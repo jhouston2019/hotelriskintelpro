@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+}
+
+body {
+  @apply bg-hrip-charcoal text-slate-100;
+}
+
+a {
+  @apply text-hrip-gold hover:text-yellow-300 transition-colors;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
