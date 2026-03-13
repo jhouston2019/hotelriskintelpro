@@ -11,11 +11,11 @@ body {
 }
 
 body {
-  @apply bg-hrip-charcoal text-slate-100;
+  @apply bg-gray-50 text-gray-900;
 }
 
 a {
-  @apply text-hrip-gold hover:text-yellow-300 transition-colors;
+  @apply text-hrip-navy hover:text-hrip-blue transition-colors;
 }
 
 * {
