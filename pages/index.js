@@ -59,7 +59,7 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
-                href="/dashboard"
+                href="/intake"
                 className="inline-flex items-center justify-center rounded-md bg-hrip-gold px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-300"
               >
                 Analyze My Hotel Insurance
@@ -561,7 +561,7 @@ export default function Home() {
             </p>
             <div className="mt-8">
               <Link
-                href="/dashboard"
+                href="/intake"
                 className="inline-flex items-center justify-center rounded-md bg-hrip-gold px-8 py-4 text-base font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-300"
               >
                 Analyze My Coverage

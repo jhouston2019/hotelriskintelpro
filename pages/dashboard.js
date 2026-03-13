@@ -1,3 +1,11 @@
+import MonitoringDashboard from "../components/MonitoringDashboard";
+
+export default function Dashboard() {
+  return <MonitoringDashboard />;
+}
+
+/*
+// Legacy risk feed dashboard - keeping for reference
 import Link from "next/link";
 
 const riskFeed = [
@@ -123,7 +131,7 @@ function riskBadge(index) {
   };
 }
 
-export default function Dashboard() {
+function LegacyDashboard() {
   const activeAlerts = riskFeed.length;
   const highRiskProperties = properties.filter((p) => p.index >= 70).length;
   const weatherThreats = riskFeed.filter((item) =>
@@ -480,5 +488,4 @@ export default function Dashboard() {
     </div>
   );
 }
-
-
+*/
