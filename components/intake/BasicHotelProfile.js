@@ -33,38 +33,47 @@ export default function BasicHotelProfile({ data, onNext, onBack, isFirstStep })
   };
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-xl border border-slate-800 bg-slate-950/80 p-8">
-      <h2 className="text-2xl font-semibold text-slate-100">Tell Us About Your Hotel</h2>
-      <p className="mt-2 text-sm text-slate-400">
-        Basic property information helps us understand your hotel&apos;s physical risk profile.
-      </p>
+    <form onSubmit={handleSubmit} className="rounded-2xl border-2 border-gray-200 bg-white p-8 shadow-lg">
+      <div className="flex items-start gap-4 mb-6">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-hrip-navy to-hrip-blue flex-shrink-0">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">Tell Us About Your Hotel</h2>
+          <p className="mt-2 text-base text-gray-600">
+            Basic property information helps us understand your hotel's physical risk profile.
+          </p>
+        </div>
+      </div>
 
       {/* Basic Information */}
-      <div className="mt-8 space-y-6">
+      <div className="space-y-8">
         <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <label className="block text-sm font-medium text-slate-300">
-              Hotel Name
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Hotel Name <span className="text-red-600">*</span>
             </label>
             <input
               type="text"
               required
               value={formData.hotelName}
               onChange={(e) => handleChange("hotelName", e.target.value)}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+              className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
               placeholder="e.g., Riverside Inn"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-300">
-              Number of Rooms
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Number of Rooms <span className="text-red-600">*</span>
             </label>
             <input
               type="number"
               required
               value={formData.numberOfRooms}
               onChange={(e) => handleChange("numberOfRooms", e.target.value)}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+              className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
               placeholder="e.g., 85"
             />
           </div>
@@ -72,104 +81,110 @@ export default function BasicHotelProfile({ data, onNext, onBack, isFirstStep })
 
         {/* Address */}
         <div>
-          <label className="block text-sm font-medium text-slate-300">
-            Property Address
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Property Address <span className="text-red-600">*</span>
           </label>
           <input
             type="text"
             required
             value={formData.address}
             onChange={(e) => handleChange("address", e.target.value)}
-            className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+            className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
             placeholder="Street address"
           />
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
           <div>
-            <label className="block text-sm font-medium text-slate-300">City</label>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              City <span className="text-red-600">*</span>
+            </label>
             <input
               type="text"
               required
               value={formData.city}
               onChange={(e) => handleChange("city", e.target.value)}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+              className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-300">State</label>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              State <span className="text-red-600">*</span>
+            </label>
             <input
               type="text"
               required
               value={formData.state}
               onChange={(e) => handleChange("state", e.target.value)}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+              className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
               placeholder="e.g., CA"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-300">ZIP Code</label>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              ZIP Code <span className="text-red-600">*</span>
+            </label>
             <input
               type="text"
               required
               value={formData.zip}
               onChange={(e) => handleChange("zip", e.target.value)}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+              className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
             />
           </div>
         </div>
 
         {/* Property Details */}
-        <div className="pt-6 border-t border-slate-800">
-          <h3 className="text-sm font-semibold text-slate-200">Property Details</h3>
-          <div className="mt-4 grid gap-6 md:grid-cols-2">
+        <div className="pt-8 border-t-2 border-gray-200">
+          <h3 className="text-lg font-bold text-gray-900 mb-6">Property Details</h3>
+          <div className="grid gap-6 md:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Square Footage
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Square Footage <span className="text-red-600">*</span>
               </label>
               <input
                 type="number"
                 required
                 value={formData.squareFootage}
                 onChange={(e) => handleChange("squareFootage", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
                 placeholder="Total building square feet"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Number of Floors
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Number of Floors <span className="text-red-600">*</span>
               </label>
               <input
                 type="number"
                 required
                 value={formData.numberOfFloors}
                 onChange={(e) => handleChange("numberOfFloors", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Year Built
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Year Built <span className="text-red-600">*</span>
               </label>
               <input
                 type="number"
                 required
                 value={formData.yearBuilt}
                 onChange={(e) => handleChange("yearBuilt", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
                 placeholder="e.g., 1995"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Year Renovated <span className="text-slate-500">(optional)</span>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Year Renovated <span className="text-sm text-gray-500">(optional)</span>
               </label>
               <input
                 type="number"
                 value={formData.yearRenovated}
                 onChange={(e) => handleChange("yearRenovated", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
                 placeholder="e.g., 2018"
               />
             </div>
@@ -177,18 +192,18 @@ export default function BasicHotelProfile({ data, onNext, onBack, isFirstStep })
         </div>
 
         {/* Building Construction */}
-        <div className="pt-6 border-t border-slate-800">
-          <h3 className="text-sm font-semibold text-slate-200">Building Construction</h3>
-          <div className="mt-4 grid gap-6 md:grid-cols-2">
+        <div className="pt-8 border-t-2 border-gray-200">
+          <h3 className="text-lg font-bold text-gray-900 mb-6">Building Construction</h3>
+          <div className="grid gap-6 md:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Construction Type
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Construction Type <span className="text-red-600">*</span>
               </label>
               <select
                 required
                 value={formData.constructionType}
                 onChange={(e) => handleChange("constructionType", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
               >
                 <option value="">Select...</option>
                 <option value="masonry">Masonry</option>
@@ -199,14 +214,14 @@ export default function BasicHotelProfile({ data, onNext, onBack, isFirstStep })
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Roof Type
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Roof Type <span className="text-red-600">*</span>
               </label>
               <select
                 required
                 value={formData.roofType}
                 onChange={(e) => handleChange("roofType", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
               >
                 <option value="">Select...</option>
                 <option value="flat">Flat</option>
@@ -217,15 +232,15 @@ export default function BasicHotelProfile({ data, onNext, onBack, isFirstStep })
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Roof Age (years)
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Roof Age (years) <span className="text-red-600">*</span>
               </label>
               <input
                 type="number"
                 required
                 value={formData.roofAge}
                 onChange={(e) => handleChange("roofAge", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
                 placeholder="e.g., 8"
               />
             </div>
@@ -233,18 +248,18 @@ export default function BasicHotelProfile({ data, onNext, onBack, isFirstStep })
         </div>
 
         {/* Safety Systems */}
-        <div className="pt-6 border-t border-slate-800">
-          <h3 className="text-sm font-semibold text-slate-200">Safety Systems</h3>
-          <div className="mt-4 grid gap-6 md:grid-cols-2">
+        <div className="pt-8 border-t-2 border-gray-200">
+          <h3 className="text-lg font-bold text-gray-900 mb-6">Safety Systems</h3>
+          <div className="grid gap-6 md:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Sprinkler System
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Sprinkler System <span className="text-red-600">*</span>
               </label>
               <select
                 required
                 value={formData.sprinklerSystem}
                 onChange={(e) => handleChange("sprinklerSystem", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
               >
                 <option value="">Select...</option>
                 <option value="yes">Yes - Full coverage</option>
@@ -253,14 +268,14 @@ export default function BasicHotelProfile({ data, onNext, onBack, isFirstStep })
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Fire Alarm System
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Fire Alarm System <span className="text-red-600">*</span>
               </label>
               <select
                 required
                 value={formData.fireAlarmSystem}
                 onChange={(e) => handleChange("fireAlarmSystem", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
               >
                 <option value="">Select...</option>
                 <option value="yes">Yes</option>
@@ -271,67 +286,73 @@ export default function BasicHotelProfile({ data, onNext, onBack, isFirstStep })
         </div>
 
         {/* Amenities & Features */}
-        <div className="pt-6 border-t border-slate-800">
-          <h3 className="text-sm font-semibold text-slate-200">Amenities & Features</h3>
-          <p className="mt-1 text-xs text-slate-400">
+        <div className="pt-8 border-t-2 border-gray-200">
+          <h3 className="text-lg font-bold text-gray-900 mb-2">Amenities & Features</h3>
+          <p className="text-sm text-gray-600 mb-6">
             These affect liability exposure and business interruption complexity
           </p>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            <label className="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-900/50 p-4 cursor-pointer hover:border-slate-700">
+          <div className="grid gap-4 md:grid-cols-2">
+            <label className="flex items-center gap-4 rounded-xl border-2 border-gray-200 bg-gray-50 p-5 cursor-pointer hover:border-hrip-navy hover:bg-blue-50 transition-all">
               <input
                 type="checkbox"
                 checked={formData.poolSpa === "yes"}
                 onChange={(e) => handleChange("poolSpa", e.target.checked ? "yes" : "no")}
-                className="h-4 w-4 rounded border-slate-600 bg-slate-800 text-hrip-gold focus:ring-hrip-gold focus:ring-offset-slate-950"
+                className="h-5 w-5 rounded border-gray-300 text-hrip-navy focus:ring-hrip-navy"
               />
-              <span className="text-sm text-slate-300">Pool / Spa</span>
+              <span className="text-base font-medium text-gray-900">Pool / Spa</span>
             </label>
-            <label className="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-900/50 p-4 cursor-pointer hover:border-slate-700">
+            <label className="flex items-center gap-4 rounded-xl border-2 border-gray-200 bg-gray-50 p-5 cursor-pointer hover:border-hrip-navy hover:bg-blue-50 transition-all">
               <input
                 type="checkbox"
                 checked={formData.restaurantBar === "yes"}
                 onChange={(e) => handleChange("restaurantBar", e.target.checked ? "yes" : "no")}
-                className="h-4 w-4 rounded border-slate-600 bg-slate-800 text-hrip-gold focus:ring-hrip-gold focus:ring-offset-slate-950"
+                className="h-5 w-5 rounded border-gray-300 text-hrip-navy focus:ring-hrip-navy"
               />
-              <span className="text-sm text-slate-300">Restaurant / Bar</span>
+              <span className="text-base font-medium text-gray-900">Restaurant / Bar</span>
             </label>
-            <label className="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-900/50 p-4 cursor-pointer hover:border-slate-700">
+            <label className="flex items-center gap-4 rounded-xl border-2 border-gray-200 bg-gray-50 p-5 cursor-pointer hover:border-hrip-navy hover:bg-blue-50 transition-all">
               <input
                 type="checkbox"
                 checked={formData.eventSpace === "yes"}
                 onChange={(e) => handleChange("eventSpace", e.target.checked ? "yes" : "no")}
-                className="h-4 w-4 rounded border-slate-600 bg-slate-800 text-hrip-gold focus:ring-hrip-gold focus:ring-offset-slate-950"
+                className="h-5 w-5 rounded border-gray-300 text-hrip-navy focus:ring-hrip-navy"
               />
-              <span className="text-sm text-slate-300">Event / Conference Space</span>
+              <span className="text-base font-medium text-gray-900">Event / Conference Space</span>
             </label>
-            <label className="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-900/50 p-4 cursor-pointer hover:border-slate-700">
+            <label className="flex items-center gap-4 rounded-xl border-2 border-gray-200 bg-gray-50 p-5 cursor-pointer hover:border-hrip-navy hover:bg-blue-50 transition-all">
               <input
                 type="checkbox"
                 checked={formData.parkingStructure === "yes"}
                 onChange={(e) => handleChange("parkingStructure", e.target.checked ? "yes" : "no")}
-                className="h-4 w-4 rounded border-slate-600 bg-slate-800 text-hrip-gold focus:ring-hrip-gold focus:ring-offset-slate-950"
+                className="h-5 w-5 rounded border-gray-300 text-hrip-navy focus:ring-hrip-navy"
               />
-              <span className="text-sm text-slate-300">Parking Structure / Valet</span>
+              <span className="text-base font-medium text-gray-900">Parking Structure / Valet</span>
             </label>
           </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <div className="mt-8 flex items-center justify-between pt-6 border-t border-slate-800">
+      <div className="mt-10 flex items-center justify-between pt-8 border-t-2 border-gray-200">
         <button
           type="button"
           onClick={onBack}
           disabled={isFirstStep}
-          className="text-sm text-slate-400 hover:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 text-base font-semibold text-gray-600 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
-          ← Back
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
         </button>
         <button
           type="submit"
-          className="rounded-md bg-hrip-gold px-6 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-300"
+          className="inline-flex items-center gap-2 rounded-lg bg-hrip-navy px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-blue-800 transition-all hover:shadow-xl"
         >
           Continue
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
         </button>
       </div>
     </form>
