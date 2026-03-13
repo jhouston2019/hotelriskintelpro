@@ -7,9 +7,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "hrip-navy": "#020617",
-        "hrip-charcoal": "#0b1120",
-        "hrip-gold": "#fbbf24",
+        "hrip-navy": "#1e3a8a",
+        "hrip-blue": "#3b82f6",
+        "hrip-light": "#eff6ff",
+        "hrip-gold": "#f59e0b",
+        "hrip-orange": "#fb923c",
       },
     },
   },

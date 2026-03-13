@@ -58,45 +58,48 @@ export default function IntakeWizard({ onComplete }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-hrip-navy via-hrip-charcoal to-black">
-      <div className="mx-auto max-w-4xl px-6 py-8">
-        {/* Progress indicator */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+        <div className="mx-auto max-w-5xl px-6 py-6">
+          <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-sm font-semibold text-slate-100">
+              <h2 className="text-2xl font-bold text-gray-900">
                 Insurance Survivability Analysis
               </h2>
-              <p className="text-xs text-slate-400 mt-1">
-                Step {currentStep} of {steps.length}
+              <p className="text-sm text-gray-600 mt-1">
+                Step {currentStep} of {steps.length}: {steps[currentStep - 1]?.title}
               </p>
             </div>
             <button
               onClick={handleSave}
-              className="text-xs text-slate-400 hover:text-hrip-gold transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg border-2 border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-900 hover:border-hrip-navy hover:bg-gray-50 transition-all"
             >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+              </svg>
               Save Progress
             </button>
           </div>
           
           {/* Progress bar */}
-          <div className="relative">
-            <div className="h-2 w-full rounded-full bg-slate-800">
+          <div className="mt-6">
+            <div className="h-3 w-full rounded-full bg-gray-200 overflow-hidden">
               <div
-                className="h-2 rounded-full bg-hrip-gold transition-all duration-300"
+                className="h-3 rounded-full bg-gradient-to-r from-hrip-navy to-hrip-blue transition-all duration-300"
                 style={{ width: `${(currentStep / steps.length) * 100}%` }}
               />
             </div>
-            <div className="mt-3 flex justify-between">
+            <div className="mt-4 flex justify-between">
               {steps.map((step) => (
                 <div
                   key={step.id}
-                  className={`text-[10px] ${
+                  className={`text-xs font-medium ${
                     step.id === currentStep
-                      ? "text-hrip-gold font-medium"
+                      ? "text-hrip-navy"
                       : step.id < currentStep
-                      ? "text-slate-400"
-                      : "text-slate-600"
+                      ? "text-green-600"
+                      : "text-gray-400"
                   }`}
                 >
                   {step.title}
@@ -105,7 +108,9 @@ export default function IntakeWizard({ onComplete }) {
             </div>
           </div>
         </div>
+      </div>
 
+      <div className="mx-auto max-w-5xl px-6 py-12">
         {/* Current step content */}
         {CurrentStepComponent && (
           <CurrentStepComponent
