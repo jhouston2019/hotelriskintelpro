@@ -48,22 +48,39 @@ export default function Home() {
         {/* Hero with Live Dashboard Demo */}
         <section className="bg-gradient-to-b from-blue-50 to-white py-12">
           <div className="mx-auto max-w-7xl px-6">
-            {/* Headline */}
+            {/* Headline - Powerful Sell */}
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-hrip-navy mb-4">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              <div className="inline-flex items-center gap-2 rounded-full bg-red-100 px-5 py-2 text-sm font-bold text-red-700 mb-6 border-2 border-red-200">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
-                Hotel Insurance Risk Intelligence
+                Average Hotel Has $9.1M in Hidden Insurance Gaps
               </div>
               
-              <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl mb-4">
-                See Your Insurance Risk in Real-Time
+              <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl mb-6 leading-tight">
+                Automated Insurance Gap Analysis for Hotels
               </h1>
               
-              <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-                Identify millions in uncovered exposure before disaster strikes
-              </p>
+              <div className="max-w-4xl mx-auto">
+                <p className="text-2xl text-gray-900 font-bold mb-4">
+                  Upload your policy → Get instant dashboard showing exactly where you're underinsured
+                </p>
+                
+                <div className="grid md:grid-cols-3 gap-4 text-left bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
+                  <div>
+                    <p className="text-sm font-bold text-blue-900 mb-1">✓ Property Coverage Gaps</p>
+                    <p className="text-xs text-blue-800">See rebuild cost vs. policy limit</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-blue-900 mb-1">✓ Business Interruption Shortfalls</p>
+                    <p className="text-xs text-blue-800">Calculate when BI runs out</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-blue-900 mb-1">✓ Dollar Exposure in Real-Time</p>
+                    <p className="text-xs text-blue-800">Track uncovered risk continuously</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Live Dashboard Demo */}
@@ -72,16 +89,17 @@ export default function Home() {
               <div className="bg-gradient-to-r from-hrip-navy to-hrip-blue px-8 py-6 text-white">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-semibold opacity-90 mb-1">LIVE DEMO</p>
-                    <h2 className="text-2xl font-bold">Riverside Boutique Hotel - 85 Rooms</h2>
+                    <p className="text-sm font-bold opacity-90 mb-2 uppercase tracking-wider">Your Risk Intelligence Dashboard</p>
+                    <h2 className="text-2xl font-bold">Sample Hotel: 85-Room Boutique Property</h2>
+                    <p className="text-sm opacity-90 mt-1">This is what you'll see after your 15-minute analysis</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm opacity-90 mb-1">Risk Status</p>
+                    <p className="text-sm opacity-90 mb-1">Overall Risk</p>
                     <div className="inline-flex items-center gap-2 bg-red-500 px-4 py-2 rounded-lg">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                       </svg>
-                      <span className="font-bold">HIGH RISK</span>
+                      <span className="font-bold">CRITICAL</span>
                     </div>
                   </div>
                 </div>
@@ -217,24 +235,33 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Potential Savings Callout */}
-              <div className="bg-gradient-to-r from-green-600 to-green-700 px-8 py-6 text-white">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white bg-opacity-20">
-                      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
+              {/* Potential Savings Callout - MASSIVE EMPHASIS */}
+              <div className="bg-gradient-to-r from-green-600 to-green-700 px-8 py-8 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
+                <div className="relative">
+                  <div className="text-center mb-6">
+                    <p className="text-base font-bold uppercase tracking-wider mb-2 text-green-100">
+                      💰 POTENTIAL SAVINGS IF YOU FIX THESE GAPS
+                    </p>
+                    <p className="text-7xl font-bold mb-2">$9.1M+</p>
+                    <p className="text-xl font-semibold">Protected from uncovered loss</p>
+                  </div>
+                  <div className="flex items-center justify-center gap-8 pt-6 border-t-2 border-white border-opacity-20">
+                    <div className="text-center">
+                      <p className="text-sm opacity-90 mb-1">Cost to Fix Gaps</p>
+                      <p className="text-3xl font-bold">~$800</p>
+                      <p className="text-sm opacity-90">per month added premium</p>
                     </div>
-                    <div>
-                      <p className="text-sm font-semibold opacity-90 mb-1">POTENTIAL SAVINGS IF FIXED</p>
-                      <p className="text-4xl font-bold">$9.1M+ Protected</p>
+                    <div className="text-5xl font-bold opacity-50">→</div>
+                    <div className="text-center">
+                      <p className="text-sm opacity-90 mb-1">Risk You Eliminate</p>
+                      <p className="text-3xl font-bold">$9.1M+</p>
+                      <p className="text-sm opacity-90">in uncovered exposure</p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm opacity-90 mb-2">Cost to Fix</p>
-                    <p className="text-2xl font-bold">~$800/month</p>
-                    <p className="text-xs opacity-90">Additional premium</p>
+                  <div className="text-center mt-6">
+                    <p className="text-lg font-bold">ROI: 11,375x your monthly investment</p>
                   </div>
                 </div>
               </div>
