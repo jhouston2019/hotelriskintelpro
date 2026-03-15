@@ -51,9 +51,13 @@ export default function Home() {
             <div className="mb-16">
               {/* Why Hotel Owners Need Hotel Risk Pro */}
               <div className="max-w-6xl mx-auto mb-12 text-center">
-                <h2 className="text-3xl font-bold text-gray-900 mb-10 sm:text-4xl">
+                <h2 className="text-3xl font-bold text-gray-900 mb-8 sm:text-4xl">
                   Why Hotel Owners Need Hotel Risk Pro
                 </h2>
+
+                <p className="text-2xl text-gray-700 leading-relaxed mb-10 max-w-5xl mx-auto">
+                  Hotel Risk Pro helps hotel owners save money, time, and stress by making sure their insurance and financial protection structure can actually absorb the losses that inevitably occur in hospitality operations.
+                </p>
 
                 {/* Value-Driven Bullet List */}
                 <div className="text-left bg-white rounded-2xl border-2 border-gray-200 p-10 shadow-lg">
@@ -262,16 +266,6 @@ export default function Home() {
               </div>
               <p className="text-base text-gray-600 mt-6">Continuous monitoring • Setup takes 15 minutes • $199/month</p>
             </div>
-          </div>
-        </section>
-
-
-        {/* One-Line Product Explanation */}
-        <section className="py-12 bg-hrip-navy">
-          <div className="mx-auto max-w-6xl px-6 text-center">
-            <p className="text-2xl font-bold text-white leading-relaxed sm:text-3xl">
-              Hotel Risk Pro helps hotel owners save money, time, and stress by making sure their insurance and financial protection structure can actually absorb the losses that inevitably occur in hospitality operations.
-            </p>
           </div>
         </section>
 
