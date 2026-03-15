@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import SurvivabilityReport from "../components/SurvivabilityReport";
+import SurvivabilityReportV2 from "../components/SurvivabilityReportV2";
 
 export default function ReportPage() {
   const [reportData, setReportData] = useState(null);
@@ -17,14 +17,14 @@ export default function ReportPage() {
 
   if (!reportData) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-hrip-navy via-hrip-charcoal to-black flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-hrip-gold border-r-transparent"></div>
-          <p className="mt-4 text-sm text-slate-400">Loading your report...</p>
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-hrip-navy border-r-transparent"></div>
+          <p className="mt-4 text-sm text-gray-600">Loading your report...</p>
         </div>
       </div>
     );
   }
 
-  return <SurvivabilityReport data={reportData} />;
+  return <SurvivabilityReportV2 data={reportData} />;
 }
