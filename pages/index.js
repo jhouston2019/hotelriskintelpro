@@ -64,43 +64,43 @@ export default function Home() {
                   <ul className="space-y-5 text-lg text-gray-900">
                     <li className="flex items-start gap-4">
                       <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">Save $1M–$10M+</span> by identifying coverage gaps before a loss exposes them.</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">SAVE $1M–$10M+</span> by identifying coverage gaps before a loss exposes them.</span>
                     </li>
                     <li className="flex items-start gap-4">
                       <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">Prevent months of lost revenue</span> by making sure business interruption coverage actually supports realistic recovery timelines.</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">PREVENT MONTHS OF LOST REVENUE</span> by making sure business interruption coverage actually supports realistic recovery timelines.</span>
                     </li>
                     <li className="flex items-start gap-4">
                       <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">Avoid coinsurance penalties</span> that can reduce claim payouts by hundreds of thousands or millions.</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">AVOID COINSURANCE PENALTIES</span> that can reduce claim payouts by hundreds of thousands or millions.</span>
                     </li>
                     <li className="flex items-start gap-4">
                       <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">Eliminate hidden coverage traps</span> buried in policy language, exclusions, sublimits, and claim-trigger provisions.</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">ELIMINATE HIDDEN COVERAGE TRAPS</span> buried in policy language, exclusions, sublimits, and claim-trigger provisions.</span>
                     </li>
                     <li className="flex items-start gap-4">
                       <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">Reduce claim chaos and stress</span> by understanding how your insurance and financial structure will respond before a disaster occurs.</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">REDUCE CLAIM CHAOS AND STRESS</span> by understanding how your insurance and financial structure will respond before a disaster occurs.</span>
                     </li>
                     <li className="flex items-start gap-4">
                       <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">Save weeks or months during claim handling</span> by already knowing what the policy should cover and where financial gaps may exist.</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">SAVE WEEKS OR MONTHS DURING CLAIM HANDLING</span> by already knowing what the policy should cover and where financial gaps may exist.</span>
                     </li>
                     <li className="flex items-start gap-4">
                       <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">Protect the long-term value of the hotel asset</span> by keeping insurance protection aligned with real risk exposure.</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">PROTECT THE LONG-TERM VALUE OF THE HOTEL ASSET</span> by keeping insurance protection aligned with real risk exposure.</span>
                     </li>
                     <li className="flex items-start gap-4">
                       <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">Prevent risk drift</span> as rebuild costs, revenue, claim history, and operating conditions change over time.</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">PREVENT RISK DRIFT</span> as rebuild costs, revenue, claim history, and operating conditions change over time.</span>
                     </li>
                     <li className="flex items-start gap-4">
                       <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">Avoid renewal surprises and premium shocks</span> caused by claim history, coverage structure, or hidden policy weaknesses.</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">AVOID RENEWAL SURPRISES AND PREMIUM SHOCKS</span> caused by claim history, coverage structure, or hidden policy weaknesses.</span>
                     </li>
                     <li className="flex items-start gap-4">
                       <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">Know exactly where financial exposure exists</span> before the next loss event.</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">KNOW EXACTLY WHERE FINANCIAL EXPOSURE EXISTS</span> before the next loss event.</span>
                     </li>
                   </ul>
                 </div>
