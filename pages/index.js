@@ -54,9 +54,6 @@ export default function Home() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-8 sm:text-3xl">
                   Why Hotel Owners Need Hotel Risk Pro
                 </h2>
-                <p className="text-3xl font-bold text-gray-900 leading-relaxed sm:text-4xl lg:text-5xl mb-12">
-                  Hotels do not fail because losses are unusual. They fail because the insurance and financial structure of the business is not prepared for the losses that are normal in hospitality operations.
-                </p>
 
                 {/* Bullet List of Reasons */}
                 <div className="grid md:grid-cols-2 gap-4 text-left max-w-4xl mx-auto mb-12">
