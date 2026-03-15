@@ -49,48 +49,57 @@ export default function Home() {
         <section className="bg-gradient-to-b from-blue-50 to-white py-20">
           <div className="mx-auto max-w-7xl px-6">
             <div className="mb-16">
-              {/* Top Lead Statement - Problem Framing */}
-              <div className="max-w-5xl mx-auto mb-12 text-center">
-                <h2 className="text-2xl font-bold text-gray-900 mb-8 sm:text-3xl">
+              {/* Why Hotel Owners Need Hotel Risk Pro */}
+              <div className="max-w-6xl mx-auto mb-12 text-center">
+                <h2 className="text-3xl font-bold text-gray-900 mb-10 sm:text-4xl">
                   Why Hotel Owners Need Hotel Risk Pro
                 </h2>
 
-                {/* Bullet List of Reasons */}
-                <div className="grid md:grid-cols-2 gap-4 text-left max-w-4xl mx-auto mb-12">
-                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
-                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
-                    <p className="text-lg text-gray-900 font-medium">Rebuild costs change</p>
-                  </div>
-                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
-                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
-                    <p className="text-lg text-gray-900 font-medium">Revenue exposure changes</p>
-                  </div>
-                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
-                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
-                    <p className="text-lg text-gray-900 font-medium">Business interruption limits may become inadequate</p>
-                  </div>
-                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
-                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
-                    <p className="text-lg text-gray-900 font-medium">Coinsurance provisions can reduce claim recovery</p>
-                  </div>
-                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
-                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
-                    <p className="text-lg text-gray-900 font-medium">Policy terms and exclusions create hidden gaps</p>
-                  </div>
-                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
-                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
-                    <p className="text-lg text-gray-900 font-medium">Claim history can create renewal pressure</p>
-                  </div>
-                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6 md:col-span-2">
-                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
-                    <p className="text-lg text-gray-900 font-medium">A property that looked protected last year may be exposed this year</p>
-                  </div>
+                {/* Value-Driven Bullet List */}
+                <div className="text-left bg-white rounded-2xl border-2 border-gray-200 p-10 shadow-lg">
+                  <ul className="space-y-5 text-lg text-gray-900">
+                    <li className="flex items-start gap-4">
+                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">Save $1M–$10M+</span> by identifying coverage gaps before a loss exposes them.</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">Prevent months of lost revenue</span> by making sure business interruption coverage actually supports realistic recovery timelines.</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">Avoid coinsurance penalties</span> that can reduce claim payouts by hundreds of thousands or millions.</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">Eliminate hidden coverage traps</span> buried in policy language, exclusions, sublimits, and claim-trigger provisions.</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">Reduce claim chaos and stress</span> by understanding how your insurance and financial structure will respond before a disaster occurs.</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">Save weeks or months during claim handling</span> by already knowing what the policy should cover and where financial gaps may exist.</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">Protect the long-term value of the hotel asset</span> by keeping insurance protection aligned with real risk exposure.</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">Prevent risk drift</span> as rebuild costs, revenue, claim history, and operating conditions change over time.</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">Avoid renewal surprises and premium shocks</span> caused by claim history, coverage structure, or hidden policy weaknesses.</span>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
+                      <span className="font-medium"><span className="font-bold text-green-700">Know exactly where financial exposure exists</span> before the next loss event.</span>
+                    </li>
+                  </ul>
                 </div>
-
-                {/* Closing Statement */}
-                <p className="text-2xl font-bold text-gray-900 bg-blue-50 border-2 border-blue-200 rounded-2xl px-8 py-6 inline-block">
-                  Hotel Risk Pro continuously monitors these conditions so you can see when your risk structure starts drifting into dangerous territory.
-                </p>
               </div>
             </div>
 
@@ -257,6 +266,15 @@ export default function Home() {
         </section>
 
 
+        {/* One-Line Product Explanation */}
+        <section className="py-12 bg-hrip-navy">
+          <div className="mx-auto max-w-6xl px-6 text-center">
+            <p className="text-2xl font-bold text-white leading-relaxed sm:text-3xl">
+              Hotel Risk Pro helps hotel owners save money, time, and stress by making sure their insurance and financial protection structure can actually absorb the losses that inevitably occur in hospitality operations.
+            </p>
+          </div>
+        </section>
+
         {/* What It Actually Does */}
         <section id="what-it-monitors" className="py-20 bg-gray-50">
           <div className="mx-auto max-w-7xl px-6">
@@ -264,279 +282,72 @@ export default function Home() {
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
                 What Hotel Risk Pro Actually Does
               </h2>
-              <p className="text-xl text-gray-700 leading-relaxed">
-                It monitors the variables that determine whether your hotel can absorb loss and recover financially.
-              </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-8">
-              {/* Card 1 */}
-              <div className="rounded-2xl border-2 border-gray-200 bg-white p-8 hover:shadow-xl transition-shadow">
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 mb-6">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Monitors Insurance Structure</h3>
-                <p className="text-base text-gray-700 leading-relaxed">
-                  Tracks limits, deductibles, sublimits, exclusions, coinsurance, and applicable coverages that affect how losses are paid.
-                </p>
+            <div className="max-w-5xl mx-auto">
+              <div className="bg-white rounded-2xl border-2 border-gray-200 p-10 shadow-lg">
+                <ul className="space-y-5 text-lg text-gray-900">
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Identifies millions in potential uncovered exposure before a loss occurs.</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Shows when property coverage may no longer match rebuild cost.</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Reveals when business interruption coverage may fail before the hotel reopens.</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Flags policy structures that can reduce claim payouts.</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Detects exclusions, sublimits, and coverage limitations that can leave losses partially uncovered.</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Keeps the hotel's protection structure aligned as risk conditions change.</span>
+                  </li>
+                </ul>
               </div>
-
-              {/* Card 2 */}
-              <div className="rounded-2xl border-2 border-gray-200 bg-white p-8 hover:shadow-xl transition-shadow">
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 mb-6">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Monitors Business Interruption Sustainability</h3>
-                <p className="text-base text-gray-700 leading-relaxed">
-                  Shows whether business interruption protection remains strong enough to support the hotel during recovery.
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div className="rounded-2xl border-2 border-gray-200 bg-white p-8 hover:shadow-xl transition-shadow">
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-red-600 mb-6">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Monitors Financial Exposure</h3>
-                <p className="text-base text-gray-700 leading-relaxed">
-                  Tracks the uncovered financial risk the business could still face when loss, downtime, and policy structure are combined.
-                </p>
-              </div>
-
-              {/* Card 4 */}
-              <div className="rounded-2xl border-2 border-gray-200 bg-white p-8 hover:shadow-xl transition-shadow">
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 mb-6">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Monitors Risk Drift Over Time</h3>
-                <p className="text-base text-gray-700 leading-relaxed">
-                  Flags changes in rebuild cost, revenue, claim history, and policy terms that can quietly weaken protection.
-                </p>
-              </div>
-
-              {/* Card 5 */}
-              <div className="rounded-2xl border-2 border-gray-200 bg-white p-8 hover:shadow-xl transition-shadow md:col-span-2">
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-green-600 mb-6">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Monitors Recovery Resilience</h3>
-                <p className="text-base text-gray-700 leading-relaxed">
-                  Evaluates whether the business can remain financially stable during claim handling, downtime, and operational disruption.
-                </p>
-              </div>
-            </div>
-
-            {/* Closing Statement */}
-            <div className="text-center">
-              <p className="text-xl font-bold text-gray-900 bg-yellow-100 border-2 border-yellow-300 rounded-xl px-8 py-6 inline-block max-w-4xl">
-                Hotel Risk Pro continuously monitors these conditions so you can see when your risk structure starts drifting into dangerous territory.
-              </p>
             </div>
           </div>
         </section>
 
-        {/* What It Helps You Manage */}
+        {/* Why It's Valuable */}
         <section className="py-20 bg-white">
           <div className="mx-auto max-w-7xl px-6">
-            <div className="text-center max-w-4xl mx-auto mb-16">
+            <div className="text-center max-w-4xl mx-auto mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                What It Helps You Manage
-              </h2>
-              <p className="text-xl text-gray-700 leading-relaxed">
-                Hotel Risk Pro helps manage the risk and insurance factors that shape how a hospitality business performs when losses occur.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              <div className="flex items-start gap-4 bg-gray-50 rounded-xl border-2 border-gray-200 p-6">
-                <svg className="w-6 h-6 text-hrip-navy flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <p className="text-base text-gray-900 font-medium">
-                  Policy language that affects claim outcomes
-                </p>
-              </div>
-
-              <div className="flex items-start gap-4 bg-gray-50 rounded-xl border-2 border-gray-200 p-6">
-                <svg className="w-6 h-6 text-hrip-navy flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <p className="text-base text-gray-900 font-medium">
-                  Loss of income and interruption sustainability
-                </p>
-              </div>
-
-              <div className="flex items-start gap-4 bg-gray-50 rounded-xl border-2 border-gray-200 p-6">
-                <svg className="w-6 h-6 text-hrip-navy flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <p className="text-base text-gray-900 font-medium">
-                  Applicable coverages and coverage gaps
-                </p>
-              </div>
-
-              <div className="flex items-start gap-4 bg-gray-50 rounded-xl border-2 border-gray-200 p-6">
-                <svg className="w-6 h-6 text-hrip-navy flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <p className="text-base text-gray-900 font-medium">
-                  Coinsurance issues and claim payment reductions
-                </p>
-              </div>
-
-              <div className="flex items-start gap-4 bg-gray-50 rounded-xl border-2 border-gray-200 p-6">
-                <svg className="w-6 h-6 text-hrip-navy flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <p className="text-base text-gray-900 font-medium">
-                  Deductible pressure and immediate cash shock
-                </p>
-              </div>
-
-              <div className="flex items-start gap-4 bg-gray-50 rounded-xl border-2 border-gray-200 p-6">
-                <svg className="w-6 h-6 text-hrip-navy flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <p className="text-base text-gray-900 font-medium">
-                  Business value and enterprise value protection
-                </p>
-              </div>
-
-              <div className="flex items-start gap-4 bg-gray-50 rounded-xl border-2 border-gray-200 p-6">
-                <svg className="w-6 h-6 text-hrip-navy flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <p className="text-base text-gray-900 font-medium">
-                  Financial variables that affect long-term resilience
-                </p>
-              </div>
-
-              <div className="flex items-start gap-4 bg-gray-50 rounded-xl border-2 border-gray-200 p-6">
-                <svg className="w-6 h-6 text-hrip-navy flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <p className="text-base text-gray-900 font-medium">
-                  Operational conditions that magnify loss severity
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Why It Is Valuable */}
-        <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Why This Platform Is Valuable
+                Why It's Valuable
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {/* Before a Loss */}
-              <div className="rounded-2xl border-2 border-blue-200 bg-white p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Before a Loss</h3>
-                <p className="text-base text-gray-700 mb-6 leading-relaxed">
-                  It helps owners identify structural weaknesses in insurance and financial protection before those weaknesses are exposed by an actual event.
-                </p>
-                <ul className="space-y-3 text-sm text-gray-700">
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">•</span>
-                    <span>Underinsurance</span>
+            <div className="max-w-5xl mx-auto">
+              <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl border-2 border-blue-200 p-10 shadow-lg">
+                <ul className="space-y-5 text-lg text-gray-900">
+                  <li className="flex items-start gap-4">
+                    <span className="text-blue-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Prevents millions in hidden exposure from building unnoticed.</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">•</span>
-                    <span>BI shortfall</span>
+                  <li className="flex items-start gap-4">
+                    <span className="text-blue-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Reduces the time it takes to understand how a loss will affect the business.</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">•</span>
-                    <span>Coinsurance exposure</span>
+                  <li className="flex items-start gap-4">
+                    <span className="text-blue-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Reduces claim stress by clarifying what the policy structure should and should not cover.</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">•</span>
-                    <span>Sublimits and exclusions</span>
+                  <li className="flex items-start gap-4">
+                    <span className="text-blue-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Helps owners make faster decisions before, during, and after a loss.</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">•</span>
-                    <span>Renewal vulnerability</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">•</span>
-                    <span>Financial weakness in recovery planning</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* When a Loss Happens */}
-              <div className="rounded-2xl border-2 border-orange-200 bg-white p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">When a Loss Happens</h3>
-                <p className="text-base text-gray-700 mb-6 leading-relaxed">
-                  It gives owners a clearer understanding of how the hotel's insurance and financial structure will respond when damage, interruption, or claim friction occurs.
-                </p>
-                <ul className="space-y-3 text-sm text-gray-700">
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-600 font-bold">•</span>
-                    <span>What the policy should respond to</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-600 font-bold">•</span>
-                    <span>Where claim outcomes may be limited</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-600 font-bold">•</span>
-                    <span>How long the business can sustain disruption</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-600 font-bold">•</span>
-                    <span>Where financial gaps may emerge</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-600 font-bold">•</span>
-                    <span>How the event may affect stability and asset value</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Over Time */}
-              <div className="rounded-2xl border-2 border-green-200 bg-white p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Over Time</h3>
-                <p className="text-base text-gray-700 mb-6 leading-relaxed">
-                  It helps maintain protection as the hotel's risk environment changes.
-                </p>
-                <ul className="space-y-3 text-sm text-gray-700">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold">•</span>
-                    <span>Revenue growth</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold">•</span>
-                    <span>Changing rebuild costs</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold">•</span>
-                    <span>New claims</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold">•</span>
-                    <span>Renewal terms</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold">•</span>
-                    <span>Operational changes</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold">•</span>
-                    <span>Growing exposure</span>
+                  <li className="flex items-start gap-4">
+                    <span className="text-blue-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Protects profitability, financial resilience, and asset value over time.</span>
                   </li>
                 </ul>
               </div>
