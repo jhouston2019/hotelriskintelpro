@@ -48,62 +48,52 @@ export default function Home() {
         {/* Hero Section */}
         <section className="bg-gradient-to-b from-blue-50 to-white py-20">
           <div className="mx-auto max-w-7xl px-6">
-            <div className="text-center mb-16">
+            <div className="mb-16">
               {/* Top Lead Statement - Problem Framing */}
-              <div className="max-w-5xl mx-auto mb-16">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6 sm:text-3xl">
+              <div className="max-w-5xl mx-auto mb-12 text-center">
+                <h2 className="text-2xl font-bold text-gray-900 mb-8 sm:text-3xl">
                   Why Hotel Owners Need Hotel Risk Pro
                 </h2>
-                <p className="text-3xl font-bold text-gray-900 leading-relaxed sm:text-4xl lg:text-5xl">
+                <p className="text-3xl font-bold text-gray-900 leading-relaxed sm:text-4xl lg:text-5xl mb-12">
                   Hotels do not fail because losses are unusual. They fail because the insurance and financial structure of the business is not prepared for the losses that are normal in hospitality operations.
                 </p>
-              </div>
 
-              {/* Main Headline */}
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl mb-6 leading-tight max-w-5xl mx-auto">
-                Loss and Damage Are Constants in Hospitality. Financial Damage Doesn't Have to Be.
-              </h1>
-              
-              {/* Subheadline */}
-              <div className="max-w-4xl mx-auto mb-12">
-                <p className="text-xl text-gray-700 leading-relaxed">
-                  Hotel Risk Pro continuously tracks the insurance, coverage, business interruption, and financial risk factors that determine how your hotel performs when losses occur.
+                {/* Bullet List of Reasons */}
+                <div className="grid md:grid-cols-2 gap-4 text-left max-w-4xl mx-auto mb-12">
+                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
+                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
+                    <p className="text-lg text-gray-900 font-medium">Rebuild costs change</p>
+                  </div>
+                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
+                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
+                    <p className="text-lg text-gray-900 font-medium">Revenue exposure changes</p>
+                  </div>
+                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
+                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
+                    <p className="text-lg text-gray-900 font-medium">Business interruption limits may become inadequate</p>
+                  </div>
+                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
+                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
+                    <p className="text-lg text-gray-900 font-medium">Coinsurance provisions can reduce claim recovery</p>
+                  </div>
+                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
+                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
+                    <p className="text-lg text-gray-900 font-medium">Policy terms and exclusions create hidden gaps</p>
+                  </div>
+                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6">
+                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
+                    <p className="text-lg text-gray-900 font-medium">Claim history can create renewal pressure</p>
+                  </div>
+                  <div className="flex items-start gap-3 bg-white rounded-xl border-2 border-gray-200 p-6 md:col-span-2">
+                    <span className="text-red-600 font-bold text-xl flex-shrink-0">•</span>
+                    <p className="text-lg text-gray-900 font-medium">A property that looked protected last year may be exposed this year</p>
+                  </div>
+                </div>
+
+                {/* Closing Statement */}
+                <p className="text-2xl font-bold text-gray-900 bg-blue-50 border-2 border-blue-200 rounded-2xl px-8 py-6 inline-block">
+                  Hotel Risk Pro continuously monitors these conditions so you can see when your risk structure starts drifting into dangerous territory.
                 </p>
-              </div>
-              
-              {/* CTAs */}
-              <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <Link
-                  href="/intake"
-                  className="inline-flex items-center justify-center rounded-xl bg-hrip-navy px-12 py-6 text-xl font-bold text-white shadow-2xl hover:bg-blue-800 transition-all hover:scale-105"
-                >
-                  Monitor My Hotel Risk
-                  <svg className="ml-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </Link>
-                <Link
-                  href="#what-it-monitors"
-                  className="inline-flex items-center justify-center rounded-xl border-2 border-gray-300 bg-white px-12 py-6 text-xl font-semibold text-gray-900 hover:border-hrip-navy hover:bg-gray-50 transition-all"
-                >
-                  See What It Monitors
-                </Link>
-              </div>
-
-              {/* Hero Feature Strip */}
-              <div className="grid md:grid-cols-4 gap-4 text-center max-w-5xl mx-auto mb-16">
-                <div className="bg-white border-2 border-blue-200 rounded-xl p-5">
-                  <p className="font-bold text-gray-900 text-base">Insurance Structure Monitoring</p>
-                </div>
-                <div className="bg-white border-2 border-blue-200 rounded-xl p-5">
-                  <p className="font-bold text-gray-900 text-base">Business Interruption Sustainability</p>
-                </div>
-                <div className="bg-white border-2 border-blue-200 rounded-xl p-5">
-                  <p className="font-bold text-gray-900 text-base">Financial Exposure Tracking</p>
-                </div>
-                <div className="bg-white border-2 border-blue-200 rounded-xl p-5">
-                  <p className="font-bold text-gray-900 text-base">Risk Drift Detection</p>
-                </div>
               </div>
             </div>
 
