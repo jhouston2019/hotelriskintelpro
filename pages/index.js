@@ -109,8 +109,149 @@ export default function Home() {
                 </div>
               </div>
               
-              {/* CTAs */}
-              <div className="flex flex-wrap justify-center gap-4 mt-12">
+            </div>
+
+            {/* Live Dashboard Demo */}
+            <div className="rounded-3xl border-4 border-gray-300 bg-white shadow-2xl overflow-hidden mb-12">
+              {/* Dashboard Header */}
+              <div className="bg-gradient-to-r from-hrip-navy to-hrip-blue px-8 py-6 text-white">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-bold opacity-90 mb-2 uppercase tracking-wider">Example: What You'll See</p>
+                    <h2 className="text-2xl font-bold">85-Room Boutique Hotel</h2>
+                    <p className="text-sm opacity-90 mt-1">This is what you get after uploading your policy</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm opacity-90 mb-1">Survivability Score</p>
+                    <div className="inline-flex items-center gap-2 bg-red-500 px-4 py-2 rounded-lg">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      <span className="font-bold text-2xl">47/100</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Key Metrics */}
+              <div className="p-8 bg-gray-50">
+                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                  {/* Property Risk */}
+                  <div className="bg-white rounded-2xl border-2 border-gray-200 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-sm font-bold text-gray-900 uppercase">Property Coverage</h3>
+                      <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                        GAP
+                      </span>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-600">Policy Limit</span>
+                        <span className="text-base font-bold text-gray-900">$14.0M</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-600">Rebuild Cost</span>
+                        <span className="text-base font-bold text-gray-900">$17.4M</span>
+                      </div>
+                      <div className="pt-3 border-t-2 border-red-200">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm font-bold text-red-700">Uncovered</span>
+                          <span className="text-2xl font-bold text-red-600">$3.4M</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Business Interruption Risk */}
+                  <div className="bg-white rounded-2xl border-2 border-gray-200 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-sm font-bold text-gray-900 uppercase">Business Interruption</h3>
+                      <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                        GAP
+                      </span>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-600">Coverage Duration</span>
+                        <span className="text-base font-bold text-orange-600">5 months</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-600">Recovery Time</span>
+                        <span className="text-base font-bold text-gray-900">14 months</span>
+                      </div>
+                      <div className="pt-3 border-t-2 border-red-200">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm font-bold text-red-700">Revenue at Risk</span>
+                          <span className="text-2xl font-bold text-red-600">$5.4M</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Priority Actions */}
+                  <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl border-2 border-blue-200 p-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                      <h3 className="text-sm font-bold text-gray-900 uppercase">What to Fix</h3>
+                    </div>
+                    <ul className="space-y-3 text-sm">
+                      <li className="flex items-start gap-2">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-xs font-bold">1</span>
+                        <span className="text-gray-700 font-medium">Increase BI coverage duration</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-xs font-bold">2</span>
+                        <span className="text-gray-700 font-medium">Close property coverage gap</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs font-bold">3</span>
+                        <span className="text-gray-700 font-medium">Review ordinance coverage</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Total Exposure Callout */}
+              <div className="bg-gradient-to-r from-red-600 to-red-700 px-8 py-8 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
+                <div className="relative">
+                  <div className="text-center mb-6">
+                    <p className="text-base font-bold uppercase tracking-wider mb-2 text-red-100">
+                      Total Uncovered Exposure
+                    </p>
+                    <p className="text-7xl font-bold mb-2">$9.1M</p>
+                    <p className="text-xl font-semibold">This hotel could lose this much if disaster strikes today</p>
+                  </div>
+                  <div className="flex items-center justify-center gap-8 pt-6 border-t-2 border-white border-opacity-20">
+                    <div className="text-center">
+                      <p className="text-sm opacity-90 mb-1">Cost to Fix Gaps</p>
+                      <p className="text-3xl font-bold">~$800</p>
+                      <p className="text-sm opacity-90">per month added premium</p>
+                    </div>
+                    <div className="text-5xl font-bold opacity-50">→</div>
+                    <div className="text-center">
+                      <p className="text-sm opacity-90 mb-1">Risk You Eliminate</p>
+                      <p className="text-3xl font-bold">$9.1M+</p>
+                      <p className="text-sm opacity-90">in uncovered exposure</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Below Dashboard */}
+            <div className="text-center mt-12">
+              <div className="flex flex-wrap justify-center gap-4">
                 <Link
                   href="/intake"
                   className="inline-flex items-center justify-center rounded-xl bg-hrip-navy px-12 py-6 text-xl font-bold text-white shadow-2xl hover:bg-blue-800 transition-all hover:scale-105"
