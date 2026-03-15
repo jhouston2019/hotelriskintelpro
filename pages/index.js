@@ -51,6 +51,9 @@ export default function Home() {
             <div className="text-center mb-16">
               {/* Top Lead Statement - Problem Framing */}
               <div className="max-w-5xl mx-auto mb-16">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 sm:text-3xl">
+                  Why Hotel Owners Need Hotel Risk Pro
+                </h2>
                 <p className="text-3xl font-bold text-gray-900 leading-relaxed sm:text-4xl lg:text-5xl">
                   Hotels do not fail because losses are unusual. They fail because the insurance and financial structure of the business is not prepared for the losses that are normal in hospitality operations.
                 </p>
