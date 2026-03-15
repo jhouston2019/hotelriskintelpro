@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { analyzeHotelRisk } from "../lib/risk-engine";
 
-export default function SurvivabilityReportV2({ data }) {
+export default function SurvivabilityReportV2({ data, onExportPDF, onSaveHotel, onEnableMonitoring }) {
   // Run the full risk engine analysis
   const analysis = analyzeHotelRisk(data);
   
@@ -474,21 +474,24 @@ export default function SurvivabilityReportV2({ data }) {
             Take action on these findings to improve your hotel's financial survivability.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <button className="rounded-lg bg-hrip-navy px-8 py-4 text-base font-bold text-white shadow-xl hover:bg-blue-800 transition-all hover:scale-105">
+            <button 
+              onClick={onExportPDF}
+              className="rounded-lg bg-hrip-navy px-8 py-4 text-base font-bold text-white shadow-xl hover:bg-blue-800 transition-all hover:scale-105"
+            >
               Download PDF Report
             </button>
-            <Link
-              href="/intake"
+            <button
+              onClick={onSaveHotel}
               className="rounded-lg border-2 border-hrip-navy px-8 py-4 text-base font-bold text-hrip-navy transition-all hover:bg-blue-50"
             >
-              Update My Risk Profile
-            </Link>
-            <Link
-              href="/dashboard"
+              Save This Hotel
+            </button>
+            <button
+              onClick={onEnableMonitoring}
               className="rounded-lg border-2 border-gray-300 px-8 py-4 text-base font-bold text-gray-900 transition-all hover:bg-gray-50"
             >
-              Monitor This Hotel
-            </Link>
+              Enable Monitoring
+            </button>
           </div>
         </div>
       </div>

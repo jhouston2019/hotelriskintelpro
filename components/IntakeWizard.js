@@ -30,18 +30,26 @@ export default function IntakeWizard({ onComplete }) {
 
   const CurrentStepComponent = steps.find((s) => s.id === currentStep)?.component;
 
-  const handleNext = (stepData) => {
+  const handleNext = async (stepData) => {
     const stepKey = Object.keys(formData)[currentStep - 1];
-    setFormData((prev) => ({
-      ...prev,
-      [stepKey]: { ...prev[stepKey], ...stepData },
-    }));
+    const updatedData = {
+      ...formData,
+      [stepKey]: { ...formData[stepKey], ...stepData },
+    };
+    
+    setFormData(updatedData);
+    
+    // Auto-save to localStorage
+    localStorage.setItem("hotelRiskIntake", JSON.stringify(updatedData));
+    
+    // TODO: Auto-save to backend when API is available
+    // await saveDraftSection(sessionId, stepKey, stepData)
     
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
       window.scrollTo(0, 0);
     } else {
-      onComplete?.(formData);
+      onComplete?.(updatedData);
     }
   };
 
@@ -52,8 +60,16 @@ export default function IntakeWizard({ onComplete }) {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    // Save to localStorage
     localStorage.setItem("hotelRiskIntake", JSON.stringify(formData));
+    
+    // TODO: Save to backend when API is available
+    // await fetch('/api/draft/save', {
+    //   method: 'POST',
+    //   body: JSON.stringify(formData)
+    // })
+    
     alert("Progress saved! You can return anytime to continue.");
   };
 

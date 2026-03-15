@@ -22,19 +22,74 @@ export default function InsurancePolicyInput({ data, onNext, onBack }) {
   });
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [isParsing, setIsParsing] = useState(false);
+  const [parsedFields, setParsedFields] = useState(new Set());
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNext(formData);
+    onNext({ ...formData, uploadedFiles });
   };
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Remove from parsed fields if manually edited
+    if (parsedFields.has(field)) {
+      setParsedFields(prev => {
+        const next = new Set(prev);
+        next.delete(field);
+        return next;
+      });
+    }
   };
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
     setUploadedFiles(files);
+    
+    // Trigger parsing
+    if (files.length > 0) {
+      setIsParsing(true);
+      
+      try {
+        // TODO: Call actual parsing API when backend is ready
+        // const formData = new FormData()
+        // files.forEach(file => formData.append('documents', file))
+        // const response = await fetch('/api/parse/policy', {
+        //   method: 'POST',
+        //   body: formData
+        // })
+        // const parsed = await response.json()
+        
+        // Simulate parsing delay
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Mock parsed data
+        const mockParsed = {
+          carrier: 'Travelers',
+          propertyCoverageLimit: '15000000',
+          biLimit: '6000000',
+          liabilityLimit: '2000000',
+          deductible: '50000',
+        };
+        
+        // Update form with parsed values (only for empty fields)
+        const fieldsUpdated = new Set();
+        Object.keys(mockParsed).forEach(key => {
+          if (!formData[key]) {
+            setFormData(prev => ({ ...prev, [key]: mockParsed[key] }));
+            fieldsUpdated.add(key);
+          }
+        });
+        
+        setParsedFields(fieldsUpdated);
+        
+      } catch (error) {
+        console.error('Parsing failed:', error);
+        alert('Could not parse document. Please enter details manually.');
+      } finally {
+        setIsParsing(false);
+      }
+    }
   };
 
   return (
@@ -81,7 +136,13 @@ export default function InsurancePolicyInput({ data, onNext, onBack }) {
             onChange={handleFileUpload}
           />
         </label>
-        {uploadedFiles.length > 0 && (
+        {isParsing && (
+          <div className="mt-4 flex items-center gap-3 bg-blue-50 border-2 border-blue-200 rounded-lg px-4 py-3">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-hrip-navy"></div>
+            <span className="text-sm font-medium text-gray-900">Extracting policy details...</span>
+          </div>
+        )}
+        {uploadedFiles.length > 0 && !isParsing && (
           <div className="mt-4 space-y-2">
             {uploadedFiles.map((file, idx) => (
               <div key={idx} className="flex items-center gap-3 bg-green-50 border-2 border-green-200 rounded-lg px-4 py-3">
@@ -89,6 +150,7 @@ export default function InsurancePolicyInput({ data, onNext, onBack }) {
                   <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
                 </svg>
                 <span className="text-sm font-medium text-gray-900">{file.name}</span>
+                <span className="ml-auto text-xs font-medium text-green-700">Parsed</span>
               </div>
             ))}
           </div>
@@ -101,6 +163,11 @@ export default function InsurancePolicyInput({ data, onNext, onBack }) {
           <div>
             <label className="block text-sm font-semibold text-gray-900 mb-2">
               Insurance Carrier <span className="text-red-600">*</span>
+              {parsedFields.has('carrier') && (
+                <span className="ml-2 text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded">
+                  Parsed from document
+                </span>
+              )}
             </label>
             <input
               type="text"

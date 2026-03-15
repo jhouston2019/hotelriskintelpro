@@ -1,15 +1,24 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { analyzeHotelRisk } from "../lib/risk-engine";
+import QuickUpdateModal from "./dashboard/QuickUpdateModal";
 
 export default function MonitoringDashboard() {
   const [hotelData, setHotelData] = useState(null);
+  const [analysis, setAnalysis] = useState(null);
   const [daysUntilRenewal, setDaysUntilRenewal] = useState(0);
+  const [showUpdatePrompt, setShowUpdatePrompt] = useState(false);
+  const [updateType, setUpdateType] = useState(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("hotelRiskAnalysis");
     if (stored) {
       const data = JSON.parse(stored);
       setHotelData(data);
+      
+      // Run analysis
+      const result = analyzeHotelRisk(data);
+      setAnalysis(result);
       
       if (data.insurancePolicy?.policyPeriodEnd) {
         const endDate = new Date(data.insurancePolicy.policyPeriodEnd);
@@ -19,6 +28,14 @@ export default function MonitoringDashboard() {
         setDaysUntilRenewal(diffDays);
       }
     }
+    
+    // TODO: Fetch from backend when API is ready
+    // const fetchData = async () => {
+    //   const response = await fetch('/api/dashboard/data')
+    //   const data = await response.json()
+    //   setHotelData(data.hotel)
+    //   setAnalysis(data.latestAnalysis)
+    // }
   }, []);
 
   if (!hotelData) {
@@ -53,8 +70,8 @@ export default function MonitoringDashboard() {
     );
   }
 
-  const survivabilityScore = 47;
-  const openIssues = 4;
+  const survivabilityScore = analysis?.summary?.survivabilityScore || 47;
+  const openIssues = analysis?.priorities?.filter(p => p.urgency === 'fix_now').length || 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -180,10 +197,19 @@ export default function MonitoringDashboard() {
             <div className="rounded-xl border border-gray-200 bg-gray-50 p-6">
               <p className="text-base font-semibold text-gray-900 mb-4">Any new claims since your last review?</p>
               <div className="flex gap-3">
-                <button className="flex-1 rounded-lg border-2 border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 hover:border-gray-400 hover:bg-gray-50 transition-all">
+                <button 
+                  onClick={() => {}}
+                  className="flex-1 rounded-lg border-2 border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 hover:border-gray-400 hover:bg-gray-50 transition-all"
+                >
                   No
                 </button>
-                <button className="flex-1 rounded-lg border-2 border-hrip-navy bg-hrip-navy px-6 py-3 text-sm font-semibold text-white hover:bg-blue-800 transition-all">
+                <button 
+                  onClick={() => {
+                    setUpdateType('claim');
+                    setShowUpdatePrompt(true);
+                  }}
+                  className="flex-1 rounded-lg border-2 border-hrip-navy bg-hrip-navy px-6 py-3 text-sm font-semibold text-white hover:bg-blue-800 transition-all"
+                >
                   Yes, add claim
                 </button>
               </div>
@@ -191,10 +217,19 @@ export default function MonitoringDashboard() {
             <div className="rounded-xl border border-gray-200 bg-gray-50 p-6">
               <p className="text-base font-semibold text-gray-900 mb-4">Has revenue changed materially?</p>
               <div className="flex gap-3">
-                <button className="flex-1 rounded-lg border-2 border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 hover:border-gray-400 hover:bg-gray-50 transition-all">
+                <button 
+                  onClick={() => {}}
+                  className="flex-1 rounded-lg border-2 border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 hover:border-gray-400 hover:bg-gray-50 transition-all"
+                >
                   No
                 </button>
-                <button className="flex-1 rounded-lg border-2 border-hrip-navy bg-hrip-navy px-6 py-3 text-sm font-semibold text-white hover:bg-blue-800 transition-all">
+                <button 
+                  onClick={() => {
+                    setUpdateType('revenue');
+                    setShowUpdatePrompt(true);
+                  }}
+                  className="flex-1 rounded-lg border-2 border-hrip-navy bg-hrip-navy px-6 py-3 text-sm font-semibold text-white hover:bg-blue-800 transition-all"
+                >
                   Yes, update revenue
                 </button>
               </div>
@@ -202,10 +237,19 @@ export default function MonitoringDashboard() {
             <div className="rounded-xl border border-gray-200 bg-gray-50 p-6">
               <p className="text-base font-semibold text-gray-900 mb-4">Any major renovations or added amenities?</p>
               <div className="flex gap-3">
-                <button className="flex-1 rounded-lg border-2 border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 hover:border-gray-400 hover:bg-gray-50 transition-all">
+                <button 
+                  onClick={() => {}}
+                  className="flex-1 rounded-lg border-2 border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-900 hover:border-gray-400 hover:bg-gray-50 transition-all"
+                >
                   No
                 </button>
-                <button className="flex-1 rounded-lg border-2 border-hrip-navy bg-hrip-navy px-6 py-3 text-sm font-semibold text-white hover:bg-blue-800 transition-all">
+                <button 
+                  onClick={() => {
+                    setUpdateType('property');
+                    setShowUpdatePrompt(true);
+                  }}
+                  className="flex-1 rounded-lg border-2 border-hrip-navy bg-hrip-navy px-6 py-3 text-sm font-semibold text-white hover:bg-blue-800 transition-all"
+                >
                   Yes, update property
                 </button>
               </div>
@@ -232,6 +276,17 @@ export default function MonitoringDashboard() {
           </button>
         </div>
       </div>
+      
+      <QuickUpdateModal
+        isOpen={showUpdatePrompt}
+        onClose={() => setShowUpdatePrompt(false)}
+        updateType={updateType}
+        onSave={(data) => {
+          // TODO: Merge update and re-run analysis
+          setShowUpdatePrompt(false);
+          alert('Update saved. Re-running analysis...');
+        }}
+      />
     </div>
   );
 }
