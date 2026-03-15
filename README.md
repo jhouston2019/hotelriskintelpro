@@ -16,6 +16,7 @@ Hotel Risk Pro helps hotel owners discover hidden insurance gaps before disaster
 - **See how long BI really lasts** - Compare coverage duration to realistic recovery timelines
 - **Estimate uncovered exposure** - Understand potential financial impact of gaps
 - **Understand real survivability** - Get a clear 0-100 score with plain-English explanations
+- **Carrier behavior intelligence** - See how your insurer compares to market norms and historical patterns
 
 ---
 
@@ -33,11 +34,12 @@ Hotel Risk Pro helps hotel owners discover hidden insurance gaps before disaster
 ### 🔌 Backend Integration Ready
 
 - **Database Schema** - Complete PostgreSQL schema
+- **Carrier Intelligence** - Pattern analysis across carriers and policies
 - **Authentication** - Anonymous-to-user handoff flow
 - **Document Parsing** - Policy and loss run extraction
 - **Stripe Billing** - $199/month or $1,999/year subscriptions
 - **PDF Export** - Professional report generation
-- **API Routes** - 8 complete reference implementations
+- **API Routes** - 9 complete reference implementations
 - **Entitlements** - Free vs paid feature gating
 
 ---
@@ -78,7 +80,7 @@ git push origin main
 4. **Upload documents** - Optional policy and loss run uploads
 5. **Review data** - Verify completeness before analysis
 6. **Run analysis** - Client-side risk engine executes
-7. **View report** - 10-section survivability report
+7. **View report** - 11-section survivability report with carrier intelligence
 8. **Take action** - Save, export PDF, or enable monitoring
 9. **Authenticate** - Sign up when ready to save or subscribe
 10. **Subscribe** - Unlock monitoring and PDF export
@@ -113,8 +115,10 @@ git push origin main
 
 ### Backend Integration
 - **`BACKEND_INTEGRATION_GUIDE.md`** - Step-by-step setup (4,000+ words)
+- **`CARRIER_INTELLIGENCE.md`** - Carrier behavior intelligence system
 - **`lib/api-examples/README.md`** - API reference
 - **`lib/db/schema.sql`** - Database structure
+- **`lib/db/carrier-intelligence-schema.sql`** - Carrier intelligence schema
 
 ### Implementation Details
 - **`WIRING_COMPLETE.md`** - Technical implementation (3,000+ words)

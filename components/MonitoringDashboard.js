@@ -11,31 +11,37 @@ export default function MonitoringDashboard() {
   const [updateType, setUpdateType] = useState(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem("hotelRiskAnalysis");
-    if (stored) {
-      const data = JSON.parse(stored);
-      setHotelData(data);
-      
-      // Run analysis
-      const result = analyzeHotelRisk(data);
-      setAnalysis(result);
-      
-      if (data.insurancePolicy?.policyPeriodEnd) {
-        const endDate = new Date(data.insurancePolicy.policyPeriodEnd);
-        const today = new Date();
-        const diffTime = endDate - today;
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        setDaysUntilRenewal(diffDays);
+    async function loadData() {
+      const stored = localStorage.getItem("hotelRiskAnalysis");
+      if (stored) {
+        const data = JSON.parse(stored);
+        setHotelData(data);
+        
+        // Run analysis (now async)
+        try {
+          const result = await analyzeHotelRisk(data);
+          setAnalysis(result);
+        } catch (error) {
+          console.error('Analysis failed:', error);
+        }
+        
+        if (data.insurancePolicy?.policyPeriodEnd) {
+          const endDate = new Date(data.insurancePolicy.policyPeriodEnd);
+          const today = new Date();
+          const diffTime = endDate - today;
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          setDaysUntilRenewal(diffDays);
+        }
       }
+      
+      // TODO: Fetch from backend when API is ready
+      // const response = await fetch('/api/dashboard/data')
+      // const data = await response.json()
+      // setHotelData(data.hotel)
+      // setAnalysis(data.latestAnalysis)
     }
     
-    // TODO: Fetch from backend when API is ready
-    // const fetchData = async () => {
-    //   const response = await fetch('/api/dashboard/data')
-    //   const data = await response.json()
-    //   setHotelData(data.hotel)
-    //   setAnalysis(data.latestAnalysis)
-    // }
+    loadData();
   }, []);
 
   if (!hotelData) {
@@ -133,6 +139,82 @@ export default function MonitoringDashboard() {
             <p className="mt-3 text-xs text-gray-600">Since last review</p>
           </div>
         </div>
+
+        {/* Carrier Intelligence Cards */}
+        {analysis?.carrierIntelligence?.available && (
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Carrier Intelligence</h2>
+            
+            <div className="grid gap-6 md:grid-cols-3 mb-6">
+              {/* Carrier Benchmark Score */}
+              <div className="rounded-2xl border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-white p-6 shadow-lg">
+                <p className="text-sm font-bold text-purple-700 uppercase tracking-wider">Policy Competitiveness</p>
+                <p className="mt-4 text-5xl font-bold text-purple-600">
+                  {analysis.carrierIntelligence.benchmark?.benchmarkScore || 0}
+                  <span className="text-2xl text-purple-400">/100</span>
+                </p>
+                <p className="mt-3 text-xs text-gray-600">
+                  {analysis.carrierIntelligence.benchmark?.scoreBand === 'highly_competitive' && 'Highly Competitive'}
+                  {analysis.carrierIntelligence.benchmark?.scoreBand === 'competitive' && 'Competitive'}
+                  {analysis.carrierIntelligence.benchmark?.scoreBand === 'below_market' && 'Below Market'}
+                  {analysis.carrierIntelligence.benchmark?.scoreBand === 'significantly_below_market' && 'Significantly Below Market'}
+                </p>
+              </div>
+              
+              {/* Coverage vs Market */}
+              {analysis.carrierIntelligence.competitivePosition?.weaknesses?.length > 0 && (
+                <div className="rounded-2xl border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-white p-6 shadow-lg">
+                  <p className="text-sm font-bold text-orange-700 uppercase tracking-wider">Coverage Gaps</p>
+                  <p className="mt-4 text-5xl font-bold text-orange-600">
+                    {analysis.carrierIntelligence.competitivePosition.weaknesses.length}
+                  </p>
+                  <p className="mt-3 text-xs text-gray-600">Areas below market</p>
+                </div>
+              )}
+              
+              {/* Carrier Risk Signals */}
+              {analysis.carrierIntelligence.benchmark?.riskFlags?.length > 0 && (
+                <div className="rounded-2xl border-2 border-yellow-200 bg-gradient-to-br from-yellow-50 to-white p-6 shadow-lg">
+                  <p className="text-sm font-bold text-yellow-700 uppercase tracking-wider">Carrier Signals</p>
+                  <p className="mt-4 text-5xl font-bold text-yellow-600">
+                    {analysis.carrierIntelligence.benchmark.riskFlags.length}
+                  </p>
+                  <p className="mt-3 text-xs text-gray-600">Behavior patterns detected</p>
+                </div>
+              )}
+            </div>
+            
+            {/* Carrier Insights Summary */}
+            {analysis.carrierIntelligence.insights?.length > 0 && (
+              <div className="rounded-2xl border-2 border-gray-200 bg-white p-6 shadow-lg">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">
+                  Carrier Behavior Insights
+                </h3>
+                <div className="space-y-3">
+                  {analysis.carrierIntelligence.insights.slice(0, 3).map((insight, idx) => (
+                    <div key={idx} className="flex items-start gap-3 text-sm">
+                      <svg className="h-5 w-5 flex-shrink-0 text-orange-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-gray-700">{insight.message}</span>
+                    </div>
+                  ))}
+                </div>
+                {analysis.carrierIntelligence.insights.length > 3 && (
+                  <Link 
+                    href="/report"
+                    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-hrip-navy hover:text-blue-800"
+                  >
+                    View all carrier insights
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </Link>
+                )}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Priority Actions */}
         <div className="mb-12 rounded-2xl border-2 border-gray-200 bg-white p-8 shadow-lg">

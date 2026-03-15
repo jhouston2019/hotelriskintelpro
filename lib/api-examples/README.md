@@ -31,6 +31,7 @@ To enable these API routes:
 - `pdf-export.js` - Generate PDF report
 - `dashboard-data.js` - Fetch dashboard data
 - `quick-update.js` - Handle quick updates
+- `carrier-metrics-update.js` - Update carrier intelligence metrics (scheduled job)
 
 ## Database Setup
 
@@ -38,8 +39,9 @@ Before using these APIs, you need to:
 
 1. Set up PostgreSQL database
 2. Run the schema from `lib/db/schema.sql`
-3. Configure database connection in `.env`
-4. Install database client (pg, Prisma, Drizzle, etc.)
+3. Run the carrier intelligence schema from `lib/db/carrier-intelligence-schema.sql`
+4. Configure database connection in `.env`
+5. Install database client (pg, Prisma, Drizzle, etc.)
 
 ## Environment Variables
 
@@ -52,6 +54,7 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 NEXTAUTH_SECRET=...
 NEXTAUTH_URL=http://localhost:3000
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
+CRON_SECRET=... # For scheduled jobs (carrier metrics update)
 ```
 
 ## Testing

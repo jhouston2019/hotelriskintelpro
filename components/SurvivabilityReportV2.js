@@ -1,9 +1,40 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { analyzeHotelRisk } from "../lib/risk-engine";
+import CarrierIntelligenceSection from "./report/CarrierIntelligenceSection";
 
 export default function SurvivabilityReportV2({ data, onExportPDF, onSaveHotel, onEnableMonitoring }) {
-  // Run the full risk engine analysis
-  const analysis = analyzeHotelRisk(data);
+  const [analysis, setAnalysis] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    async function runAnalysis() {
+      setIsLoading(true);
+      try {
+        const result = await analyzeHotelRisk(data);
+        setAnalysis(result);
+      } catch (error) {
+        console.error('Analysis failed:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    if (data) {
+      runAnalysis();
+    }
+  }, [data]);
+  
+  if (isLoading || !analysis) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Analyzing your hotel's risk profile...</p>
+        </div>
+      </div>
+    );
+  }
   
   const formatCurrency = (value) => {
     if (!value || value === 0) return '$0';
@@ -448,7 +479,12 @@ export default function SurvivabilityReportV2({ data, onExportPDF, onSaveHotel, 
           </div>
         </div>
 
-        {/* Section 10: If Nothing Changes */}
+        {/* Section 10: Carrier Intelligence */}
+        {analysis.carrierIntelligence && (
+          <CarrierIntelligenceSection carrierIntelligence={analysis.carrierIntelligence} />
+        )}
+
+        {/* Section 11: If Nothing Changes */}
         <div className="mt-8 rounded-2xl border-2 border-red-300 bg-gradient-to-br from-red-100 to-red-50 p-8 shadow-lg">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-600 flex-shrink-0">
@@ -465,7 +501,7 @@ export default function SurvivabilityReportV2({ data, onExportPDF, onSaveHotel, 
           </div>
         </div>
 
-        {/* Section 11: Report Footer / Next Steps */}
+        {/* Section 12: Report Footer / Next Steps */}
         <div className="mt-8 rounded-2xl border-2 border-gray-200 bg-white p-10 shadow-lg text-center">
           <h2 className="text-3xl font-bold text-gray-900">
             Strengthen Your Hotel's Protection

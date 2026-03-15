@@ -71,18 +71,24 @@ All infrastructure code is implemented and documented:
 - **Module**: `lib/pdf/generator.js`
 - **Features**: Professional report generation
 
-#### 9. API Routes
-- **Location**: `lib/api-examples/` (8 complete examples)
+#### 9. Carrier Intelligence
+- **Module**: `lib/carrier-intelligence/` (4 modules)
+- **Features**: Pattern analysis, benchmarking, market comparisons
+- **UI**: Report section and dashboard cards
+
+#### 10. API Routes
+- **Location**: `lib/api-examples/` (9 complete examples)
 - **Ready to move**: To `pages/api/` when backend is enabled
 
 ---
 
 ## File Summary
 
-### New Files Created (33 files)
+### New Files Created (41 files)
 
 **Backend Infrastructure**:
 - `lib/db/schema.sql` - Complete database schema
+- `lib/db/carrier-intelligence-schema.sql` - Carrier intelligence schema
 - `lib/db/models.js` - Database model classes
 - `lib/session/manager.js` - Session handling
 - `lib/auth/provider.js` - Auth provider
@@ -93,10 +99,17 @@ All infrastructure code is implemented and documented:
 - `lib/entitlements/index.js` - Access control
 - `lib/pdf/generator.js` - PDF generation
 
+**Carrier Intelligence** (4 modules):
+- `lib/carrier-intelligence/index.js` - Main orchestrator
+- `lib/carrier-intelligence/ingestion.js` - Data ingestion pipeline
+- `lib/carrier-intelligence/metrics.js` - Metrics aggregation
+- `lib/carrier-intelligence/benchmarking.js` - Benchmark scoring
+
 **UI Components**:
 - `components/auth/AuthModal.js` - Sign up/sign in
 - `components/billing/SubscriptionPrompt.js` - Subscription upsell
 - `components/dashboard/QuickUpdateModal.js` - Quick updates
+- `components/report/CarrierIntelligenceSection.js` - Carrier intelligence display
 - `pages/analyze.js` - Analysis entry point
 
 **API Examples** (8 files in `lib/api-examples/`):
@@ -111,20 +124,24 @@ All infrastructure code is implemented and documented:
 
 **Tests**:
 - `tests/integration/flow.test.js` - Integration tests
+- `tests/integration/carrier-intelligence.test.js` - Carrier intelligence tests
+- `tests/fixtures/carrier-intelligence-fixtures.js` - Test data
 
 **Documentation** (3 comprehensive guides):
 - `APPLICATION_FLOW.md` - Complete user journey (8,000+ words)
 - `BACKEND_INTEGRATION_GUIDE.md` - Backend setup guide (4,000+ words)
 - `WIRING_COMPLETE.md` - Implementation summary (3,000+ words)
 
-### Enhanced Files (6 files)
+### Enhanced Files (8 files)
 
 - `components/IntakeWizard.js` - Added auto-save functionality
 - `components/intake/InsurancePolicyInput.js` - Added parsing UI and badges
 - `pages/intake.js` - Added analysis loading state
 - `pages/report.js` - Added auth and subscription handling
-- `components/SurvivabilityReportV2.js` - Added action callbacks
-- `components/MonitoringDashboard.js` - Enhanced with real analysis data
+- `components/SurvivabilityReportV2.js` - Added action callbacks + carrier intelligence + async analysis
+- `components/MonitoringDashboard.js` - Enhanced with real analysis data + carrier intelligence cards
+- `lib/risk-engine/index.js` - Integrated carrier intelligence analysis
+- `README.md` - Updated with carrier intelligence feature
 
 ---
 
@@ -146,8 +163,8 @@ All infrastructure code is implemented and documented:
    ↓ Risk engine runs (client-side)
    
 4. Survivability Report (/report)
-   ↓ 10 comprehensive sections
-   ↓ Key metrics, findings, priorities
+   ↓ 11 comprehensive sections
+   ↓ Key metrics, findings, priorities, carrier intelligence
    
 5. User Actions
    ├─ Download PDF → Auth → Subscription → Export
@@ -528,7 +545,7 @@ When ready to add backend:
 - Added analysis loading state
 
 ### Total Lines Added
-- **6,146 lines** of production code and documentation
+- **7,800+ lines** of production code and documentation (including carrier intelligence)
 
 ---
 
@@ -570,9 +587,11 @@ When ready to add backend:
 
 ### 2. Comprehensive Analysis
 - 13 analysis modules
+- Carrier behavior intelligence
 - Scenario generation
 - Priority action ranking
 - Plain-English explanations
+- Market benchmarking
 
 ### 3. Flexible Architecture
 - Works now with static export
@@ -668,6 +687,7 @@ When ready to add backend:
 ### Documentation
 - `APPLICATION_FLOW.md` - How everything works
 - `BACKEND_INTEGRATION_GUIDE.md` - How to add backend
+- `CARRIER_INTELLIGENCE.md` - Carrier intelligence system
 - `lib/risk-engine/README.md` - Risk engine details
 - `INTEGRATION_GUIDE.md` - Engine usage
 - `PROJECT_STATUS.md` - Overall status
