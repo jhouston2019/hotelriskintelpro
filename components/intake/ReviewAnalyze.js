@@ -8,182 +8,143 @@ export default function ReviewAnalyze({ data, onNext, onBack }) {
   };
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-950/80 p-8">
-      <h2 className="text-2xl font-semibold text-slate-100">
-        Review Your Hotel Risk Profile
-      </h2>
-      <p className="mt-2 text-sm text-slate-400">
-        Review your information before running the survivability analysis.
-      </p>
+    <div className="rounded-2xl border-2 border-gray-200 bg-white p-8 shadow-lg">
+      <div className="flex items-start gap-4 mb-6">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-hrip-navy to-hrip-blue flex-shrink-0">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg>
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Review Your Hotel Risk Profile
+          </h2>
+          <p className="mt-2 text-base text-gray-600">
+            Review your information before running the survivability analysis.
+          </p>
+        </div>
+      </div>
 
-      <div className="mt-8 space-y-6">
+      <div className="space-y-6">
         {/* Hotel Profile Summary */}
-        <div className="rounded-lg border border-slate-800 bg-slate-900/50 p-5">
-          <h3 className="text-sm font-semibold text-slate-200">Hotel Profile</h3>
-          <div className="mt-3 grid gap-3 text-sm">
+        <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6">
+          <h3 className="text-base font-bold text-gray-900 mb-4">Hotel Profile</h3>
+          <div className="grid gap-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-slate-400">Hotel Name:</span>
-              <span className="text-slate-100 font-medium">{data.hotelName || "—"}</span>
+              <span className="text-gray-600">Hotel Name:</span>
+              <span className="text-gray-900 font-semibold">{data.hotelName || "—"}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Location:</span>
-              <span className="text-slate-100">{data.city}, {data.state}</span>
+              <span className="text-gray-600">Location:</span>
+              <span className="text-gray-900">{data.city}, {data.state}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Rooms:</span>
-              <span className="text-slate-100">{data.numberOfRooms || "—"}</span>
+              <span className="text-gray-600">Rooms:</span>
+              <span className="text-gray-900">{data.numberOfRooms || "—"}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Square Footage:</span>
-              <span className="text-slate-100">{data.squareFootage ? parseInt(data.squareFootage).toLocaleString() : "—"} sq ft</span>
+              <span className="text-gray-600">Square Footage:</span>
+              <span className="text-gray-900">{data.squareFootage ? parseInt(data.squareFootage).toLocaleString() : "—"} sq ft</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Year Built:</span>
-              <span className="text-slate-100">{data.yearBuilt || "—"}</span>
+              <span className="text-gray-600">Year Built:</span>
+              <span className="text-gray-900">{data.yearBuilt || "—"}</span>
             </div>
           </div>
         </div>
 
         {/* Financial Summary */}
-        <div className="rounded-lg border border-slate-800 bg-slate-900/50 p-5">
-          <h3 className="text-sm font-semibold text-slate-200">Financial Exposure</h3>
-          <div className="mt-3 grid gap-3 text-sm">
+        <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6">
+          <h3 className="text-base font-bold text-gray-900 mb-4">Financial Exposure</h3>
+          <div className="grid gap-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-slate-400">Annual Revenue:</span>
-              <span className="text-slate-100 font-medium">{formatCurrency(data.annualRevenue)}</span>
+              <span className="text-gray-600">Annual Revenue:</span>
+              <span className="text-gray-900 font-semibold">{formatCurrency(data.annualRevenue)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Monthly Revenue:</span>
-              <span className="text-slate-100">{data.annualRevenue ? formatCurrency(data.annualRevenue / 12) : "—"}</span>
+              <span className="text-gray-600">Monthly Revenue:</span>
+              <span className="text-gray-900">{data.annualRevenue ? formatCurrency(data.annualRevenue / 12) : "—"}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Fixed Monthly Costs:</span>
-              <span className="text-slate-100">{formatCurrency(data.fixedMonthlyCosts)}</span>
+              <span className="text-gray-600">Fixed Monthly Costs:</span>
+              <span className="text-gray-900">{formatCurrency(data.fixedMonthlyCosts)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Emergency Reserves:</span>
-              <span className="text-slate-100">{formatCurrency(data.emergencyCashReserves)}</span>
+              <span className="text-gray-600">Emergency Reserves:</span>
+              <span className="text-gray-900">{formatCurrency(data.emergencyCashReserves)}</span>
             </div>
           </div>
         </div>
 
         {/* Insurance Summary */}
-        <div className="rounded-lg border border-slate-800 bg-slate-900/50 p-5">
-          <h3 className="text-sm font-semibold text-slate-200">Insurance Coverage</h3>
-          <div className="mt-3 grid gap-3 text-sm">
+        <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6">
+          <h3 className="text-base font-bold text-gray-900 mb-4">Insurance Coverage</h3>
+          <div className="grid gap-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-slate-400">Carrier:</span>
-              <span className="text-slate-100 font-medium">{data.carrier || "—"}</span>
+              <span className="text-gray-600">Carrier:</span>
+              <span className="text-gray-900 font-semibold">{data.carrier || "—"}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Property Limit:</span>
-              <span className="text-slate-100">{formatCurrency(data.propertyCoverageLimit)}</span>
+              <span className="text-gray-600">Property Limit:</span>
+              <span className="text-gray-900">{formatCurrency(data.propertyCoverageLimit)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">BI Limit:</span>
-              <span className="text-slate-100">{formatCurrency(data.biLimit)}</span>
+              <span className="text-gray-600">BI Limit:</span>
+              <span className="text-gray-900">{formatCurrency(data.biLimit)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">BI Restoration Period:</span>
-              <span className="text-slate-100">{data.biRestorationPeriod || "—"} months</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-400">Deductible:</span>
-              <span className="text-slate-100">{formatCurrency(data.deductible)}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Loss History Summary */}
-        <div className="rounded-lg border border-slate-800 bg-slate-900/50 p-5">
-          <h3 className="text-sm font-semibold text-slate-200">Loss History</h3>
-          <div className="mt-3 text-sm">
-            {data.claims && data.claims.length > 0 ? (
-              <div className="space-y-2">
-                <p className="text-slate-400">
-                  {data.claims.length} claim{data.claims.length !== 1 ? "s" : ""} reported
-                </p>
-                {data.claims.map((claim, idx) => (
-                  <div key={idx} className="flex justify-between text-xs">
-                    <span className="text-slate-400">{claim.type} ({claim.year})</span>
-                    <span className="text-slate-300">{formatCurrency(claim.amountPaid)}</span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-slate-400">No claims reported</p>
-            )}
-          </div>
-        </div>
-
-        {/* Operational Risk Summary */}
-        <div className="rounded-lg border border-slate-800 bg-slate-900/50 p-5">
-          <h3 className="text-sm font-semibold text-slate-200">Operational Risk</h3>
-          <div className="mt-3 text-sm text-slate-400">
-            {Object.entries(data).filter(([key, value]) => value === "yes" && key.includes("Issues")).length > 0
-              ? `${Object.entries(data).filter(([key, value]) => value === "yes").length} risk factors identified`
-              : "No major operational risks reported"}
-          </div>
-        </div>
-
-        {/* Location Risk Summary */}
-        <div className="rounded-lg border border-slate-800 bg-slate-900/50 p-5">
-          <h3 className="text-sm font-semibold text-slate-200">Location Risk</h3>
-          <div className="mt-3 grid gap-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-slate-400">Flood Zone:</span>
-              <span className="text-slate-100">{data.floodZone || "—"}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-400">Wind Exposure:</span>
-              <span className="text-slate-100">{data.coastalWindExposure || "—"}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-400">Wildfire Risk:</span>
-              <span className="text-slate-100">{data.wildfireExposure || "—"}</span>
+              <span className="text-gray-600">Deductible:</span>
+              <span className="text-gray-900">{formatCurrency(data.deductible)}</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* CTA */}
-      <div className="mt-8 rounded-lg border border-hrip-gold/30 bg-gradient-to-br from-hrip-gold/5 to-slate-950 p-6">
-        <p className="text-sm font-medium text-slate-200">
-          Ready to analyze your hotel&apos;s insurance survivability
+      {/* CTA Section */}
+      <div className="mt-10 rounded-xl bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-8 text-center">
+        <h3 className="text-2xl font-bold text-gray-900 mb-3">
+          Ready to Run Your Analysis
+        </h3>
+        <p className="text-base text-gray-700 mb-6">
+          We'll analyze your hotel's insurance survivability and show you exactly where you're protected—and where you're not.
         </p>
-        <p className="mt-1 text-xs text-slate-400">
-          We&apos;ll generate a comprehensive report showing coverage gaps, BI exposure, and priority actions.
-        </p>
+        <button
+          type="button"
+          onClick={handleAnalyze}
+          className="inline-flex items-center justify-center rounded-lg bg-hrip-navy px-10 py-5 text-lg font-bold text-white shadow-xl hover:bg-blue-800 transition-all hover:scale-105"
+        >
+          Run My Survivability Analysis
+          <svg className="ml-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
       </div>
 
       {/* Navigation */}
-      <div className="mt-8 flex items-center justify-between pt-6 border-t border-slate-800">
+      <div className="mt-8 flex items-center justify-between pt-8 border-t-2 border-gray-200">
         <button
           type="button"
           onClick={onBack}
-          className="text-sm text-slate-400 hover:text-slate-300"
+          className="inline-flex items-center gap-2 text-base font-semibold text-gray-600 hover:text-gray-900 transition-colors"
         >
-          ← Back
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
         </button>
-        <div className="flex gap-3">
-          <button
-            type="button"
-            onClick={() => {
-              localStorage.setItem("hotelRiskIntake", JSON.stringify(data));
-              alert("Progress saved!");
-            }}
-            className="rounded-md border border-slate-700 px-6 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-900"
-          >
-            Save and Finish Later
-          </button>
-          <button
-            type="button"
-            onClick={handleAnalyze}
-            className="rounded-md bg-hrip-gold px-6 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-300"
-          >
-            Run My Survivability Analysis
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => {
+            localStorage.setItem("hotelRiskIntake", JSON.stringify(data));
+            alert("Progress saved! You can return anytime to continue.");
+          }}
+          className="inline-flex items-center gap-2 rounded-lg border-2 border-gray-300 bg-white px-6 py-3 text-base font-semibold text-gray-900 hover:border-hrip-navy hover:bg-gray-50 transition-all"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+          </svg>
+          Save and Finish Later
+        </button>
       </div>
     </div>
   );

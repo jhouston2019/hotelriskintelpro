@@ -23,117 +23,110 @@ export default function LocationHazard({ data, onNext, onBack }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-xl border border-slate-800 bg-slate-950/80 p-8">
-      <h2 className="text-2xl font-semibold text-slate-100">
-        Tell Us About Local Risk Conditions
-      </h2>
-      <p className="mt-2 text-sm text-slate-400">
-        Location-specific hazards that may affect loss severity and recovery time.
-      </p>
+    <form onSubmit={handleSubmit} className="rounded-2xl border-2 border-gray-200 bg-white p-8 shadow-lg">
+      <div className="flex items-start gap-4 mb-6">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-hrip-navy to-hrip-blue flex-shrink-0">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Tell Us About Local Risk Conditions
+          </h2>
+          <p className="mt-2 text-base text-gray-600">
+            Location-specific hazards that may affect loss severity and recovery time.
+          </p>
+        </div>
+      </div>
 
       {/* Natural Hazards */}
-      <div className="mt-8 space-y-6">
-        <div className="grid gap-6 md:grid-cols-2">
-          <div>
-            <label className="block text-sm font-medium text-slate-300">
-              Flood Zone
-            </label>
-            <select
-              required
-              value={formData.floodZone}
-              onChange={(e) => handleChange("floodZone", e.target.value)}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
-            >
-              <option value="">Select...</option>
-              <option value="none">Not in flood zone</option>
-              <option value="x">Zone X (minimal risk)</option>
-              <option value="a">Zone A (high risk)</option>
-              <option value="ae">Zone AE (high risk with BFE)</option>
-              <option value="v">Zone V (coastal high risk)</option>
-              <option value="unknown">I don&apos;t know</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-300">
-              Coastal / Wind Exposure
-            </label>
-            <select
-              required
-              value={formData.coastalWindExposure}
-              onChange={(e) => handleChange("coastalWindExposure", e.target.value)}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
-            >
-              <option value="">Select...</option>
-              <option value="none">No coastal exposure</option>
-              <option value="low">Low</option>
-              <option value="moderate">Moderate</option>
-              <option value="high">High (hurricane zone)</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-300">
-              Wildfire Exposure
-            </label>
-            <select
-              required
-              value={formData.wildfireExposure}
-              onChange={(e) => handleChange("wildfireExposure", e.target.value)}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
-            >
-              <option value="">Select...</option>
-              <option value="none">No wildfire risk</option>
-              <option value="low">Low</option>
-              <option value="moderate">Moderate</option>
-              <option value="high">High</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-300">
-              Freeze Exposure
-            </label>
-            <select
-              required
-              value={formData.freezeExposure}
-              onChange={(e) => handleChange("freezeExposure", e.target.value)}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
-            >
-              <option value="">Select...</option>
-              <option value="none">Rarely freezes</option>
-              <option value="occasional">Occasional freezing</option>
-              <option value="frequent">Frequent hard freezes</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-300">
-              Storm / Hail Exposure
-            </label>
-            <select
-              required
-              value={formData.stormHailExposure}
-              onChange={(e) => handleChange("stormHailExposure", e.target.value)}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
-            >
-              <option value="">Select...</option>
-              <option value="low">Low</option>
-              <option value="moderate">Moderate</option>
-              <option value="high">High (tornado alley, hail belt)</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Operational Environment */}
-        <div className="pt-6 border-t border-slate-800">
-          <h3 className="text-sm font-semibold text-slate-200">Operational Environment</h3>
-          <div className="mt-4 grid gap-6 md:grid-cols-2">
+      <div className="space-y-8">
+        <div>
+          <h3 className="text-lg font-bold text-gray-900 mb-6">Natural Hazards</h3>
+          <div className="grid gap-6 md:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Local Crime Level
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Flood Zone <span className="text-red-600">*</span>
               </label>
               <select
                 required
+                value={formData.floodZone}
+                onChange={(e) => handleChange("floodZone", e.target.value)}
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
+              >
+                <option value="">Select...</option>
+                <option value="none">Not in flood zone</option>
+                <option value="x">Zone X (minimal risk)</option>
+                <option value="a">Zone A (high risk)</option>
+                <option value="ae">Zone AE (high risk with BFE)</option>
+                <option value="v">Zone V (coastal high risk)</option>
+                <option value="unknown">I don't know</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Coastal / Wind Exposure
+              </label>
+              <select
+                value={formData.coastalWindExposure}
+                onChange={(e) => handleChange("coastalWindExposure", e.target.value)}
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
+              >
+                <option value="">Select...</option>
+                <option value="none">No exposure</option>
+                <option value="low">Low</option>
+                <option value="moderate">Moderate</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Wildfire Exposure
+              </label>
+              <select
+                value={formData.wildfireExposure}
+                onChange={(e) => handleChange("wildfireExposure", e.target.value)}
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
+              >
+                <option value="">Select...</option>
+                <option value="none">No exposure</option>
+                <option value="low">Low</option>
+                <option value="moderate">Moderate</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Storm / Hail Exposure
+              </label>
+              <select
+                value={formData.stormHailExposure}
+                onChange={(e) => handleChange("stormHailExposure", e.target.value)}
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
+              >
+                <option value="">Select...</option>
+                <option value="low">Low</option>
+                <option value="moderate">Moderate</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Local Conditions */}
+        <div className="pt-8 border-t-2 border-gray-200">
+          <h3 className="text-lg font-bold text-gray-900 mb-6">Local Conditions</h3>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Crime Level
+              </label>
+              <select
                 value={formData.crimeLevel}
                 onChange={(e) => handleChange("crimeLevel", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
               >
                 <option value="">Select...</option>
                 <option value="low">Low</option>
@@ -142,51 +135,18 @@ export default function LocationHazard({ data, onNext, onBack }) {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Utility Interruption Concerns
-              </label>
-              <select
-                required
-                value={formData.utilityInterruption}
-                onChange={(e) => handleChange("utilityInterruption", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
-              >
-                <option value="">Select...</option>
-                <option value="low">Rare outages</option>
-                <option value="moderate">Occasional outages</option>
-                <option value="high">Frequent outages</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-300">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 Contractor Scarcity / Rebuild Difficulty
               </label>
               <select
-                required
                 value={formData.contractorScarcity}
                 onChange={(e) => handleChange("contractorScarcity", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 text-base text-gray-900 focus:border-hrip-navy focus:outline-none focus:ring-2 focus:ring-hrip-navy/20 transition-all"
               >
                 <option value="">Select...</option>
-                <option value="low">Easy to rebuild</option>
-                <option value="moderate">Moderate difficulty</option>
-                <option value="high">High difficulty (remote, limited contractors)</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Local Litigation Sensitivity
-              </label>
-              <select
-                required
-                value={formData.litigationEnvironment}
-                onChange={(e) => handleChange("litigationEnvironment", e.target.value)}
-                className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
-              >
-                <option value="">Select...</option>
-                <option value="low">Low litigation environment</option>
+                <option value="low">Low - Contractors readily available</option>
                 <option value="moderate">Moderate</option>
-                <option value="high">High (plaintiff-friendly jurisdiction)</option>
+                <option value="high">High - Limited contractor availability</option>
               </select>
             </div>
           </div>
@@ -194,19 +154,25 @@ export default function LocationHazard({ data, onNext, onBack }) {
       </div>
 
       {/* Navigation */}
-      <div className="mt-8 flex items-center justify-between pt-6 border-t border-slate-800">
+      <div className="mt-10 flex items-center justify-between pt-8 border-t-2 border-gray-200">
         <button
           type="button"
           onClick={onBack}
-          className="text-sm text-slate-400 hover:text-slate-300"
+          className="inline-flex items-center gap-2 text-base font-semibold text-gray-600 hover:text-gray-900 transition-colors"
         >
-          ← Back
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
         </button>
         <button
           type="submit"
-          className="rounded-md bg-hrip-gold px-6 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-300"
+          className="inline-flex items-center gap-2 rounded-lg bg-hrip-navy px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-blue-800 transition-all hover:shadow-xl"
         >
           Continue
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
         </button>
       </div>
     </form>

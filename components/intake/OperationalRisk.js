@@ -2,23 +2,14 @@ import { useState } from "react";
 
 export default function OperationalRisk({ data, onNext, onBack }) {
   const [formData, setFormData] = useState({
-    maintenanceIssues: data?.maintenanceIssues || "",
     roofLeaks: data?.roofLeaks || "",
     hvacIssues: data?.hvacIssues || "",
     plumbingIssues: data?.plumbingIssues || "",
     electricalIssues: data?.electricalIssues || "",
     moldMoistureHistory: data?.moldMoistureHistory || "",
-    securityIncidents: data?.securityIncidents || "",
-    slipFallFrequency: data?.slipFallFrequency || "",
-    crimeConcerns: data?.crimeConcerns || "",
     deferredMaintenance: data?.deferredMaintenance || "",
     inspectionDeficiencies: data?.inspectionDeficiencies || "",
-    complianceIssues: data?.complianceIssues || "",
-    completedMitigation: data?.completedMitigation || "",
-    unresolvedNeeds: data?.unresolvedNeeds || "",
   });
-
-  const [expandedSections, setExpandedSections] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,179 +20,88 @@ export default function OperationalRisk({ data, onNext, onBack }) {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const toggleSection = (section) => {
-    setExpandedSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
-
   const riskItems = [
-    {
-      id: "roofLeaks",
-      label: "Prior Roof Leaks",
-      detail: "roofLeaksDetail",
-      detailLabel: "Describe the roof leak history",
-    },
-    {
-      id: "hvacIssues",
-      label: "HVAC Age or Issues",
-      detail: "hvacIssuesDetail",
-      detailLabel: "Describe HVAC concerns",
-    },
-    {
-      id: "plumbingIssues",
-      label: "Plumbing Age or Issues",
-      detail: "plumbingIssuesDetail",
-      detailLabel: "Describe plumbing concerns",
-    },
-    {
-      id: "electricalIssues",
-      label: "Electrical System Issues",
-      detail: "electricalIssuesDetail",
-      detailLabel: "Describe electrical concerns",
-    },
-    {
-      id: "moldMoistureHistory",
-      label: "Mold or Moisture History",
-      detail: "moldMoistureDetail",
-      detailLabel: "Describe mold/moisture issues",
-    },
-    {
-      id: "securityIncidents",
-      label: "Security Incidents",
-      detail: "securityIncidentsDetail",
-      detailLabel: "Describe security concerns",
-    },
-    {
-      id: "slipFallFrequency",
-      label: "Slip and Fall Frequency",
-      detail: "slipFallDetail",
-      detailLabel: "Describe slip/fall patterns",
-    },
-    {
-      id: "crimeConcerns",
-      label: "Crime or Security Concerns",
-      detail: "crimeDetail",
-      detailLabel: "Describe crime/security issues",
-    },
-    {
-      id: "deferredMaintenance",
-      label: "Deferred Maintenance Items",
-      detail: "deferredMaintenanceDetail",
-      detailLabel: "List deferred maintenance",
-    },
-    {
-      id: "inspectionDeficiencies",
-      label: "Inspection Deficiencies",
-      detail: "inspectionDeficienciesDetail",
-      detailLabel: "Describe inspection findings",
-    },
-    {
-      id: "complianceIssues",
-      label: "Code Compliance Issues",
-      detail: "complianceIssuesDetail",
-      detailLabel: "Describe compliance gaps",
-    },
+    { id: "roofLeaks", label: "Prior Roof Leaks" },
+    { id: "hvacIssues", label: "HVAC Age or Issues" },
+    { id: "plumbingIssues", label: "Plumbing Age or Issues" },
+    { id: "electricalIssues", label: "Electrical System Issues" },
+    { id: "moldMoistureHistory", label: "Mold or Moisture History" },
+    { id: "deferredMaintenance", label: "Deferred Maintenance Items" },
+    { id: "inspectionDeficiencies", label: "Inspection Deficiencies" },
   ];
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-xl border border-slate-800 bg-slate-950/80 p-8">
-      <h2 className="text-2xl font-semibold text-slate-100">
-        Tell Us About Current Property and Operations Risk
-      </h2>
-      <p className="mt-2 text-sm text-slate-400">
-        Known issues and maintenance concerns that may increase loss risk or affect insurability.
-      </p>
+    <form onSubmit={handleSubmit} className="rounded-2xl border-2 border-gray-200 bg-white p-8 shadow-lg">
+      <div className="flex items-start gap-4 mb-6">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-hrip-navy to-hrip-blue flex-shrink-0">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Tell Us About Current Property and Operations Risk
+          </h2>
+          <p className="mt-2 text-base text-gray-600">
+            Property conditions that could increase loss severity or affect coverage.
+          </p>
+        </div>
+      </div>
 
-      <div className="mt-8 space-y-3">
+      <div className="space-y-6">
         {riskItems.map((item) => (
-          <div key={item.id} className="rounded-lg border border-slate-800 bg-slate-900/50">
-            <div className="flex items-center justify-between p-4">
-              <label className="flex items-center gap-3 flex-1 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={formData[item.id] === "yes"}
-                  onChange={(e) => {
-                    handleChange(item.id, e.target.checked ? "yes" : "no");
-                    if (e.target.checked) {
-                      toggleSection(item.id);
-                    }
-                  }}
-                  className="h-4 w-4 rounded border-slate-600 bg-slate-800 text-hrip-gold focus:ring-hrip-gold focus:ring-offset-slate-950"
-                />
-                <span className="text-sm text-slate-300">{item.label}</span>
-              </label>
-              {formData[item.id] === "yes" && (
-                <button
-                  type="button"
-                  onClick={() => toggleSection(item.id)}
-                  className="text-xs text-slate-500 hover:text-slate-400"
-                >
-                  {expandedSections[item.id] ? "Hide" : "Add Details"}
-                </button>
-              )}
+          <div key={item.id} className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6">
+            <label className="block text-base font-semibold text-gray-900 mb-4">
+              {item.label}
+            </label>
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={() => handleChange(item.id, "no")}
+                className={`flex-1 rounded-lg border-2 px-6 py-3 text-base font-semibold transition-all ${
+                  formData[item.id] === "no"
+                    ? "border-green-500 bg-green-50 text-green-700"
+                    : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
+                }`}
+              >
+                No Issue
+              </button>
+              <button
+                type="button"
+                onClick={() => handleChange(item.id, "yes")}
+                className={`flex-1 rounded-lg border-2 px-6 py-3 text-base font-semibold transition-all ${
+                  formData[item.id] === "yes"
+                    ? "border-red-500 bg-red-50 text-red-700"
+                    : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
+                }`}
+              >
+                Issue Present
+              </button>
             </div>
-            {formData[item.id] === "yes" && expandedSections[item.id] && (
-              <div className="border-t border-slate-800 p-4">
-                <label className="block text-xs font-medium text-slate-300">
-                  {item.detailLabel}
-                </label>
-                <textarea
-                  value={formData[item.detail] || ""}
-                  onChange={(e) => handleChange(item.detail, e.target.value)}
-                  rows={3}
-                  className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
-                  placeholder="Provide details..."
-                />
-              </div>
-            )}
           </div>
         ))}
       </div>
 
-      {/* Mitigation */}
-      <div className="mt-8 pt-6 border-t border-slate-800">
-        <h3 className="text-sm font-semibold text-slate-200">Mitigation Projects</h3>
-        <div className="mt-4 space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-300">
-              Completed Mitigation Projects <span className="text-slate-500">(optional)</span>
-            </label>
-            <textarea
-              value={formData.completedMitigation}
-              onChange={(e) => handleChange("completedMitigation", e.target.value)}
-              rows={2}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
-              placeholder="e.g., New roof 2023, HVAC upgrade 2024"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-300">
-              Unresolved Mitigation Needs <span className="text-slate-500">(optional)</span>
-            </label>
-            <textarea
-              value={formData.unresolvedNeeds}
-              onChange={(e) => handleChange("unresolvedNeeds", e.target.value)}
-              rows={2}
-              className="mt-2 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-hrip-gold focus:outline-none focus:ring-1 focus:ring-hrip-gold"
-              placeholder="e.g., Parking lot drainage, elevator modernization"
-            />
-          </div>
-        </div>
-      </div>
-
       {/* Navigation */}
-      <div className="mt-8 flex items-center justify-between pt-6 border-t border-slate-800">
+      <div className="mt-10 flex items-center justify-between pt-8 border-t-2 border-gray-200">
         <button
           type="button"
           onClick={onBack}
-          className="text-sm text-slate-400 hover:text-slate-300"
+          className="inline-flex items-center gap-2 text-base font-semibold text-gray-600 hover:text-gray-900 transition-colors"
         >
-          ← Back
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
         </button>
         <button
           type="submit"
-          className="rounded-md bg-hrip-gold px-6 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-300"
+          className="inline-flex items-center gap-2 rounded-lg bg-hrip-navy px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-blue-800 transition-all hover:shadow-xl"
         >
           Continue
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
         </button>
       </div>
     </form>
