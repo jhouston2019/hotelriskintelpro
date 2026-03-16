@@ -95,7 +95,7 @@ export default function Home() {
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link
                     href="/dashboard"
                     className="w-full sm:w-auto rounded-lg bg-hrip-navy px-8 py-4 text-lg font-bold text-white hover:bg-hrip-blue transition-all shadow-lg hover:shadow-xl"
@@ -111,6 +111,126 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            {/* Loss Reality Panel */}
+            <div className="max-w-6xl mx-auto mt-20">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+                What Happens When a Hotel Suffers a Major Loss
+              </h2>
+              
+              <div className="bg-white rounded-2xl border-4 border-gray-300 shadow-2xl overflow-hidden">
+                {/* Table Header */}
+                <div className="grid grid-cols-3 bg-gradient-to-r from-hrip-navy to-hrip-blue text-white">
+                  <div className="p-6 border-r-2 border-blue-400">
+                    <h3 className="text-lg font-bold">Scenario</h3>
+                  </div>
+                  <div className="p-6 border-r-2 border-blue-400 bg-red-900 bg-opacity-30">
+                    <h3 className="text-lg font-bold text-center">Without Hotel Risk Pro</h3>
+                  </div>
+                  <div className="p-6 bg-green-900 bg-opacity-30">
+                    <h3 className="text-lg font-bold text-center">With Hotel Risk Pro</h3>
+                  </div>
+                </div>
+
+                {/* Table Rows */}
+                <div className="divide-y-2 divide-gray-200">
+                  {/* Rebuild Cost */}
+                  <div className="grid grid-cols-3 hover:bg-gray-50 transition-colors">
+                    <div className="p-5 border-r-2 border-gray-200 font-semibold text-gray-900">Rebuild Cost</div>
+                    <div className="p-5 border-r-2 border-gray-200 text-center font-bold text-gray-900">$17.4M</div>
+                    <div className="p-5 text-center font-bold text-gray-900">$17.4M</div>
+                  </div>
+
+                  {/* Insurance Property Limit */}
+                  <div className="grid grid-cols-3 hover:bg-gray-50 transition-colors">
+                    <div className="p-5 border-r-2 border-gray-200 font-semibold text-gray-900">Insurance Property Limit</div>
+                    <div className="p-5 border-r-2 border-gray-200 text-center font-bold text-red-600">$14.0M</div>
+                    <div className="p-5 text-center font-bold text-green-600">$18.0M</div>
+                  </div>
+
+                  {/* Property Gap */}
+                  <div className="grid grid-cols-3 bg-red-50 hover:bg-red-100 transition-colors">
+                    <div className="p-5 border-r-2 border-gray-200 font-bold text-gray-900">Property Gap</div>
+                    <div className="p-5 border-r-2 border-gray-200 text-center font-bold text-red-700 text-lg">-$3.4M uncovered</div>
+                    <div className="p-5 text-center font-bold text-green-700 text-lg">$0 gap</div>
+                  </div>
+
+                  {/* Business Interruption Coverage */}
+                  <div className="grid grid-cols-3 hover:bg-gray-50 transition-colors">
+                    <div className="p-5 border-r-2 border-gray-200 font-semibold text-gray-900">Business Interruption Coverage</div>
+                    <div className="p-5 border-r-2 border-gray-200 text-center font-bold text-red-600">5 months</div>
+                    <div className="p-5 text-center font-bold text-green-600">15 months</div>
+                  </div>
+
+                  {/* Real Recovery Time */}
+                  <div className="grid grid-cols-3 hover:bg-gray-50 transition-colors">
+                    <div className="p-5 border-r-2 border-gray-200 font-semibold text-gray-900">Real Recovery Time</div>
+                    <div className="p-5 border-r-2 border-gray-200 text-center font-bold text-gray-900">14 months</div>
+                    <div className="p-5 text-center font-bold text-gray-900">14 months</div>
+                  </div>
+
+                  {/* Revenue Loss Exposure */}
+                  <div className="grid grid-cols-3 bg-red-50 hover:bg-red-100 transition-colors">
+                    <div className="p-5 border-r-2 border-gray-200 font-bold text-gray-900">Revenue Loss Exposure</div>
+                    <div className="p-5 border-r-2 border-gray-200 text-center font-bold text-red-700 text-lg">-$5.4M uncovered</div>
+                    <div className="p-5 text-center font-bold text-green-700 text-lg">Covered</div>
+                  </div>
+
+                  {/* Coinsurance Penalty */}
+                  <div className="grid grid-cols-3 hover:bg-gray-50 transition-colors">
+                    <div className="p-5 border-r-2 border-gray-200 font-semibold text-gray-900">Coinsurance Penalty</div>
+                    <div className="p-5 border-r-2 border-gray-200 text-center font-bold text-red-600">8–10% reduction</div>
+                    <div className="p-5 text-center font-bold text-green-600">Eliminated</div>
+                  </div>
+
+                  {/* Total Financial Exposure */}
+                  <div className="grid grid-cols-3 bg-gradient-to-r from-red-100 to-red-50">
+                    <div className="p-6 border-r-2 border-gray-300 font-bold text-gray-900 text-lg">Total Financial Exposure</div>
+                    <div className="p-6 border-r-2 border-gray-300 text-center font-bold text-red-700 text-2xl">$9.1M loss</div>
+                    <div className="p-6 text-center font-bold text-green-700 text-2xl">$0 exposure</div>
+                  </div>
+                </div>
+
+                {/* Bottom Summary */}
+                <div className="grid grid-cols-2 bg-gradient-to-r from-slate-100 to-blue-50">
+                  <div className="p-8 border-r-2 border-gray-300 text-center">
+                    <p className="text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Cost to Fix the Protection Structure</p>
+                    <p className="text-3xl font-bold text-gray-900">~$800/month</p>
+                    <p className="text-sm text-gray-600 mt-1">additional premium</p>
+                  </div>
+                  <div className="p-8 text-center bg-green-50">
+                    <p className="text-sm font-bold text-green-800 mb-2 uppercase tracking-wide">Financial Damage Prevented</p>
+                    <p className="text-4xl font-bold text-green-700">$9.1M+</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA After Loss Reality Panel */}
+        <section className="py-12 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="text-center">
+              <p className="text-xl text-gray-700 mb-6 font-medium">
+                Hotel Risk Pro identifies these gaps before a loss occurs.
+              </p>
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center justify-center rounded-xl bg-hrip-navy px-12 py-5 text-xl font-bold text-white shadow-2xl hover:bg-blue-800 transition-all hover:scale-105"
+              >
+                Monitor My Hotel Risk
+                <svg className="ml-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Hero Section Continues */}
+        <section className="bg-white py-20">
+          <div className="mx-auto max-w-7xl px-6">
 
             {/* Live Dashboard Demo */}
             <div className="rounded-3xl border-4 border-gray-300 bg-white shadow-2xl overflow-hidden">
