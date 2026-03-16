@@ -51,86 +51,30 @@ export default function Home() {
             <div className="mb-16">
               {/* Hero Content */}
               <div className="max-w-6xl mx-auto mb-12 text-center">
-                {/* Introduction */}
-                <div className="mb-12">
-                  <p className="text-3xl font-bold text-gray-900 mb-6 leading-relaxed sm:text-4xl">
-                    Hotel Risk Pro is a dynamic insurance and loss-risk intelligence system for hotel owners.
-                  </p>
-                  <p className="text-xl text-gray-700 mb-6 leading-relaxed">
-                    It takes the things that determine how a loss actually affects a hotel:
-                  </p>
-                  <div className="grid md:grid-cols-2 gap-3 mb-6 text-lg text-gray-700 max-w-4xl mx-auto text-left">
-                    <div className="flex items-center gap-2">
-                      <span className="text-hrip-navy font-bold">•</span>
-                      <span>Insurance policy structure</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-hrip-navy font-bold">•</span>
-                      <span>Rebuild cost exposure</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-hrip-navy font-bold">•</span>
-                      <span>Business interruption coverage</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-hrip-navy font-bold">•</span>
-                      <span>Coinsurance provisions</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-hrip-navy font-bold">•</span>
-                      <span>Exclusions and sublimits</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-hrip-navy font-bold">•</span>
-                      <span>Revenue dependence</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-hrip-navy font-bold">•</span>
-                      <span>Recovery timelines</span>
-                    </div>
-                  </div>
-                  <p className="text-2xl font-bold text-gray-900 leading-relaxed">
-                    …and turns them into clear financial outcomes.
-                  </p>
-                </div>
+                {/* Hero Headline */}
+                <h1 className="text-4xl font-extrabold text-gray-900 mb-6 sm:text-5xl lg:text-6xl leading-tight">
+                  Hotel Risk Pro Saves Hotel Owners Thousands in Insurance Costs and Prevents Millions in Uncovered Loss Exposure
+                </h1>
 
-                {/* Instead of reading */}
-                <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl border-2 border-blue-200 p-8 mb-12 shadow-lg max-w-4xl mx-auto">
-                  <p className="text-xl text-gray-700 mb-4 leading-relaxed">
-                    Instead of reading a policy, the owner sees:
-                  </p>
-                  <ul className="space-y-3 text-lg text-gray-900">
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl">→</span>
-                      <span className="font-medium">How much a disaster could cost</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl">→</span>
-                      <span className="font-medium">How much insurance would actually pay</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl">→</span>
-                      <span className="font-medium">What financial gap remains</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl">→</span>
-                      <span className="font-medium">What needs to be fixed</span>
-                    </li>
-                  </ul>
-                </div>
+                {/* Subheadline */}
+                <p className="text-xl text-gray-700 leading-relaxed mb-10 max-w-5xl mx-auto">
+                  HRP analyzes your hotel's insurance coverage, rebuild exposure, business interruption protection, and financial risk structure to reveal where a disaster could leave the business responsible for major losses.
+                </p>
 
-                {/* In Simple Terms */}
-                <div className="bg-hrip-navy rounded-2xl p-10 mb-12 text-white text-center shadow-2xl">
-                  <h2 className="text-2xl font-bold mb-6">In Simple Terms</h2>
-                  <p className="text-2xl leading-relaxed mb-4">
-                    Hotel Risk Pro answers one question:
-                  </p>
-                  <p className="text-3xl font-bold leading-relaxed mb-6 sm:text-4xl">
-                    "If my hotel suffers a major loss tomorrow, what would the financial damage actually be?"
-                  </p>
-                  <p className="text-2xl font-semibold">
-                    Then it helps prevent that damage.
-                  </p>
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                  <Link
+                    href="/dashboard"
+                    className="w-full sm:w-auto rounded-lg bg-hrip-navy px-8 py-4 text-lg font-bold text-white hover:bg-hrip-blue transition-all shadow-lg hover:shadow-xl"
+                  >
+                    Monitor My Hotel Risk
+                  </Link>
+                  <Link
+                    href="#what-it-monitors"
+                    className="w-full sm:w-auto rounded-lg border-2 border-gray-300 px-8 py-4 text-lg font-semibold text-gray-900 hover:border-hrip-navy hover:bg-gray-50 transition-all"
+                  >
+                    See What It Monitors
+                  </Link>
                 </div>
               </div>
             </div>
@@ -297,8 +241,97 @@ export default function Home() {
           </div>
         </section>
 
+        {/* What Hotel Risk Pro Is */}
+        <section className="py-20 bg-white">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="max-w-5xl mx-auto">
+              {/* Introduction */}
+              <div className="mb-12">
+                <p className="text-3xl font-bold text-gray-900 mb-6 leading-relaxed">
+                  Hotel Risk Pro is a dynamic insurance and loss-risk intelligence system for hotel owners.
+                </p>
+                <p className="text-xl text-gray-700 mb-4 leading-relaxed">
+                  It takes the things that determine how a loss actually affects a hotel:
+                </p>
+                <div className="grid md:grid-cols-2 gap-3 mb-6 text-lg text-gray-700">
+                  <div className="flex items-center gap-2">
+                    <span className="text-hrip-navy font-bold">•</span>
+                    <span>Insurance policy structure</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-hrip-navy font-bold">•</span>
+                    <span>Rebuild cost exposure</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-hrip-navy font-bold">•</span>
+                    <span>Business interruption coverage</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-hrip-navy font-bold">•</span>
+                    <span>Coinsurance provisions</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-hrip-navy font-bold">•</span>
+                    <span>Exclusions and sublimits</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-hrip-navy font-bold">•</span>
+                    <span>Revenue dependence</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-hrip-navy font-bold">•</span>
+                    <span>Recovery timelines</span>
+                  </div>
+                </div>
+                <p className="text-xl font-bold text-gray-900 leading-relaxed">
+                  …and turns them into clear financial outcomes.
+                </p>
+              </div>
+
+              {/* Instead of reading */}
+              <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl border-2 border-blue-200 p-8 mb-12 shadow-lg">
+                <p className="text-xl text-gray-700 mb-4 leading-relaxed">
+                  Instead of reading a policy, the owner sees:
+                </p>
+                <ul className="space-y-3 text-lg text-gray-900">
+                  <li className="flex items-start gap-3">
+                    <span className="text-hrip-navy font-bold text-xl">→</span>
+                    <span className="font-medium">How much a disaster could cost</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-hrip-navy font-bold text-xl">→</span>
+                    <span className="font-medium">How much insurance would actually pay</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-hrip-navy font-bold text-xl">→</span>
+                    <span className="font-medium">What financial gap remains</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-hrip-navy font-bold text-xl">→</span>
+                    <span className="font-medium">What needs to be fixed</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* In Simple Terms */}
+              <div className="bg-hrip-navy rounded-2xl p-10 mb-12 text-white text-center shadow-2xl">
+                <h2 className="text-2xl font-bold mb-6">In Simple Terms</h2>
+                <p className="text-2xl leading-relaxed mb-4">
+                  Hotel Risk Pro answers one question:
+                </p>
+                <p className="text-3xl font-bold leading-relaxed mb-6">
+                  "If my hotel suffers a major loss tomorrow, what would the financial damage actually be?"
+                </p>
+                <p className="text-2xl font-semibold">
+                  Then it helps prevent that damage.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* How Hotel Risk Pro Benefits & Protects Your Business */}
-        <section id="what-it-monitors" className="py-20 bg-white">
+        <section id="what-it-monitors" className="py-20 bg-gray-50">
           <div className="mx-auto max-w-7xl px-6">
             <div className="max-w-5xl mx-auto">
               <h2 className="text-4xl font-bold text-gray-900 mb-10 text-center">How Hotel Risk Pro Benefits & Protects Your Business</h2>
