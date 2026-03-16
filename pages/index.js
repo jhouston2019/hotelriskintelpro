@@ -49,108 +49,88 @@ export default function Home() {
         <section className="bg-gradient-to-b from-slate-50 via-white to-white py-20">
           <div className="mx-auto max-w-7xl px-6">
             <div className="mb-16">
-              {/* Hero Headline */}
+              {/* Hero Content */}
               <div className="max-w-6xl mx-auto mb-12 text-center">
-                <h1 className="text-5xl font-extrabold text-gray-900 mb-6 sm:text-6xl lg:text-7xl leading-tight">
-                  Is Your Hotel Insurance Actually Enough?
-                </h1>
+                {/* Introduction */}
+                <div className="mb-12">
+                  <p className="text-3xl font-bold text-gray-900 mb-6 leading-relaxed sm:text-4xl">
+                    Hotel Risk Pro is a dynamic insurance and loss-risk intelligence system for hotel owners.
+                  </p>
+                  <p className="text-xl text-gray-700 mb-6 leading-relaxed">
+                    It takes the things that determine how a loss actually affects a hotel:
+                  </p>
+                  <div className="grid md:grid-cols-2 gap-3 mb-6 text-lg text-gray-700 max-w-4xl mx-auto text-left">
+                    <div className="flex items-center gap-2">
+                      <span className="text-hrip-navy font-bold">•</span>
+                      <span>Insurance policy structure</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-hrip-navy font-bold">•</span>
+                      <span>Rebuild cost exposure</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-hrip-navy font-bold">•</span>
+                      <span>Business interruption coverage</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-hrip-navy font-bold">•</span>
+                      <span>Coinsurance provisions</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-hrip-navy font-bold">•</span>
+                      <span>Exclusions and sublimits</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-hrip-navy font-bold">•</span>
+                      <span>Revenue dependence</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-hrip-navy font-bold">•</span>
+                      <span>Recovery timelines</span>
+                    </div>
+                  </div>
+                  <p className="text-2xl font-bold text-gray-900 leading-relaxed">
+                    …and turns them into clear financial outcomes.
+                  </p>
+                </div>
 
-                <p className="text-2xl text-gray-700 leading-relaxed mb-4 max-w-5xl mx-auto font-medium">
-                  Most hotel owners discover their coverage gaps after a disaster — when it's too late to fix them.
-                </p>
-
-                <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-5xl mx-auto">
-                  Hotel Risk Pro helps you save money, time, and stress by making sure your insurance and financial protection can actually absorb the losses that inevitably occur in hospitality operations.
-                </p>
-
-                <h2 className="text-2xl font-bold text-gray-900 mb-8 sm:text-3xl">
-                  Why Hotels Need Hotel Risk Pro
-                </h2>
-
-                {/* Value-Driven Bullet List */}
-                <div className="text-left bg-gradient-to-br from-white to-blue-50 rounded-2xl border-2 border-blue-200 p-10 shadow-2xl">
-                  <ul className="space-y-6">
-                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-hrip-navy flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-hrip-navy text-xl">SAVE $1M–$10M+</span> <span className="text-gray-800">by identifying coverage gaps before a loss exposes them.</span></span>
+                {/* Instead of reading */}
+                <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl border-2 border-blue-200 p-8 mb-12 shadow-lg max-w-4xl mx-auto">
+                  <p className="text-xl text-gray-700 mb-4 leading-relaxed">
+                    Instead of reading a policy, the owner sees:
+                  </p>
+                  <ul className="space-y-3 text-lg text-gray-900">
+                    <li className="flex items-start gap-3">
+                      <span className="text-hrip-navy font-bold text-xl">→</span>
+                      <span className="font-medium">How much a disaster could cost</span>
                     </li>
-                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-hrip-navy flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-hrip-navy text-xl">PREVENT MONTHS OF LOST REVENUE</span> <span className="text-gray-800">by making sure business interruption coverage actually supports realistic recovery timelines.</span></span>
+                    <li className="flex items-start gap-3">
+                      <span className="text-hrip-navy font-bold text-xl">→</span>
+                      <span className="font-medium">How much insurance would actually pay</span>
                     </li>
-                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-hrip-navy flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-hrip-navy text-xl">AVOID COINSURANCE PENALTIES</span> <span className="text-gray-800">that can reduce claim payouts by hundreds of thousands or millions.</span></span>
+                    <li className="flex items-start gap-3">
+                      <span className="text-hrip-navy font-bold text-xl">→</span>
+                      <span className="font-medium">What financial gap remains</span>
                     </li>
-                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-hrip-navy flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-hrip-navy text-xl">ELIMINATE HIDDEN COVERAGE TRAPS</span> <span className="text-gray-800">buried in policy language, exclusions, sublimits, and claim-trigger provisions.</span></span>
-                    </li>
-                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-hrip-navy flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-hrip-navy text-xl">REDUCE CLAIM CHAOS AND STRESS</span> <span className="text-gray-800">by understanding how your insurance and financial structure will respond before a disaster occurs.</span></span>
-                    </li>
-                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-hrip-navy flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-hrip-navy text-xl">SAVE WEEKS OR MONTHS DURING CLAIM HANDLING</span> <span className="text-gray-800">by already knowing what the policy should cover and where financial gaps may exist.</span></span>
-                    </li>
-                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-hrip-navy flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-hrip-navy text-xl">PROTECT THE LONG-TERM VALUE OF THE HOTEL ASSET</span> <span className="text-gray-800">by keeping insurance protection aligned with real risk exposure.</span></span>
-                    </li>
-                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-hrip-navy flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-hrip-navy text-xl">PREVENT RISK DRIFT</span> <span className="text-gray-800">as rebuild costs, revenue, claim history, and operating conditions change over time.</span></span>
-                    </li>
-                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-hrip-navy flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-hrip-navy text-xl">AVOID RENEWAL SURPRISES AND PREMIUM SHOCKS</span> <span className="text-gray-800">caused by claim history, coverage structure, or hidden policy weaknesses.</span></span>
-                    </li>
-                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-hrip-navy flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-hrip-navy text-xl">KNOW EXACTLY WHERE FINANCIAL EXPOSURE EXISTS</span> <span className="text-gray-800">before the next loss event.</span></span>
+                    <li className="flex items-start gap-3">
+                      <span className="text-hrip-navy font-bold text-xl">→</span>
+                      <span className="font-medium">What needs to be fixed</span>
                     </li>
                   </ul>
+                </div>
+
+                {/* In Simple Terms */}
+                <div className="bg-hrip-navy rounded-2xl p-10 mb-12 text-white text-center shadow-2xl">
+                  <h2 className="text-2xl font-bold mb-6">In Simple Terms</h2>
+                  <p className="text-2xl leading-relaxed mb-4">
+                    Hotel Risk Pro answers one question:
+                  </p>
+                  <p className="text-3xl font-bold leading-relaxed mb-6 sm:text-4xl">
+                    "If my hotel suffers a major loss tomorrow, what would the financial damage actually be?"
+                  </p>
+                  <p className="text-2xl font-semibold">
+                    Then it helps prevent that damage.
+                  </p>
                 </div>
               </div>
             </div>
@@ -317,211 +297,42 @@ export default function Home() {
           </div>
         </section>
 
-        {/* What Hotel Risk Pro Is */}
+        {/* What HRP Actually Does */}
         <section id="what-it-monitors" className="py-20 bg-white">
           <div className="mx-auto max-w-7xl px-6">
             <div className="max-w-5xl mx-auto">
-              {/* Introduction */}
-              <div className="mb-12">
-                <p className="text-2xl font-bold text-gray-900 mb-6 leading-relaxed">
-                  Hotel Risk Pro is a dynamic insurance and loss-risk intelligence system for hotel owners.
-                </p>
-                <p className="text-xl text-gray-700 mb-4 leading-relaxed">
-                  It takes the things that determine how a loss actually affects a hotel:
-                </p>
-                <div className="grid md:grid-cols-2 gap-3 mb-6 text-lg text-gray-700">
-                  <div className="flex items-center gap-2">
-                    <span className="text-hrip-navy">•</span>
-                    <span>Insurance policy structure</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-hrip-navy">•</span>
-                    <span>Rebuild cost exposure</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-hrip-navy">•</span>
-                    <span>Business interruption coverage</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-hrip-navy">•</span>
-                    <span>Coinsurance provisions</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-hrip-navy">•</span>
-                    <span>Exclusions and sublimits</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-hrip-navy">•</span>
-                    <span>Revenue dependence</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-hrip-navy">•</span>
-                    <span>Recovery timelines</span>
-                  </div>
-                </div>
-                <p className="text-xl font-bold text-gray-900 leading-relaxed">
-                  …and turns them into clear financial outcomes.
-                </p>
-              </div>
-
-              {/* Instead of reading */}
-              <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl border-2 border-blue-200 p-8 mb-12 shadow-lg">
-                <p className="text-xl text-gray-700 mb-4 leading-relaxed">
-                  Instead of reading a policy, the owner sees:
-                </p>
-                <ul className="space-y-3 text-lg text-gray-900">
-                  <li className="flex items-start gap-3">
-                    <span className="text-hrip-navy font-bold">→</span>
-                    <span className="font-medium">How much a disaster could cost</span>
+              <h2 className="text-4xl font-bold text-gray-900 mb-10 text-center">What Hotel Risk Pro Actually Does</h2>
+              <div className="bg-white rounded-2xl border-2 border-gray-200 p-10 shadow-lg">
+                <ul className="space-y-5 text-lg text-gray-900">
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Reads and interprets the hotel's insurance policy</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-hrip-navy font-bold">→</span>
-                    <span className="font-medium">How much insurance would actually pay</span>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Compares coverage to real rebuild cost and exposure</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-hrip-navy font-bold">→</span>
-                    <span className="font-medium">What financial gap remains</span>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Calculates business interruption survivability</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-hrip-navy font-bold">→</span>
-                    <span className="font-medium">What needs to be fixed</span>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Identifies coverage gaps and claim-payment risks</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Shows the dollar exposure that could remain after insurance</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Recommends the fixes needed to eliminate those gaps</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Continuously monitors those conditions as they change</span>
                   </li>
                 </ul>
-              </div>
-
-              {/* In Simple Terms */}
-              <div className="bg-hrip-navy rounded-2xl p-10 mb-12 text-white text-center shadow-2xl">
-                <h3 className="text-2xl font-bold mb-6">In Simple Terms</h3>
-                <p className="text-2xl leading-relaxed mb-4">
-                  Hotel Risk Pro answers one question:
-                </p>
-                <p className="text-3xl font-bold leading-relaxed mb-6">
-                  "If my hotel suffers a major loss tomorrow, what would the financial damage actually be?"
-                </p>
-                <p className="text-2xl font-semibold">
-                  Then it helps prevent that damage.
-                </p>
-              </div>
-
-              {/* What HRP Actually Does */}
-              <div className="mb-12">
-                <h3 className="text-3xl font-bold text-gray-900 mb-8">What Hotel Risk Pro Actually Does</h3>
-                <div className="bg-white rounded-2xl border-2 border-gray-200 p-8 shadow-lg">
-                  <ul className="space-y-4 text-lg text-gray-900">
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl flex-shrink-0">•</span>
-                      <span>Reads and interprets the hotel's insurance policy</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl flex-shrink-0">•</span>
-                      <span>Compares coverage to real rebuild cost and exposure</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl flex-shrink-0">•</span>
-                      <span>Calculates business interruption survivability</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl flex-shrink-0">•</span>
-                      <span>Identifies coverage gaps and claim-payment risks</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl flex-shrink-0">•</span>
-                      <span>Shows the dollar exposure that could remain after insurance</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl flex-shrink-0">•</span>
-                      <span>Recommends the fixes needed to eliminate those gaps</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-hrip-navy font-bold text-xl flex-shrink-0">•</span>
-                      <span>Continuously monitors those conditions as they change</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* The Output */}
-              <div className="mb-12">
-                <h3 className="text-3xl font-bold text-gray-900 mb-8">The Output</h3>
-                <p className="text-xl text-gray-700 mb-6 leading-relaxed">
-                  Instead of guessing, the owner sees something like:
-                </p>
-                <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl border-2 border-gray-300 p-8 shadow-lg">
-                  <div className="space-y-6 font-mono text-lg">
-                    <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                      <span className="text-gray-700">Rebuild Cost:</span>
-                      <span className="font-bold text-gray-900">$17.4M</span>
-                    </div>
-                    <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                      <span className="text-gray-700">Policy Limit:</span>
-                      <span className="font-bold text-gray-900">$14.0M</span>
-                    </div>
-                    <div className="flex justify-between items-center pb-4 border-b-2 border-red-300">
-                      <span className="text-red-700 font-bold">Coverage Gap:</span>
-                      <span className="font-bold text-red-600 text-xl">$3.4M</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center pb-3 border-b border-gray-300 pt-4">
-                      <span className="text-gray-700">Business Interruption Coverage:</span>
-                      <span className="font-bold text-gray-900">5 months</span>
-                    </div>
-                    <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                      <span className="text-gray-700">Estimated Recovery Time:</span>
-                      <span className="font-bold text-gray-900">14 months</span>
-                    </div>
-                    <div className="flex justify-between items-center pb-4 border-b-2 border-red-300">
-                      <span className="text-red-700 font-bold">Revenue Exposure:</span>
-                      <span className="font-bold text-red-600 text-xl">$5.4M</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center pt-4 bg-red-50 -mx-8 px-8 py-6 -mb-8 rounded-b-2xl">
-                      <span className="text-red-900 font-bold text-xl">Total Uncovered Exposure:</span>
-                      <span className="font-bold text-red-600 text-3xl">$9.1M</span>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-xl font-bold text-gray-900 mt-6 leading-relaxed">
-                  And the platform tells them how to fix it.
-                </p>
-              </div>
-
-              {/* Why It Exists */}
-              <div className="bg-gradient-to-br from-slate-50 to-white rounded-2xl border-2 border-gray-200 p-10 shadow-lg">
-                <h3 className="text-3xl font-bold text-gray-900 mb-6">Why It Exists</h3>
-                <p className="text-xl text-gray-700 mb-4 leading-relaxed">
-                  Hotels experience losses regularly:
-                </p>
-                <div className="grid md:grid-cols-2 gap-3 mb-6 text-lg text-gray-700">
-                  <div className="flex items-center gap-2">
-                    <span className="text-red-600">•</span>
-                    <span>Fires</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-red-600">•</span>
-                    <span>Water damage</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-red-600">•</span>
-                    <span>Storms</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-red-600">•</span>
-                    <span>Liability claims</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-red-600">•</span>
-                    <span>Operational shutdowns</span>
-                  </div>
-                </div>
-                <p className="text-xl text-gray-900 mb-3 leading-relaxed font-medium">
-                  The problem is not the loss itself.
-                </p>
-                <p className="text-xl text-gray-900 mb-6 leading-relaxed font-medium">
-                  The problem is discovering too late that the insurance and financial structure of the business cannot absorb the loss.
-                </p>
-                <p className="text-2xl font-bold text-hrip-navy leading-relaxed">
-                  Hotel Risk Pro prevents that surprise.
-                </p>
               </div>
             </div>
           </div>
