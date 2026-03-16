@@ -49,14 +49,18 @@ export default function Home() {
         <section className="bg-gradient-to-b from-slate-50 via-white to-white py-20">
           <div className="mx-auto max-w-7xl px-6">
             <div className="mb-16">
-              {/* Why Hotel Owners Need Hotel Risk Pro */}
+              {/* Hero Headline */}
               <div className="max-w-6xl mx-auto mb-12 text-center">
-                <h2 className="text-3xl font-bold text-gray-900 mb-8 sm:text-4xl">
-                  Why Hotel Owners Need Hotel Risk Pro
-                </h2>
+                <h1 className="text-5xl font-extrabold text-gray-900 mb-6 sm:text-6xl lg:text-7xl leading-tight">
+                  Is Your Hotel Insurance Actually Enough?
+                </h1>
 
-                <p className="text-2xl text-gray-700 leading-relaxed mb-10 max-w-5xl mx-auto">
-                  Hotel Risk Pro helps hotel owners save money, time, and stress by making sure their insurance and financial protection structure can actually absorb the losses that inevitably occur in hospitality operations.
+                <p className="text-2xl text-gray-700 leading-relaxed mb-4 max-w-5xl mx-auto font-medium">
+                  Most hotel owners discover their coverage gaps after a disaster — when it's too late to fix them.
+                </p>
+
+                <p className="text-xl text-gray-600 leading-relaxed mb-10 max-w-5xl mx-auto">
+                  Hotel Risk Pro helps you save money, time, and stress by making sure your insurance and financial protection can actually absorb the losses that inevitably occur in hospitality operations.
                 </p>
 
                 {/* Value-Driven Bullet List */}
