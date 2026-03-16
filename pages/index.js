@@ -317,12 +317,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* What It Actually Does */}
+        {/* How It Works */}
         <section id="what-it-monitors" className="py-20 bg-gray-50">
           <div className="mx-auto max-w-7xl px-6">
             <div className="text-center max-w-4xl mx-auto mb-16">
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                What Hotel Risk Pro Actually Does
+                How It Works
               </h2>
             </div>
 
