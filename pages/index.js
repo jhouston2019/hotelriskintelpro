@@ -57,9 +57,42 @@ export default function Home() {
                 </h1>
 
                 {/* Subheadline */}
-                <p className="text-xl text-gray-700 leading-relaxed mb-10 max-w-5xl mx-auto">
+                <p className="text-xl text-gray-700 leading-relaxed mb-6 max-w-5xl mx-auto">
                   HRP analyzes your hotel's insurance coverage, rebuild exposure, business interruption protection, and financial risk structure to reveal where a disaster could leave the business responsible for major losses.
                 </p>
+
+                {/* Automation Message */}
+                <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border-2 border-green-200 px-8 py-5 mb-10 max-w-4xl mx-auto">
+                  <p className="text-lg font-bold text-gray-900 text-center">
+                    Setup takes about 15 minutes. After that, Hotel Risk Pro continuously monitors your risk structure automatically.
+                  </p>
+                  <div className="flex items-center justify-center gap-6 mt-4 text-sm font-semibold text-gray-700">
+                    <span className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Automated
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Simple
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Fast
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      No onboarding headache
+                    </span>
+                  </div>
+                </div>
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
@@ -241,6 +274,58 @@ export default function Home() {
           </div>
         </section>
 
+        {/* How It Works - 3 Steps */}
+        <section className="py-20 bg-gradient-to-b from-white to-slate-50">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                How It Works
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {/* Step 1 */}
+              <div className="bg-white rounded-2xl border-2 border-gray-200 p-8 shadow-lg hover:shadow-xl transition-shadow">
+                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-hrip-navy text-white text-2xl font-bold mb-6 mx-auto">
+                  1
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
+                  Upload Your Policy
+                </h3>
+                <p className="text-base text-gray-700 leading-relaxed text-center">
+                  Upload your hotel insurance policy and basic property information.
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="bg-white rounded-2xl border-2 border-gray-200 p-8 shadow-lg hover:shadow-xl transition-shadow">
+                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-hrip-navy text-white text-2xl font-bold mb-6 mx-auto">
+                  2
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
+                  HRP Analyzes Your Risk Structure
+                </h3>
+                <p className="text-base text-gray-700 leading-relaxed text-center">
+                  The platform evaluates coverage, rebuild exposure, business interruption protection, coinsurance risks, and other financial variables.
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="bg-white rounded-2xl border-2 border-gray-200 p-8 shadow-lg hover:shadow-xl transition-shadow">
+                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-hrip-navy text-white text-2xl font-bold mb-6 mx-auto">
+                  3
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
+                  Continuous Risk Monitoring
+                </h3>
+                <p className="text-base text-gray-700 leading-relaxed text-center">
+                  HRP continuously monitors those conditions and alerts you when risk exposure changes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* What Hotel Risk Pro Is */}
         <section className="py-20 bg-white">
           <div className="mx-auto max-w-7xl px-6">
@@ -371,8 +456,89 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Why It's Valuable */}
+        {/* Setup Takes Minutes. HRP Runs Automatically */}
+        <section className="py-20 bg-gradient-to-br from-blue-50 to-white">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center">
+                Setup Takes Minutes. HRP Runs Automatically.
+              </h2>
+              <p className="text-xl text-gray-700 leading-relaxed mb-8 text-center">
+                Hotel Risk Pro is designed to be simple for hotel owners to deploy and use.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed mb-10 text-center">
+                There is no complicated onboarding process and no technical setup.
+              </p>
+
+              <div className="bg-white rounded-2xl border-2 border-blue-200 p-10 shadow-lg">
+                <ul className="space-y-5 text-lg text-gray-900">
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Upload your insurance policy</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Enter basic property and revenue information</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">HRP automatically analyzes your risk structure</span>
+                  </li>
+                </ul>
+              </div>
+
+              <p className="text-xl text-gray-900 leading-relaxed mt-10 text-center font-medium">
+                From there, the platform continuously monitors your risk environment and alerts you when conditions change.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* What HRP Does Day-to-Day */}
         <section className="py-20 bg-white">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center">
+                What HRP Does Day-to-Day
+              </h2>
+              <p className="text-xl text-gray-700 leading-relaxed mb-10 text-center">
+                Once your hotel is set up, Hotel Risk Pro automatically:
+              </p>
+
+              <div className="bg-gradient-to-br from-slate-50 to-white rounded-2xl border-2 border-gray-200 p-10 shadow-lg">
+                <ul className="space-y-5 text-lg text-gray-900">
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Monitors coverage vs rebuild exposure</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Tracks business interruption sustainability</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Flags coinsurance and policy structure risks</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Detects coverage gaps as conditions change</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <span className="text-hrip-navy font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Alerts owners when financial exposure increases</span>
+                  </li>
+                </ul>
+              </div>
+
+              <p className="text-lg text-gray-700 leading-relaxed mt-10 text-center">
+                Owners can check the dashboard anytime to see the current protection status of their hotel.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Why It's Valuable */}
+        <section className="py-20 bg-gray-50">
           <div className="mx-auto max-w-7xl px-6">
             <div className="text-center max-w-4xl mx-auto mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
