@@ -60,47 +60,87 @@ export default function Home() {
                 </p>
 
                 {/* Value-Driven Bullet List */}
-                <div className="text-left bg-white rounded-2xl border-2 border-gray-200 p-10 shadow-lg">
-                  <ul className="space-y-5 text-lg text-gray-900">
-                    <li className="flex items-start gap-4">
-                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">SAVE $1M–$10M+</span> by identifying coverage gaps before a loss exposes them.</span>
+                <div className="text-left bg-gradient-to-br from-white to-gray-50 rounded-2xl border-2 border-green-200 p-10 shadow-2xl">
+                  <ul className="space-y-6">
+                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors group">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-green-700 text-xl">SAVE $1M–$10M+</span> <span className="text-gray-800">by identifying coverage gaps before a loss exposes them.</span></span>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">PREVENT MONTHS OF LOST REVENUE</span> by making sure business interruption coverage actually supports realistic recovery timelines.</span>
+                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors group">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-green-700 text-xl">PREVENT MONTHS OF LOST REVENUE</span> <span className="text-gray-800">by making sure business interruption coverage actually supports realistic recovery timelines.</span></span>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">AVOID COINSURANCE PENALTIES</span> that can reduce claim payouts by hundreds of thousands or millions.</span>
+                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors group">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-green-700 text-xl">AVOID COINSURANCE PENALTIES</span> <span className="text-gray-800">that can reduce claim payouts by hundreds of thousands or millions.</span></span>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">ELIMINATE HIDDEN COVERAGE TRAPS</span> buried in policy language, exclusions, sublimits, and claim-trigger provisions.</span>
+                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors group">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-green-700 text-xl">ELIMINATE HIDDEN COVERAGE TRAPS</span> <span className="text-gray-800">buried in policy language, exclusions, sublimits, and claim-trigger provisions.</span></span>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">REDUCE CLAIM CHAOS AND STRESS</span> by understanding how your insurance and financial structure will respond before a disaster occurs.</span>
+                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors group">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-green-700 text-xl">REDUCE CLAIM CHAOS AND STRESS</span> <span className="text-gray-800">by understanding how your insurance and financial structure will respond before a disaster occurs.</span></span>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">SAVE WEEKS OR MONTHS DURING CLAIM HANDLING</span> by already knowing what the policy should cover and where financial gaps may exist.</span>
+                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors group">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-green-700 text-xl">SAVE WEEKS OR MONTHS DURING CLAIM HANDLING</span> <span className="text-gray-800">by already knowing what the policy should cover and where financial gaps may exist.</span></span>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">PROTECT THE LONG-TERM VALUE OF THE HOTEL ASSET</span> by keeping insurance protection aligned with real risk exposure.</span>
+                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors group">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-green-700 text-xl">PROTECT THE LONG-TERM VALUE OF THE HOTEL ASSET</span> <span className="text-gray-800">by keeping insurance protection aligned with real risk exposure.</span></span>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">PREVENT RISK DRIFT</span> as rebuild costs, revenue, claim history, and operating conditions change over time.</span>
+                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors group">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-green-700 text-xl">PREVENT RISK DRIFT</span> <span className="text-gray-800">as rebuild costs, revenue, claim history, and operating conditions change over time.</span></span>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">AVOID RENEWAL SURPRISES AND PREMIUM SHOCKS</span> caused by claim history, coverage structure, or hidden policy weaknesses.</span>
+                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors group">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-green-700 text-xl">AVOID RENEWAL SURPRISES AND PREMIUM SHOCKS</span> <span className="text-gray-800">caused by claim history, coverage structure, or hidden policy weaknesses.</span></span>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <span className="text-green-600 font-bold text-2xl flex-shrink-0">•</span>
-                      <span className="font-medium"><span className="font-bold text-green-700">KNOW EXACTLY WHERE FINANCIAL EXPOSURE EXISTS</span> before the next loss event.</span>
+                    <li className="flex items-start gap-4 p-4 rounded-xl hover:bg-green-50 transition-colors group">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-lg leading-relaxed"><span className="font-extrabold text-green-700 text-xl">KNOW EXACTLY WHERE FINANCIAL EXPOSURE EXISTS</span> <span className="text-gray-800">before the next loss event.</span></span>
                     </li>
                   </ul>
                 </div>
