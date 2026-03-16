@@ -322,7 +322,7 @@ export default function Home() {
           <div className="mx-auto max-w-7xl px-6">
             <div className="text-center max-w-4xl mx-auto mb-16">
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                How It Works
+                How Hotel Risk Pro Benefits & Protects Your Business
               </h2>
             </div>
 
