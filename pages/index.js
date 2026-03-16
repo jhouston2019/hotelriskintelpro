@@ -274,6 +274,67 @@ export default function Home() {
           </div>
         </section>
 
+        {/* What Happens Without Hotel Risk Pro */}
+        <section className="py-20 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center">
+                What Happens Without Hotel Risk Pro
+              </h2>
+              
+              <div className="mb-10">
+                <p className="text-xl text-gray-800 leading-relaxed mb-4 text-center">
+                  When hotels do not continuously monitor their insurance and risk structure, problems often remain hidden until a major loss occurs.
+                </p>
+                <p className="text-xl font-bold text-gray-900 leading-relaxed text-center">
+                  At that point, correction is no longer possible.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl border-2 border-red-200 p-10 shadow-xl mb-10">
+                <p className="text-lg font-bold text-gray-900 mb-6">
+                  Without ongoing risk intelligence, hotels often discover:
+                </p>
+                <ul className="space-y-5 text-lg text-gray-900">
+                  <li className="flex items-start gap-4 p-4 rounded-lg bg-red-50 border border-red-200">
+                    <span className="text-red-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Rebuild costs exceed policy limits, leaving millions in uncovered property damage.</span>
+                  </li>
+                  <li className="flex items-start gap-4 p-4 rounded-lg bg-red-50 border border-red-200">
+                    <span className="text-red-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Business interruption coverage runs out before the property can realistically reopen.</span>
+                  </li>
+                  <li className="flex items-start gap-4 p-4 rounded-lg bg-red-50 border border-red-200">
+                    <span className="text-red-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Coinsurance penalties reduce claim payments, cutting recovery funds when they are needed most.</span>
+                  </li>
+                  <li className="flex items-start gap-4 p-4 rounded-lg bg-red-50 border border-red-200">
+                    <span className="text-red-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Policy exclusions or sublimits limit coverage, leaving major losses partially uncovered.</span>
+                  </li>
+                  <li className="flex items-start gap-4 p-4 rounded-lg bg-red-50 border border-red-200">
+                    <span className="text-red-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Revenue exposure during downtime creates financial strain the business cannot absorb.</span>
+                  </li>
+                  <li className="flex items-start gap-4 p-4 rounded-lg bg-red-50 border border-red-200">
+                    <span className="text-red-600 font-bold text-2xl flex-shrink-0">•</span>
+                    <span className="font-medium">Claim history increases renewal pressure, leading to higher premiums or reduced coverage options.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-10 text-white text-center shadow-2xl">
+                <p className="text-xl leading-relaxed mb-6">
+                  Many hotel owners discover these issues only after a disaster, when the financial consequences are already locked in.
+                </p>
+                <p className="text-2xl font-bold leading-relaxed">
+                  Hotel Risk Pro exists to identify and correct these conditions before a loss exposes them.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* How It Works - 3 Steps */}
         <section className="py-20 bg-gradient-to-b from-white to-slate-50">
           <div className="mx-auto max-w-7xl px-6">
