@@ -297,11 +297,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* What HRP Actually Does */}
+        {/* How Hotel Risk Pro Benefits & Protects Your Business */}
         <section id="what-it-monitors" className="py-20 bg-white">
           <div className="mx-auto max-w-7xl px-6">
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-4xl font-bold text-gray-900 mb-10 text-center">What Hotel Risk Pro Actually Does</h2>
+              <h2 className="text-4xl font-bold text-gray-900 mb-10 text-center">How Hotel Risk Pro Benefits & Protects Your Business</h2>
               <div className="bg-white rounded-2xl border-2 border-gray-200 p-10 shadow-lg">
                 <ul className="space-y-5 text-lg text-gray-900">
                   <li className="flex items-start gap-4">
