@@ -59,9 +59,13 @@ export default function Home() {
                   Most hotel owners discover their coverage gaps after a disaster — when it's too late to fix them.
                 </p>
 
-                <p className="text-xl text-gray-600 leading-relaxed mb-10 max-w-5xl mx-auto">
+                <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-5xl mx-auto">
                   Hotel Risk Pro helps you save money, time, and stress by making sure your insurance and financial protection can actually absorb the losses that inevitably occur in hospitality operations.
                 </p>
+
+                <h2 className="text-2xl font-bold text-gray-900 mb-8 sm:text-3xl">
+                  Why Hotels Need Hotel Risk Pro
+                </h2>
 
                 {/* Value-Driven Bullet List */}
                 <div className="text-left bg-gradient-to-br from-white to-blue-50 rounded-2xl border-2 border-blue-200 p-10 shadow-2xl">
