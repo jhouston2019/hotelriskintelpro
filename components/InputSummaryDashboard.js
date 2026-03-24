@@ -602,277 +602,294 @@ function CompletenessBar({ data }) {
 
 // ─── Main component ──────────────────────────────────────────────────────────
 
+const NAV_SECTIONS = [
+  {
+    key: "hotelProfile", label: "Hotel Profile", num: 1,
+    accent: "border-blue-500", dot: "bg-blue-500",
+    icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>,
+  },
+  {
+    key: "financialExposure", label: "Financial Exposure", num: 2,
+    accent: "border-emerald-500", dot: "bg-emerald-500",
+    icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+  },
+  {
+    key: "insurancePolicy", label: "Insurance Coverage", num: 3,
+    accent: "border-violet-500", dot: "bg-violet-500",
+    icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>,
+  },
+  {
+    key: "lossHistory", label: "Loss History", num: 4,
+    accent: "border-rose-500", dot: "bg-rose-500",
+    icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>,
+  },
+  {
+    key: "operationalRisk", label: "Operational Risk", num: 5,
+    accent: "border-amber-500", dot: "bg-amber-500",
+    icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>,
+  },
+  {
+    key: "locationHazard", label: "Location & Hazards", num: 6,
+    accent: "border-cyan-500", dot: "bg-cyan-500",
+    icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
+  },
+];
+
+const SECTION_COLORS = {
+  hotelProfile:     "bg-gradient-to-r from-hrip-navy to-blue-700",
+  financialExposure:"bg-gradient-to-r from-emerald-700 to-emerald-500",
+  insurancePolicy:  "bg-gradient-to-r from-violet-700 to-violet-500",
+  lossHistory:      "bg-gradient-to-r from-rose-700 to-rose-500",
+  operationalRisk:  "bg-gradient-to-r from-amber-600 to-amber-400",
+  locationHazard:   "bg-gradient-to-r from-cyan-700 to-cyan-500",
+};
+
+const SECTION_RENDERERS = {
+  hotelProfile:     (d) => <HotelProfileSection data={d} />,
+  financialExposure:(d) => <FinancialSection data={d} />,
+  insurancePolicy:  (d) => <InsuranceSection data={d} />,
+  lossHistory:      (d) => <LossHistorySection data={d} />,
+  operationalRisk:  (d) => <OperationalRiskSection data={d} />,
+  locationHazard:   (d) => <LocationSection data={d} />,
+};
+
 export default function InputSummaryDashboard() {
   const [hotelData, setHotelData] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [isDemo, setIsDemo] = useState(false);
+  const [activeSection, setActiveSection] = useState("hotelProfile");
 
   useEffect(() => {
     const raw = localStorage.getItem("hotelRiskAnalysis") || localStorage.getItem("hotelRiskIntake");
     if (raw) {
-      try {
-        setHotelData(JSON.parse(raw));
-        setIsDemo(false);
-      } catch {
-        setHotelData(DEMO_DATA);
-        setIsDemo(true);
-      }
+      try { setHotelData(JSON.parse(raw)); setIsDemo(false); }
+      catch { setHotelData(DEMO_DATA); setIsDemo(true); }
     } else {
-      // No real data — show demo data by default
       setHotelData(DEMO_DATA);
       setIsDemo(true);
     }
     setLoaded(true);
   }, []);
 
+  // Track which section is in view
+  useEffect(() => {
+    if (!loaded) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) setActiveSection(e.target.id); });
+      },
+      { rootMargin: "-30% 0px -60% 0px" }
+    );
+    NAV_SECTIONS.forEach(({ key }) => {
+      const el = document.getElementById(key);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [loaded]);
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const loadDemo = () => {
     localStorage.setItem("hotelRiskAnalysis", JSON.stringify(DEMO_DATA));
     setHotelData(DEMO_DATA);
+    setIsDemo(true);
   };
 
   const clearData = () => {
     localStorage.removeItem("hotelRiskAnalysis");
     localStorage.removeItem("hotelRiskIntake");
-    setHotelData(null);
+    setHotelData(DEMO_DATA);
+    setIsDemo(true);
   };
 
-  const hotelName = hotelData?.hotelProfile?.hotelName || "Your Hotel";
-  const city = hotelData?.hotelProfile?.city;
-  const state = hotelData?.hotelProfile?.state;
-  const location = city && state ? `${city}, ${state}` : null;
+  // ── Derived KPIs ─────────────────────────────────────────────────────────
+  const p = hotelData?.hotelProfile || {};
+  const f = hotelData?.financialExposure || {};
+  const ins = hotelData?.insurancePolicy || {};
+  const op = hotelData?.operationalRisk || {};
 
-  const sections = [
-    {
-      key: "hotelProfile",
-      title: "Hotel Profile",
-      color: "bg-gradient-to-r from-hrip-navy to-blue-700",
-      icon: (
-        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-        </svg>
-      ),
-      render: (d) => <HotelProfileSection data={d} />,
-    },
-    {
-      key: "financialExposure",
-      title: "Financial Exposure",
-      color: "bg-gradient-to-r from-emerald-700 to-emerald-500",
-      icon: (
-        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-      render: (d) => <FinancialSection data={d} />,
-    },
-    {
-      key: "insurancePolicy",
-      title: "Insurance Coverage",
-      color: "bg-gradient-to-r from-violet-700 to-violet-500",
-      icon: (
-        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-      ),
-      render: (d) => <InsuranceSection data={d} />,
-    },
-    {
-      key: "lossHistory",
-      title: "Loss History",
-      color: "bg-gradient-to-r from-rose-700 to-rose-500",
-      icon: (
-        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-      ),
-      render: (d) => <LossHistorySection data={d} />,
-    },
-    {
-      key: "operationalRisk",
-      title: "Operational Risk",
-      color: "bg-gradient-to-r from-amber-600 to-amber-400",
-      icon: (
-        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
-      ),
-      render: (d) => <OperationalRiskSection data={d} />,
-    },
-    {
-      key: "locationHazard",
-      title: "Location & Hazards",
-      color: "bg-gradient-to-r from-cyan-700 to-cyan-500",
-      icon: (
-        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      ),
-      render: (d) => <LocationSection data={d} />,
-    },
+  const monthlyBurn =
+    (parseFloat(f.fixedMonthlyCosts) || 0) +
+    (parseFloat(f.monthlyPayroll) || 0) +
+    (parseFloat(f.monthlyDebtService) || 0);
+
+  const issueCount = ["roofLeaks","hvacIssues","plumbingIssues","electricalIssues",
+    "moldMoistureHistory","deferredMaintenance","inspectionDeficiencies"]
+    .filter(k => op[k] === "yes").length;
+
+  const claimCount = hotelData?.lossHistory?.claims?.length || 0;
+
+  const daysToRenewal = (() => {
+    if (!ins.policyPeriodEnd) return null;
+    const d = Math.ceil((new Date(ins.policyPeriodEnd) - new Date()) / 86400000);
+    return d;
+  })();
+
+  const hotelName = p.hotelName || "Your Hotel";
+  const location = [p.city, p.state].filter(Boolean).join(", ") || null;
+
+  const kpis = [
+    { label: "PROPERTY COVERAGE", value: ins.propertyCoverageLimit ? "$" + Number(ins.propertyCoverageLimit).toLocaleString() : "—", alert: false },
+    { label: "BI COVERAGE", value: ins.biLimit ? "$" + Number(ins.biLimit).toLocaleString() : "—", alert: false },
+    { label: "ANNUAL REVENUE", value: f.annualRevenue ? "$" + Number(f.annualRevenue).toLocaleString() : "—", alert: false },
+    { label: "MONTHLY BURN", value: monthlyBurn > 0 ? "$" + monthlyBurn.toLocaleString() : "—", alert: monthlyBurn > 0 },
+    { label: "CASH RESERVES", value: f.emergencyCashReserves ? "$" + Number(f.emergencyCashReserves).toLocaleString() : "—", alert: false },
+    { label: "POLICY RENEWAL", value: daysToRenewal !== null ? `${daysToRenewal} days` : "—", alert: daysToRenewal !== null && daysToRenewal < 60 },
   ];
 
-  // ── Loading ──────────────────────────────────────────────────────────────
+  // ── Completeness ─────────────────────────────────────────────────────────
+  const sectionComplete = {
+    hotelProfile:      !!p.hotelName,
+    financialExposure: !!f.annualRevenue,
+    insurancePolicy:   !!ins.propertyCoverageLimit,
+    lossHistory:       true,
+    operationalRisk:   !!op.roofLeaks,
+    locationHazard:    !!hotelData?.locationHazard?.floodZone,
+  };
+  const completedCount = Object.values(sectionComplete).filter(Boolean).length;
+
   if (!loaded) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-hrip-navy" />
+      <div className="h-screen flex items-center justify-center bg-slate-900">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-hrip-gold" />
       </div>
     );
   }
 
-  // ── Empty state ──────────────────────────────────────────────────────────
-  if (!hotelData) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Nav hotelName={null} location={null} />
-        <div className="mx-auto max-w-2xl px-6 py-24 text-center">
-          <div className="flex justify-center mb-6">
-            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-hrip-navy to-hrip-blue">
-              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">No Data Found</h2>
-          <p className="text-gray-600 mb-8">
-            Complete the intake form to populate your dashboard, or load demo data to preview the layout.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/intake"
-              className="inline-flex items-center gap-2 rounded-xl bg-hrip-navy px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-blue-800 transition-all"
-            >
-              Start Intake Form
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-            <button
-              onClick={loadDemo}
-              className="inline-flex items-center gap-2 rounded-xl border-2 border-hrip-navy px-8 py-4 text-base font-semibold text-hrip-navy hover:bg-hrip-navy hover:text-white transition-all"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-              </svg>
-              Load Demo Data
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // ── Full dashboard ───────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Nav hotelName={hotelName} location={location} />
+    <div className="h-screen flex flex-col overflow-hidden bg-slate-950">
 
-      <div className="mx-auto max-w-6xl px-6 py-10 space-y-6">
-        {/* Completeness bar */}
-        <CompletenessBar data={hotelData} />
+      {/* ── TOP BAR ─────────────────────────────────────────────────────── */}
+      <div className="flex-shrink-0 bg-hrip-navy border-b border-blue-900 flex items-stretch h-12">
+        {/* Brand */}
+        <Link href="/" className="flex items-center gap-2.5 px-4 border-r border-blue-900 hover:bg-blue-900/40 transition-colors flex-shrink-0">
+          <div className="flex h-7 w-7 items-center justify-center rounded bg-white/10">
+            <span className="text-xs font-bold text-white">HR</span>
+          </div>
+          <span className="text-sm font-bold text-white tracking-tight whitespace-nowrap">Hotel Risk Pro</span>
+        </Link>
 
-        {/* Action bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold text-gray-900">{hotelName}</h1>
-              {isDemo && (
-                <span className="rounded-full bg-amber-100 border border-amber-300 px-2 py-0.5 text-xs font-bold text-amber-700">
-                  DEMO
-                </span>
-              )}
+        {/* KPI pills — scrollable on small screens */}
+        <div className="flex items-stretch overflow-x-auto flex-1">
+          {kpis.map(({ label, value, alert }, i) => (
+            <div key={i} className={`flex flex-col justify-center px-4 border-r border-blue-900/60 min-w-[120px] ${alert ? "bg-amber-900/30" : ""}`}>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-blue-300/70 leading-none">{label}</p>
+              <p className={`text-sm font-bold leading-tight mt-0.5 ${alert ? "text-amber-300" : "text-white"}`}>{value}</p>
             </div>
-            {location && <p className="text-sm text-gray-500">{location}</p>}
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={loadDemo}
-              className="inline-flex items-center gap-2 rounded-lg border-2 border-gray-300 px-4 py-2 text-sm font-semibold text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-all"
-              title="Overwrite with demo data"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-              </svg>
-              Demo Data
-            </button>
-            <button
-              onClick={clearData}
-              className="inline-flex items-center gap-2 rounded-lg border-2 border-gray-300 px-4 py-2 text-sm font-semibold text-gray-600 hover:border-red-300 hover:text-red-600 transition-all"
-              title="Clear all data"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-              Clear
-            </button>
-            <Link
-              href="/intake"
-              className="inline-flex items-center gap-2 rounded-lg border-2 border-hrip-navy px-4 py-2 text-sm font-semibold text-hrip-navy hover:bg-hrip-navy hover:text-white transition-all"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-              </svg>
-              Edit Data
-            </Link>
-            <Link
-              href="/report"
-              className="inline-flex items-center gap-2 rounded-lg bg-hrip-navy px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800 transition-all"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              View Risk Report
-            </Link>
-          </div>
-        </div>
-
-        {/* Section cards — 2-column layout on wide screens */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          {sections.map(({ key, title, color, icon, render }) => (
-            <SectionCard key={key} title={title} color={color} icon={icon}>
-              {render(hotelData[key])}
-            </SectionCard>
           ))}
         </div>
-      </div>
-    </div>
-  );
-}
 
-// ─── Nav ─────────────────────────────────────────────────────────────────────
-
-function Nav({ hotelName, location }) {
-  return (
-    <header className="border-b border-gray-200 bg-white sticky top-0 z-50 shadow-sm">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-hrip-navy to-hrip-blue">
-              <span className="text-sm font-bold tracking-tight text-white">HR</span>
-            </div>
-            <div>
-              <p className="text-sm font-bold tracking-tight text-gray-900">Hotel Risk Pro</p>
-              {hotelName && location && (
-                <p className="text-xs text-gray-500">{hotelName} &mdash; {location}</p>
-              )}
-              {hotelName && !location && (
-                <p className="text-xs text-gray-500">{hotelName}</p>
-              )}
-            </div>
+        {/* Right actions */}
+        <div className="flex items-center gap-1 px-3 border-l border-blue-900 flex-shrink-0">
+          {isDemo && (
+            <span className="rounded px-2 py-0.5 text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 mr-1">DEMO</span>
+          )}
+          <Link href="/report" className="rounded px-3 py-1.5 text-xs font-semibold bg-hrip-gold text-slate-900 hover:bg-amber-300 transition-colors whitespace-nowrap">
+            Risk Report
           </Link>
         </div>
-        <nav className="flex items-center gap-4 text-sm font-medium">
-          <Link href="/dashboard" className="text-hrip-navy font-semibold border-b-2 border-hrip-navy pb-0.5">
-            Dashboard
-          </Link>
-          <Link href="/report" className="text-gray-600 hover:text-hrip-navy transition-colors">
-            Report
-          </Link>
-          <Link href="/intake" className="rounded-lg border-2 border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-900 hover:border-hrip-navy hover:bg-gray-50 transition-all">
-            Edit Intake
-          </Link>
-        </nav>
       </div>
-    </header>
+
+      {/* ── BODY (sidebar + content) ─────────────────────────────────────── */}
+      <div className="flex flex-1 overflow-hidden">
+
+        {/* ── LEFT SIDEBAR ──────────────────────────────────────────────── */}
+        <div className="w-56 flex-shrink-0 bg-slate-900 border-r border-slate-800 flex flex-col overflow-y-auto">
+
+          {/* Hotel identity */}
+          <div className="px-4 py-4 border-b border-slate-800">
+            <p className="text-xs font-bold text-white leading-tight">{hotelName}</p>
+            {location && <p className="text-[11px] text-slate-400 mt-0.5">{location}</p>}
+            {p.numberOfRooms && (
+              <p className="text-[11px] text-slate-500 mt-0.5">{p.numberOfRooms} rooms · {p.numberOfFloors || "—"} floors</p>
+            )}
+          </div>
+
+          {/* Stat boxes */}
+          <div className="grid grid-cols-2 gap-px bg-slate-800 border-b border-slate-800">
+            <div className="bg-slate-900 px-3 py-2.5">
+              <p className="text-lg font-bold text-white leading-none">{completedCount}</p>
+              <p className="text-[10px] text-slate-500 mt-0.5">Sections<br/>Complete</p>
+            </div>
+            <div className="bg-slate-900 px-3 py-2.5">
+              <p className={`text-lg font-bold leading-none ${issueCount > 0 ? "text-amber-400" : "text-green-400"}`}>{issueCount}</p>
+              <p className="text-[10px] text-slate-500 mt-0.5">Operational<br/>Issues</p>
+            </div>
+            <div className="bg-slate-900 px-3 py-2.5">
+              <p className={`text-lg font-bold leading-none ${claimCount > 0 ? "text-rose-400" : "text-slate-300"}`}>{claimCount}</p>
+              <p className="text-[10px] text-slate-500 mt-0.5">Prior<br/>Claims</p>
+            </div>
+            <div className="bg-slate-900 px-3 py-2.5">
+              <p className="text-lg font-bold text-white leading-none">{daysToRenewal ?? "—"}</p>
+              <p className="text-[10px] text-slate-500 mt-0.5">Days to<br/>Renewal</p>
+            </div>
+          </div>
+
+          {/* Section navigation */}
+          <div className="py-2 border-b border-slate-800 flex-1">
+            <p className="px-4 pt-2 pb-1 text-[9px] font-bold uppercase tracking-widest text-slate-600">Data Sections</p>
+            {NAV_SECTIONS.map(({ key, label, num, accent, dot, icon }) => {
+              const active = activeSection === key;
+              const done = sectionComplete[key];
+              return (
+                <button
+                  key={key}
+                  onClick={() => scrollTo(key)}
+                  className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-left transition-colors border-l-2 ${
+                    active
+                      ? `${accent} bg-slate-800 text-white`
+                      : "border-transparent text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
+                  }`}
+                >
+                  <span className="flex-shrink-0 opacity-70">{icon}</span>
+                  <span className="flex-1 text-xs font-medium leading-tight">{label}</span>
+                  <span className={`flex-shrink-0 h-1.5 w-1.5 rounded-full ${done ? dot : "bg-slate-700"}`} />
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Quick actions */}
+          <div className="p-3 space-y-1.5 border-t border-slate-800">
+            <Link
+              href="/intake"
+              className="flex items-center gap-2 w-full rounded-lg bg-hrip-navy px-3 py-2 text-xs font-semibold text-white hover:bg-blue-800 transition-colors"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+              Edit Intake Data
+            </Link>
+            <button
+              onClick={loadDemo}
+              className="flex items-center gap-2 w-full rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-400 hover:text-white hover:border-slate-500 transition-colors"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+              Reload Demo Data
+            </button>
+          </div>
+        </div>
+
+        {/* ── MAIN CONTENT ──────────────────────────────────────────────── */}
+        <div className="flex-1 overflow-y-auto bg-gray-50">
+          <div className="max-w-4xl mx-auto px-6 py-6 space-y-6">
+            {NAV_SECTIONS.map(({ key, label, icon }) => (
+              <div key={key} id={key} className="scroll-mt-4">
+                <SectionCard
+                  title={label}
+                  color={SECTION_COLORS[key]}
+                  icon={<span className="text-white">{icon}</span>}
+                >
+                  {SECTION_RENDERERS[key](hotelData?.[key])}
+                </SectionCard>
+              </div>
+            ))}
+            <div className="h-12" />
+          </div>
+        </div>
+
+      </div>
+    </div>
   );
 }
