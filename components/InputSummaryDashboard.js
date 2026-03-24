@@ -605,18 +605,22 @@ function CompletenessBar({ data }) {
 export default function InputSummaryDashboard() {
   const [hotelData, setHotelData] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [isDemo, setIsDemo] = useState(false);
 
   useEffect(() => {
     const raw = localStorage.getItem("hotelRiskAnalysis") || localStorage.getItem("hotelRiskIntake");
     if (raw) {
       try {
         setHotelData(JSON.parse(raw));
+        setIsDemo(false);
       } catch {
         setHotelData(DEMO_DATA);
+        setIsDemo(true);
       }
     } else {
       // No real data — show demo data by default
       setHotelData(DEMO_DATA);
+      setIsDemo(true);
     }
     setLoaded(true);
   }, []);
@@ -632,7 +636,6 @@ export default function InputSummaryDashboard() {
     setHotelData(null);
   };
 
-  const isDemo = !localStorage.getItem("hotelRiskAnalysis") && !localStorage.getItem("hotelRiskIntake");
   const hotelName = hotelData?.hotelProfile?.hotelName || "Your Hotel";
   const city = hotelData?.hotelProfile?.city;
   const state = hotelData?.hotelProfile?.state;
