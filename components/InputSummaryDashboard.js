@@ -154,8 +154,8 @@ function capitalize(str) {
 function Field({ label, value, mono = false }) {
   return (
     <div>
-      <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-0.5 leading-none">{label}</p>
-      <p className={`text-xs font-semibold text-gray-800 leading-tight ${mono ? "font-mono" : ""}`}>
+      <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-0.5 leading-none">{label}</p>
+      <p className={`text-base font-semibold text-gray-800 leading-tight ${mono ? "font-mono" : ""}`}>
         {value || "—"}
       </p>
     </div>
@@ -164,7 +164,7 @@ function Field({ label, value, mono = false }) {
 
 // Coloured badge
 function Badge({ value, type = "neutral" }) {
-  const base = "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold";
+  const base = "inline-flex items-center rounded-full px-2.5 py-0.5 text-base font-semibold";
   if (!value || value === "—") return <span className={`${base} bg-gray-100 text-gray-500`}>—</span>;
 
   const low = ["no", "none", "low", "x"].includes(String(value).toLowerCase());
@@ -195,11 +195,11 @@ function SectionCard({ icon, title, color, children, compact }) {
           <div className="flex h-6 w-6 items-center justify-center rounded bg-white/20 [&_svg]:w-3.5 [&_svg]:h-3.5">
             {icon}
           </div>
-          <h3 className="text-xs font-bold text-white uppercase tracking-wide">{title}</h3>
+          <h3 className="text-base font-bold text-white uppercase tracking-wide">{title}</h3>
         </div>
         <Link
           href="/intake"
-          className="rounded bg-white/20 px-2 py-1 text-[10px] font-semibold text-white hover:bg-white/30 transition-colors"
+          className="rounded bg-white/20 px-2 py-1 text-sm font-semibold text-white hover:bg-white/30 transition-colors"
         >
           Edit
         </Link>
@@ -212,7 +212,7 @@ function SectionCard({ icon, title, color, children, compact }) {
 // ─── Section components ──────────────────────────────────────────────────────
 
 function HotelProfileSection({ data }) {
-  if (!data) return <p className="text-xs text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-base text-gray-400">No data entered yet.</p>;
   const p = data;
   return (
     <div className="space-y-2.5">
@@ -235,11 +235,11 @@ function HotelProfileSection({ data }) {
       </div>
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">Sprinklers</p>
+          <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-1">Sprinklers</p>
           <Badge value={p.sprinklerSystem} type="risk" />
         </div>
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">Fire Alarm</p>
+          <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-1">Fire Alarm</p>
           <Badge value={p.fireAlarmSystem} type="risk" />
         </div>
       </div>
@@ -251,7 +251,7 @@ function HotelProfileSection({ data }) {
             { key: "eventSpace", label: "Events" },
             { key: "parkingStructure", label: "Parking" },
           ].map(({ key, label }) => (
-            <span key={key} className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+            <span key={key} className={`rounded-full px-2 py-0.5 text-sm font-semibold ${
               p[key] === "yes" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-400 line-through"
             }`}>{label}</span>
           ))}
@@ -262,7 +262,7 @@ function HotelProfileSection({ data }) {
 }
 
 function FinancialSection({ data }) {
-  if (!data) return <p className="text-xs text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-base text-gray-400">No data entered yet.</p>;
   const f = data;
   const monthlyRev = f.annualRevenue ? Math.round(parseFloat(f.annualRevenue) / 12) : null;
   const totalObligations =
@@ -274,15 +274,15 @@ function FinancialSection({ data }) {
     <div className="space-y-2.5">
       <div className="grid grid-cols-3 gap-2">
         <div className="col-span-1">
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-0.5">Annual Revenue</p>
-          <p className="text-sm font-bold text-hrip-navy">{fmt$(f.annualRevenue)}</p>
-          {monthlyRev && <p className="text-[10px] text-gray-400">≈ {fmt$(monthlyRev)}/mo</p>}
+          <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-0.5">Annual Revenue</p>
+          <p className="text-lg font-bold text-hrip-navy">{fmt$(f.annualRevenue)}</p>
+          {monthlyRev && <p className="text-sm text-gray-400">≈ {fmt$(monthlyRev)}/mo</p>}
         </div>
         <Field label="Occupancy" value={fmtPct(f.averageOccupancy)} />
         <Field label="ADR" value={fmt$(f.adr)} />
       </div>
       <div className="border-t border-gray-100 pt-2">
-        <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Revenue Mix</p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Revenue Mix</p>
         <div className="grid grid-cols-4 gap-1.5">
           <Field label="Rooms" value={fmtPct(f.roomRevenuePercent)} />
           <Field label="F&B" value={fmtPct(f.fbRevenuePercent)} />
@@ -291,7 +291,7 @@ function FinancialSection({ data }) {
         </div>
       </div>
       <div className="border-t border-gray-100 pt-2">
-        <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Monthly Obligations</p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Monthly Obligations</p>
         <div className="grid grid-cols-2 gap-1.5">
           <Field label="Fixed Costs" value={fmt$(f.fixedMonthlyCosts)} />
           <Field label="Payroll" value={fmt$(f.monthlyPayroll)} />
@@ -300,7 +300,7 @@ function FinancialSection({ data }) {
         </div>
         {totalObligations > 0 && (
           <div className="mt-2 rounded bg-amber-50 border border-amber-200 px-2.5 py-1.5">
-            <p className="text-xs font-bold text-amber-800">Total Burn: {fmt$(totalObligations)}/mo</p>
+            <p className="text-base font-bold text-amber-800">Total Burn: {fmt$(totalObligations)}/mo</p>
           </div>
         )}
       </div>
@@ -309,7 +309,7 @@ function FinancialSection({ data }) {
 }
 
 function InsuranceSection({ data }) {
-  if (!data) return <p className="text-xs text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-base text-gray-400">No data entered yet.</p>;
   const ins = data;
   const coverages = [
     { key: "ordinanceLawCoverage", label: "Ordinance & Law" },
@@ -327,7 +327,7 @@ function InsuranceSection({ data }) {
         <Field label="End" value={fmtDate(ins.policyPeriodEnd)} />
       </div>
       <div className="border-t border-gray-100 pt-2">
-        <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Coverage Limits</p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Coverage Limits</p>
         <div className="grid grid-cols-2 gap-1.5">
           <Field label="Property" value={fmt$(ins.propertyCoverageLimit)} />
           <Field label="Bus. Interruption" value={fmt$(ins.biLimit)} />
@@ -349,7 +349,7 @@ function InsuranceSection({ data }) {
           {coverages.map(({ key, label }) => {
             const hasIt = ins[key] && ins[key] !== "no" && ins[key] !== "";
             return (
-              <span key={key} className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+              <span key={key} className={`rounded-full px-2 py-0.5 text-sm font-semibold ${
                 hasIt ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"
               }`}>{hasIt ? "✓ " : ""}{label}</span>
             );
@@ -365,7 +365,7 @@ function LossHistorySection({ data }) {
   if (claims.length === 0) {
     return (
       <div className="rounded border border-dashed border-gray-200 px-3 py-6 text-center">
-        <p className="text-xs text-gray-400">No claims on record</p>
+        <p className="text-base text-gray-400">No claims on record</p>
       </div>
     );
   }
@@ -374,26 +374,26 @@ function LossHistorySection({ data }) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-semibold text-gray-600">{claims.length} claim{claims.length !== 1 ? "s" : ""}</p>
-        {totalPaid > 0 && <p className="text-xs font-bold text-red-700">Total: {fmt$(totalPaid)}</p>}
+        <p className="text-base font-semibold text-gray-600">{claims.length} claim{claims.length !== 1 ? "s" : ""}</p>
+        {totalPaid > 0 && <p className="text-base font-bold text-red-700">Total: {fmt$(totalPaid)}</p>}
       </div>
       <table className="w-full">
         <thead>
           <tr className="border-b border-gray-200">
-            <th className="pb-1 text-left text-[10px] font-semibold uppercase tracking-wide text-gray-400">Yr</th>
-            <th className="pb-1 text-left text-[10px] font-semibold uppercase tracking-wide text-gray-400">Type</th>
-            <th className="pb-1 text-right text-[10px] font-semibold uppercase tracking-wide text-gray-400">Paid</th>
-            <th className="pb-1 text-center text-[10px] font-semibold uppercase tracking-wide text-gray-400">Status</th>
+            <th className="pb-1 text-left text-sm font-semibold uppercase tracking-wide text-gray-400">Yr</th>
+            <th className="pb-1 text-left text-sm font-semibold uppercase tracking-wide text-gray-400">Type</th>
+            <th className="pb-1 text-right text-sm font-semibold uppercase tracking-wide text-gray-400">Paid</th>
+            <th className="pb-1 text-center text-sm font-semibold uppercase tracking-wide text-gray-400">Status</th>
           </tr>
         </thead>
         <tbody>
           {claims.map((c, i) => (
             <tr key={c.id || i} className="border-b border-gray-100 last:border-0">
-              <td className="py-1.5 text-xs font-medium text-gray-900">{c.year || "—"}</td>
-              <td className="py-1.5 text-xs text-gray-600">{capitalize(c.type)}</td>
-              <td className="py-1.5 text-xs text-right font-mono text-gray-900">{fmt$(c.amountPaid)}</td>
+              <td className="py-1.5 text-base font-medium text-gray-900">{c.year || "—"}</td>
+              <td className="py-1.5 text-base text-gray-600">{capitalize(c.type)}</td>
+              <td className="py-1.5 text-base text-right font-mono text-gray-900">{fmt$(c.amountPaid)}</td>
               <td className="py-1.5 text-center">
-                <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
+                <span className={`rounded-full px-1.5 py-0.5 text-sm font-semibold ${
                   c.status === "closed" ? "bg-gray-100 text-gray-500" :
                   c.status === "open" ? "bg-amber-100 text-amber-700" : "bg-blue-100 text-blue-700"
                 }`}>{capitalize(c.status) || "—"}</span>
@@ -407,7 +407,7 @@ function LossHistorySection({ data }) {
 }
 
 function OperationalRiskSection({ data }) {
-  if (!data) return <p className="text-xs text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-base text-gray-400">No data entered yet.</p>;
   const items = [
     { key: "roofLeaks", label: "Roof Leaks" },
     { key: "hvacIssues", label: "HVAC" },
@@ -421,7 +421,7 @@ function OperationalRiskSection({ data }) {
 
   return (
     <div className="space-y-2">
-      <div className={`rounded px-2.5 py-1.5 text-xs font-semibold ${
+      <div className={`rounded px-2.5 py-1.5 text-base font-semibold ${
         issueCount > 0 ? "bg-red-50 border border-red-200 text-red-700" : "bg-green-50 border border-green-200 text-green-700"
       }`}>
         {issueCount > 0 ? `${issueCount} issue${issueCount !== 1 ? "s" : ""} flagged` : "All systems clear"}
@@ -435,8 +435,8 @@ function OperationalRiskSection({ data }) {
               hasIssue ? "bg-red-50 border border-red-100" :
               clear ? "bg-green-50 border border-green-100" : "bg-gray-50 border border-gray-100"
             }`}>
-              <span className="text-xs text-gray-700">{label}</span>
-              <span className={`text-[10px] font-bold ${hasIssue ? "text-red-600" : clear ? "text-green-600" : "text-gray-400"}`}>
+              <span className="text-base text-gray-700">{label}</span>
+              <span className={`text-sm font-bold ${hasIssue ? "text-red-600" : clear ? "text-green-600" : "text-gray-400"}`}>
                 {hasIssue ? "ISSUE" : clear ? "CLEAR" : "—"}
               </span>
             </div>
@@ -448,7 +448,7 @@ function OperationalRiskSection({ data }) {
 }
 
 function LocationSection({ data }) {
-  if (!data) return <p className="text-xs text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-base text-gray-400">No data entered yet.</p>;
   const loc = data;
 
   const all = [
@@ -470,7 +470,7 @@ function LocationSection({ data }) {
         const display = format ? format(raw) : capitalize(raw);
         return (
           <div key={key}>
-            <p className="text-[10px] text-gray-400 mb-0.5">{label}</p>
+            <p className="text-sm text-gray-400 mb-0.5">{label}</p>
             <Badge value={display || raw} type="risk" />
           </div>
         );
@@ -497,8 +497,8 @@ function CompletenessBar({ data }) {
   return (
     <div className="rounded-2xl border-2 border-gray-200 bg-white p-5 shadow-sm">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-sm font-bold text-gray-900">Data Completeness</p>
-        <span className={`text-sm font-bold ${pct === 100 ? "text-green-600" : "text-hrip-navy"}`}>
+        <p className="text-lg font-bold text-gray-900">Data Completeness</p>
+        <span className={`text-lg font-bold ${pct === 100 ? "text-green-600" : "text-hrip-navy"}`}>
           {done} / {sections.length} sections &mdash; {pct}%
         </span>
       </div>
@@ -514,7 +514,7 @@ function CompletenessBar({ data }) {
           return (
             <span
               key={key}
-              className={`text-xs rounded-full px-2.5 py-1 font-semibold ${
+              className={`text-base rounded-full px-2.5 py-1 font-semibold ${
                 complete ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"
               }`}
             >
@@ -694,17 +694,17 @@ export default function InputSummaryDashboard() {
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 px-4 border-r border-blue-900 hover:bg-blue-900/40 transition-colors flex-shrink-0">
           <div className="flex h-7 w-7 items-center justify-center rounded bg-white/10">
-            <span className="text-xs font-bold text-white">HR</span>
+            <span className="text-base font-bold text-white">HR</span>
           </div>
-          <span className="text-sm font-bold text-white tracking-tight whitespace-nowrap">Hotel Risk Pro</span>
+          <span className="text-lg font-bold text-white tracking-tight whitespace-nowrap">Hotel Risk Pro</span>
         </Link>
 
         {/* KPI pills — scrollable on small screens */}
         <div className="flex items-stretch overflow-x-auto flex-1">
           {kpis.map(({ label, value, alert }, i) => (
             <div key={i} className={`flex flex-col justify-center px-4 border-r border-blue-900/60 min-w-[120px] ${alert ? "bg-amber-900/30" : ""}`}>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-blue-300/70 leading-none">{label}</p>
-              <p className={`text-sm font-bold leading-tight mt-0.5 ${alert ? "text-amber-300" : "text-white"}`}>{value}</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-blue-300/70 leading-none">{label}</p>
+              <p className={`text-lg font-bold leading-tight mt-0.5 ${alert ? "text-amber-300" : "text-white"}`}>{value}</p>
             </div>
           ))}
         </div>
@@ -712,9 +712,9 @@ export default function InputSummaryDashboard() {
         {/* Right actions */}
         <div className="flex items-center gap-1 px-3 border-l border-blue-900 flex-shrink-0">
           {isDemo && (
-            <span className="rounded px-2 py-0.5 text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 mr-1">DEMO</span>
+            <span className="rounded px-2 py-0.5 text-sm font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 mr-1">DEMO</span>
           )}
-          <Link href="/report" className="rounded px-3 py-1.5 text-xs font-semibold bg-hrip-gold text-slate-900 hover:bg-amber-300 transition-colors whitespace-nowrap">
+          <Link href="/report" className="rounded px-3 py-1.5 text-base font-semibold bg-hrip-gold text-slate-900 hover:bg-amber-300 transition-colors whitespace-nowrap">
             Risk Report
           </Link>
         </div>
@@ -728,36 +728,36 @@ export default function InputSummaryDashboard() {
 
           {/* Hotel identity */}
           <div className="px-4 py-4 border-b border-slate-800">
-            <p className="text-xs font-bold text-white leading-tight">{hotelName}</p>
-            {location && <p className="text-[11px] text-slate-400 mt-0.5">{location}</p>}
+            <p className="text-base font-bold text-white leading-tight">{hotelName}</p>
+            {location && <p className="text-sm text-slate-400 mt-0.5">{location}</p>}
             {p.numberOfRooms && (
-              <p className="text-[11px] text-slate-500 mt-0.5">{p.numberOfRooms} rooms · {p.numberOfFloors || "—"} floors</p>
+              <p className="text-sm text-slate-500 mt-0.5">{p.numberOfRooms} rooms · {p.numberOfFloors || "—"} floors</p>
             )}
           </div>
 
           {/* Stat boxes */}
           <div className="grid grid-cols-2 gap-px bg-slate-800 border-b border-slate-800">
             <div className="bg-slate-900 px-3 py-2.5">
-              <p className="text-lg font-bold text-white leading-none">{completedCount}</p>
-              <p className="text-[10px] text-slate-500 mt-0.5">Sections<br/>Complete</p>
+              <p className="text-2xl font-bold text-white leading-none">{completedCount}</p>
+              <p className="text-sm text-slate-500 mt-0.5">Sections<br/>Complete</p>
             </div>
             <div className="bg-slate-900 px-3 py-2.5">
-              <p className={`text-lg font-bold leading-none ${issueCount > 0 ? "text-amber-400" : "text-green-400"}`}>{issueCount}</p>
-              <p className="text-[10px] text-slate-500 mt-0.5">Operational<br/>Issues</p>
+              <p className={`text-2xl font-bold leading-none ${issueCount > 0 ? "text-amber-400" : "text-green-400"}`}>{issueCount}</p>
+              <p className="text-sm text-slate-500 mt-0.5">Operational<br/>Issues</p>
             </div>
             <div className="bg-slate-900 px-3 py-2.5">
-              <p className={`text-lg font-bold leading-none ${claimCount > 0 ? "text-rose-400" : "text-slate-300"}`}>{claimCount}</p>
-              <p className="text-[10px] text-slate-500 mt-0.5">Prior<br/>Claims</p>
+              <p className={`text-2xl font-bold leading-none ${claimCount > 0 ? "text-rose-400" : "text-slate-300"}`}>{claimCount}</p>
+              <p className="text-sm text-slate-500 mt-0.5">Prior<br/>Claims</p>
             </div>
             <div className="bg-slate-900 px-3 py-2.5">
-              <p className="text-lg font-bold text-white leading-none">{daysToRenewal ?? "—"}</p>
-              <p className="text-[10px] text-slate-500 mt-0.5">Days to<br/>Renewal</p>
+              <p className="text-2xl font-bold text-white leading-none">{daysToRenewal ?? "—"}</p>
+              <p className="text-sm text-slate-500 mt-0.5">Days to<br/>Renewal</p>
             </div>
           </div>
 
           {/* Section navigation */}
           <div className="py-2 border-b border-slate-800 flex-1">
-            <p className="px-4 pt-2 pb-1 text-[9px] font-bold uppercase tracking-widest text-slate-600">Data Sections</p>
+            <p className="px-4 pt-2 pb-1 text-sm font-bold uppercase tracking-widest text-slate-600">Data Sections</p>
             {NAV_SECTIONS.map(({ key, label, num, accent, dot, icon }) => {
               const active = activeSection === key;
               const done = sectionComplete[key];
@@ -772,7 +772,7 @@ export default function InputSummaryDashboard() {
                   }`}
                 >
                   <span className="flex-shrink-0 opacity-70">{icon}</span>
-                  <span className="flex-1 text-xs font-medium leading-tight">{label}</span>
+                  <span className="flex-1 text-base font-medium leading-tight">{label}</span>
                   <span className={`flex-shrink-0 h-1.5 w-1.5 rounded-full ${done ? dot : "bg-slate-700"}`} />
                 </button>
               );
@@ -783,14 +783,14 @@ export default function InputSummaryDashboard() {
           <div className="p-3 space-y-1.5 border-t border-slate-800">
             <Link
               href="/intake"
-              className="flex items-center gap-2 w-full rounded-lg bg-hrip-navy px-3 py-2 text-xs font-semibold text-white hover:bg-blue-800 transition-colors"
+              className="flex items-center gap-2 w-full rounded-lg bg-hrip-navy px-3 py-2 text-base font-semibold text-white hover:bg-blue-800 transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
               Edit Intake Data
             </Link>
             <button
               onClick={loadDemo}
-              className="flex items-center gap-2 w-full rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-400 hover:text-white hover:border-slate-500 transition-colors"
+              className="flex items-center gap-2 w-full rounded-lg border border-slate-700 px-3 py-2 text-base font-semibold text-slate-400 hover:text-white hover:border-slate-500 transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
               Reload Demo Data
