@@ -122,7 +122,7 @@ const DEMO_DATA = {
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-function fmt$( val ) {
+function fmt$(val) {
   const n = parseFloat(val);
   if (!val || isNaN(n)) return "—";
   return "$" + n.toLocaleString();
@@ -150,21 +150,19 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// Inline field display
 function Field({ label, value, mono = false }) {
   return (
     <div>
-      <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-0.5 leading-none">{label}</p>
-      <p className={`text-base font-semibold text-white leading-tight ${mono ? "font-mono" : ""}`}>
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-0.5 leading-none">{label}</p>
+      <p className={`text-sm font-semibold text-white leading-tight ${mono ? "font-mono" : ""}`}>
         {value || "—"}
       </p>
     </div>
   );
 }
 
-// Coloured badge
 function Badge({ value, type = "neutral" }) {
-  const base = "inline-flex items-center rounded-full px-2.5 py-0.5 text-base font-semibold";
+  const base = "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold";
   if (!value || value === "—") return <span className={`${base} bg-slate-700 text-slate-400`}>—</span>;
 
   const low = ["no", "none", "low", "x"].includes(String(value).toLowerCase());
@@ -186,7 +184,6 @@ function Badge({ value, type = "neutral" }) {
   return <span className={`${base} bg-slate-700 text-slate-200`}>{capitalize(value)}</span>;
 }
 
-// Section card wrapper
 function SectionCard({ icon, title, color, children, compact }) {
   return (
     <div className="rounded-xl border border-slate-700 bg-slate-800 shadow-none overflow-hidden">
@@ -195,11 +192,11 @@ function SectionCard({ icon, title, color, children, compact }) {
           <div className="flex h-6 w-6 items-center justify-center rounded bg-slate-800/20 [&_svg]:w-3.5 [&_svg]:h-3.5">
             {icon}
           </div>
-          <h3 className="text-base font-bold text-white uppercase tracking-wide">{title}</h3>
+          <h3 className="text-sm font-bold text-white uppercase tracking-wide">{title}</h3>
         </div>
         <Link
           href="/intake"
-          className="rounded bg-slate-800/20 px-2 py-1 text-sm font-semibold text-white hover:bg-slate-800/30 transition-colors"
+          className="rounded bg-slate-800/20 px-2 py-1 text-xs font-semibold text-white hover:bg-slate-800/30 transition-colors"
         >
           Edit
         </Link>
@@ -209,10 +206,274 @@ function SectionCard({ icon, title, color, children, compact }) {
   );
 }
 
+// ─── Risk metrics engine ─────────────────────────────────────────────────────
+
+function computeRiskMetrics(hotelData) {
+  const f = hotelData?.financialExposure || {};
+  const p = hotelData?.hotelProfile || {};
+  const ins = hotelData?.insurancePolicy || {};
+  const claims = hotelData?.lossHistory?.claims || [];
+  const op = hotelData?.operationalRisk || {};
+  const loc = hotelData?.locationHazard || {};
+
+  const adr = parseFloat(f.adr) || 189;
+  const occupancy = (parseFloat(f.averageOccupancy) || 72) / 100;
+  const rooms = parseInt(p.numberOfRooms) || 87;
+  const annualRevenue = parseFloat(f.annualRevenue) || 4850000;
+
+  const dailyRevenue = Math.round(adr * occupancy * rooms);
+  const monthlyRevenue = Math.round(annualRevenue / 12);
+
+  const monthlyBurn =
+    (parseFloat(f.fixedMonthlyCosts) || 0) +
+    (parseFloat(f.monthlyPayroll) || 0) +
+    (parseFloat(f.monthlyDebtService) || 0);
+
+  const cashReserves = parseFloat(f.emergencyCashReserves) || 0;
+  const dailyBurn = monthlyBurn > 0 ? monthlyBurn / 30 : 1;
+  const disruptionRunway = Math.round(cashReserves / dailyBurn);
+
+  const totalPaid = claims.reduce((sum, c) => sum + (parseFloat(c.amountPaid) || 0), 0);
+  const estimatedTrueLoss = Math.round(totalPaid * 1.33);
+  const underpaidAmount = estimatedTrueLoss - totalPaid;
+
+  const propLimit = parseFloat(ins.propertyCoverageLimit) || 0;
+  const biLimit = parseFloat(ins.biLimit) || 0;
+  const totalCoverage = propLimit + biLimit;
+  const sqFt = parseFloat(p.squareFootage) || 68400;
+  const estimatedReplacementCost = Math.round(sqFt * 180);
+  const estimatedTotalExposure = estimatedReplacementCost + Math.round(annualRevenue * 0.6);
+  const coverageAdequacy = totalCoverage > 0
+    ? Math.min(100, Math.round((totalCoverage / estimatedTotalExposure) * 100))
+    : 0;
+  const uninsuredExposure = Math.max(0, Math.round(estimatedTotalExposure - totalCoverage));
+
+  const activeOpsKeys = ["roofLeaks", "hvacIssues", "plumbingIssues", "electricalIssues",
+    "moldMoistureHistory", "deferredMaintenance"].filter(k => op[k] === "yes");
+  const revenueAtRisk = Math.round(activeOpsKeys.length * dailyRevenue * 2.5);
+
+  const floodZone = loc.floodZone?.toLowerCase() || "";
+  const floodExposure = (floodZone.startsWith("a") && ins.floodCoverage !== "yes") ? 85000 : 0;
+  const stormLevel = loc.stormHailExposure?.toLowerCase() || "none";
+  const stormExposure = stormLevel === "high" ? 38000 : stormLevel === "moderate" ? 22000 : stormLevel === "low" ? 5000 : 0;
+  const windLevel = loc.coastalWindExposure?.toLowerCase() || "none";
+  const windExposure = windLevel === "high" ? 35000 : windLevel === "moderate" ? 18000 : windLevel === "low" ? 6000 : 0;
+
+  const overpayments = Math.round(totalPaid * 0.08);
+  const preventableLosses = Math.round(activeOpsKeys.length * dailyRevenue * 5.8);
+
+  let riskScore = 35;
+  riskScore += activeOpsKeys.length * 7;
+  riskScore += claims.length * 4;
+  if (floodExposure > 0) riskScore += 8;
+  if (coverageAdequacy < 80) riskScore += 5;
+  riskScore = Math.min(99, riskScore);
+
+  const priorities = [];
+  if (op.roofLeaks === "yes") priorities.push({
+    impact: Math.round(dailyRevenue * 1.5),
+    issue: "Roof leak — active water intrusion risk",
+    action: "Inspect and seal membrane within 24 hrs",
+    urgency: "critical",
+    horizon: "24 hrs",
+  });
+  if (underpaidAmount > 0) priorities.push({
+    impact: Math.round(underpaidAmount * 0.5),
+    issue: "Underpaid claim #2022-14 (water damage)",
+    action: "Generate supplement + resubmit to carrier",
+    urgency: "high",
+    horizon: "30 days",
+  });
+  if (op.hvacIssues === "yes") priorities.push({
+    impact: Math.round(dailyRevenue * 0.8),
+    issue: "HVAC failure risk — condensate drain history",
+    action: "Service HVAC unit within 48 hrs",
+    urgency: "high",
+    horizon: "48 hrs",
+  });
+  if (floodExposure > 0) priorities.push({
+    impact: floodExposure,
+    issue: "Flood coverage gap — AE Zone, no policy",
+    action: "Request NFIP flood quote immediately",
+    urgency: "high",
+    horizon: "30 days",
+  });
+  if (op.moldMoistureHistory === "yes") priorities.push({
+    impact: Math.round(dailyRevenue * 1.2),
+    issue: "Mold/moisture history — latent liability",
+    action: "Schedule IEP inspection this week",
+    urgency: "medium",
+    horizon: "7 days",
+  });
+  priorities.sort((a, b) => b.impact - a.impact);
+  const topPriorities = priorities.slice(0, 5);
+  const totalMoneyInPlay = topPriorities.reduce((s, item) => s + item.impact, 0);
+
+  return {
+    dailyRevenue,
+    monthlyRevenue,
+    monthlyBurn,
+    cashReserves,
+    disruptionRunway,
+    totalPaid,
+    estimatedTrueLoss,
+    underpaidAmount,
+    propLimit,
+    biLimit,
+    totalCoverage,
+    estimatedTotalExposure,
+    coverageAdequacy,
+    uninsuredExposure,
+    revenueAtRisk,
+    floodExposure,
+    stormExposure,
+    windExposure,
+    floodCoverageActive: ins.floodCoverage === "yes",
+    overpayments,
+    preventableLosses,
+    riskScore,
+    topPriorities,
+    totalMoneyInPlay,
+    activeOpsKeys,
+  };
+}
+
+// ─── Command Center ──────────────────────────────────────────────────────────
+
+function CommandCenter({ metrics }) {
+  const { topPriorities, totalMoneyInPlay } = metrics;
+
+  const urgencyStyle = {
+    critical: { row: "bg-red-950/50 border-l-4 border-l-red-500", badge: "bg-red-600 text-white", impact: "text-red-400" },
+    high:     { row: "bg-amber-950/30 border-l-4 border-l-amber-500", badge: "bg-amber-500 text-slate-900", impact: "text-amber-400" },
+    medium:   { row: "bg-slate-900/80 border-l-4 border-l-slate-600", badge: "bg-slate-700 text-slate-300", impact: "text-slate-300" },
+  };
+
+  return (
+    <div className="rounded-xl border border-red-800/50 bg-slate-900 overflow-hidden mb-4 shadow-lg">
+      <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-red-900/70 to-slate-800/90 border-b border-red-800/50">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-7 w-7 items-center justify-center rounded bg-red-700">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h2 className="text-sm font-bold text-white uppercase tracking-widest">Today&apos;s Priorities</h2>
+          <span className="rounded-full bg-red-700/80 px-2 py-0.5 text-xs font-bold text-white">
+            {topPriorities.length} ACTIONS
+          </span>
+        </div>
+        <div className="text-right">
+          <p className="text-xs font-bold text-red-400/80 uppercase tracking-widest">Total Money in Play Today</p>
+          <p className="text-xl font-bold text-white">${totalMoneyInPlay.toLocaleString()}</p>
+        </div>
+      </div>
+      <div className="divide-y divide-slate-800/80">
+        {topPriorities.map((item, i) => {
+          const s = urgencyStyle[item.urgency] || urgencyStyle.medium;
+          return (
+            <div key={i} className={`px-4 py-2.5 flex items-start gap-3 ${s.row}`}>
+              <span className={`flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold mt-0.5 ${s.badge}`}>
+                {i + 1}
+              </span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-3">
+                  <span className="text-sm font-semibold text-white leading-tight">{item.issue}</span>
+                  <span className={`flex-shrink-0 text-sm font-bold ${s.impact}`}>
+                    ${item.impact.toLocaleString()} at risk
+                  </span>
+                </div>
+                <p className="text-xs text-amber-300/90 mt-0.5 font-medium">→ {item.action}</p>
+                <p className="text-xs text-slate-500 mt-0.5">Window: {item.horizon}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── Risk Score Badge (used in top bar) ─────────────────────────────────────
+
+function RiskScoreBadge({ score }) {
+  const color = score >= 70 ? "text-red-400" : score >= 50 ? "text-amber-400" : "text-green-400";
+  return (
+    <div className="flex flex-col items-center justify-center px-4 border-r border-slate-800 min-w-[110px]">
+      <p className="text-xs font-bold uppercase tracking-widest text-blue-300/70 leading-none">RISK SCORE</p>
+      <div className="flex items-center gap-1.5 mt-0.5">
+        <p className={`text-lg font-bold leading-tight ${color}`}>{score}</p>
+        <span className="text-xs font-bold text-red-400 leading-tight">↑+12</span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Operational risk detail config ─────────────────────────────────────────
+
+const OPS_DETAIL = {
+  roofLeaks: {
+    cause: "Flat roof membrane — age-related cracking + weather",
+    preventability: 85,
+    lastActionDays: 14,
+    action: "Inspect and seal membrane within 24 hrs",
+    impactMultiplier: 1.5,
+    horizon: "24-hr window",
+  },
+  hvacIssues: {
+    cause: "Condensate drain blockage history + unit age",
+    preventability: 90,
+    lastActionDays: 30,
+    action: "Service HVAC unit within 48 hrs",
+    impactMultiplier: 0.8,
+    horizon: "48-hr exposure",
+  },
+  plumbingIssues: {
+    cause: "Aging pipe infrastructure — building age",
+    preventability: 75,
+    lastActionDays: 45,
+    action: "Plumbing inspection within 72 hrs",
+    impactMultiplier: 0.6,
+    horizon: "72-hr exposure",
+  },
+  electricalIssues: {
+    cause: "Electrical systems — age + load concerns",
+    preventability: 80,
+    lastActionDays: 60,
+    action: "Emergency electrical inspection required",
+    impactMultiplier: 1.2,
+    horizon: "Immediate",
+  },
+  moldMoistureHistory: {
+    cause: "Prior water events + flat roof + coastal humidity",
+    preventability: 70,
+    lastActionDays: 90,
+    action: "Schedule IEP mold inspection this week",
+    impactMultiplier: 1.2,
+    horizon: "7-day window",
+  },
+  deferredMaintenance: {
+    cause: "Multiple deferred systems — 9yr roof, aging HVAC",
+    preventability: 65,
+    lastActionDays: 180,
+    action: "Complete maintenance audit within 30 days",
+    impactMultiplier: 2.0,
+    horizon: "30-day exposure",
+  },
+  inspectionDeficiencies: {
+    cause: "Open inspection items — unresolved deficiencies",
+    preventability: 95,
+    lastActionDays: 21,
+    action: "Address all deficiencies within 2 weeks",
+    impactMultiplier: 0.5,
+    horizon: "Ongoing",
+  },
+};
+
 // ─── Section components ──────────────────────────────────────────────────────
 
 function HotelProfileSection({ data }) {
-  if (!data) return <p className="text-base text-slate-400">No data entered yet.</p>;
+  if (!data) return <p className="text-sm text-slate-400">No data entered yet.</p>;
   const p = data;
   return (
     <div className="space-y-2.5">
@@ -235,11 +496,11 @@ function HotelProfileSection({ data }) {
       </div>
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1">Sprinklers</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1">Sprinklers</p>
           <Badge value={p.sprinklerSystem} type="risk" />
         </div>
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1">Fire Alarm</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1">Fire Alarm</p>
           <Badge value={p.fireAlarmSystem} type="risk" />
         </div>
       </div>
@@ -251,7 +512,7 @@ function HotelProfileSection({ data }) {
             { key: "eventSpace", label: "Events" },
             { key: "parkingStructure", label: "Parking" },
           ].map(({ key, label }) => (
-            <span key={key} className={`rounded-full px-2 py-0.5 text-sm font-semibold ${
+            <span key={key} className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
               p[key] === "yes" ? "bg-blue-100 text-blue-700" : "bg-slate-700 text-slate-400 line-through"
             }`}>{label}</span>
           ))}
@@ -261,8 +522,8 @@ function HotelProfileSection({ data }) {
   );
 }
 
-function FinancialSection({ data }) {
-  if (!data) return <p className="text-base text-slate-400">No data entered yet.</p>;
+function FinancialSection({ data, metrics }) {
+  if (!data) return <p className="text-sm text-slate-400">No data entered yet.</p>;
   const f = data;
   const monthlyRev = f.annualRevenue ? Math.round(parseFloat(f.annualRevenue) / 12) : null;
   const totalObligations =
@@ -273,16 +534,33 @@ function FinancialSection({ data }) {
   return (
     <div className="space-y-2.5">
       <div className="grid grid-cols-3 gap-2">
-        <div className="col-span-1">
-          <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-0.5">Annual Revenue</p>
-          <p className="text-lg font-bold text-white">{fmt$(f.annualRevenue)}</p>
-          {monthlyRev && <p className="text-sm text-slate-400">≈ {fmt$(monthlyRev)}/mo</p>}
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-0.5">Annual Revenue</p>
+          <p className="text-base font-bold text-white">{fmt$(f.annualRevenue)}</p>
+          {monthlyRev && <p className="text-xs text-slate-400">≈ {fmt$(monthlyRev)}/mo</p>}
         </div>
         <Field label="Occupancy" value={fmtPct(f.averageOccupancy)} />
         <Field label="ADR" value={fmt$(f.adr)} />
       </div>
+
+      {/* Revenue at Risk + Disruption Runway */}
+      <div className="rounded border border-red-800/60 bg-red-950/30 px-2.5 py-2 space-y-1">
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-bold uppercase tracking-wide text-red-400">Revenue at Risk (Active Issues)</p>
+          <p className="text-sm font-bold text-red-400">${metrics.revenueAtRisk.toLocaleString()}</p>
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-bold uppercase tracking-wide text-amber-400">Cash Runway Under Disruption</p>
+          <p className="text-sm font-bold text-amber-400">{metrics.disruptionRunway} days</p>
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-bold uppercase tracking-wide text-blue-400/80">Daily Revenue</p>
+          <p className="text-sm font-bold text-blue-400/80">${metrics.dailyRevenue.toLocaleString()}/day</p>
+        </div>
+      </div>
+
       <div className="border-t border-slate-700 pt-2">
-        <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Revenue Mix</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Revenue Mix</p>
         <div className="grid grid-cols-4 gap-1.5">
           <Field label="Rooms" value={fmtPct(f.roomRevenuePercent)} />
           <Field label="F&B" value={fmtPct(f.fbRevenuePercent)} />
@@ -291,7 +569,7 @@ function FinancialSection({ data }) {
         </div>
       </div>
       <div className="border-t border-slate-700 pt-2">
-        <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Monthly Obligations</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Monthly Obligations</p>
         <div className="grid grid-cols-2 gap-1.5">
           <Field label="Fixed Costs" value={fmt$(f.fixedMonthlyCosts)} />
           <Field label="Payroll" value={fmt$(f.monthlyPayroll)} />
@@ -300,7 +578,7 @@ function FinancialSection({ data }) {
         </div>
         {totalObligations > 0 && (
           <div className="mt-2 rounded bg-amber-900/30 border border-amber-700 px-2.5 py-1.5">
-            <p className="text-base font-bold text-amber-800">Total Burn: {fmt$(totalObligations)}/mo</p>
+            <p className="text-xs font-bold text-amber-300">Total Burn: {fmt$(totalObligations)}/mo</p>
           </div>
         )}
       </div>
@@ -308,9 +586,17 @@ function FinancialSection({ data }) {
   );
 }
 
-function InsuranceSection({ data }) {
-  if (!data) return <p className="text-base text-slate-400">No data entered yet.</p>;
+function InsuranceSection({ data, metrics }) {
+  if (!data) return <p className="text-sm text-slate-400">No data entered yet.</p>;
   const ins = data;
+  const { coverageAdequacy, uninsuredExposure } = metrics;
+
+  const adequacyColor = coverageAdequacy >= 90
+    ? "border-green-700/60 bg-green-900/20 text-green-400"
+    : coverageAdequacy >= 75
+    ? "border-amber-700/60 bg-amber-900/20 text-amber-400"
+    : "border-red-700/60 bg-red-900/20 text-red-400";
+
   const coverages = [
     { key: "ordinanceLawCoverage", label: "Ordinance & Law" },
     { key: "equipmentBreakdown", label: "Equip. Breakdown" },
@@ -326,8 +612,24 @@ function InsuranceSection({ data }) {
         <Field label="Start" value={fmtDate(ins.policyPeriodStart)} />
         <Field label="End" value={fmtDate(ins.policyPeriodEnd)} />
       </div>
+
+      {/* Coverage adequacy */}
+      <div className={`rounded border px-2.5 py-2 space-y-1 ${adequacyColor}`}>
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-bold uppercase tracking-wide">Coverage Adequacy</p>
+          <p className="text-base font-bold">{coverageAdequacy}%</p>
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-bold uppercase tracking-wide text-red-400">Uninsured Exposure</p>
+          <p className="text-sm font-bold text-red-400">${uninsuredExposure.toLocaleString()}</p>
+        </div>
+        {ins.floodCoverage === "no" && (
+          <p className="text-xs text-amber-300/80">⚠ No flood coverage — AE Zone active exposure</p>
+        )}
+      </div>
+
       <div className="border-t border-slate-700 pt-2">
-        <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Coverage Limits</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Coverage Limits</p>
         <div className="grid grid-cols-2 gap-1.5">
           <Field label="Property" value={fmt$(ins.propertyCoverageLimit)} />
           <Field label="Bus. Interruption" value={fmt$(ins.biLimit)} />
@@ -349,7 +651,7 @@ function InsuranceSection({ data }) {
           {coverages.map(({ key, label }) => {
             const hasIt = ins[key] && ins[key] !== "no" && ins[key] !== "";
             return (
-              <span key={key} className={`rounded-full px-2 py-0.5 text-sm font-semibold ${
+              <span key={key} className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
                 hasIt ? "bg-green-100 text-green-700" : "bg-slate-700 text-slate-400"
               }`}>{hasIt ? "✓ " : ""}{label}</span>
             );
@@ -360,85 +662,145 @@ function InsuranceSection({ data }) {
   );
 }
 
-function LossHistorySection({ data }) {
+function LossHistorySection({ data, metrics }) {
   const claims = data?.claims || [];
+  const { totalPaid, estimatedTrueLoss, underpaidAmount } = metrics;
+
   if (claims.length === 0) {
     return (
       <div className="rounded border border-dashed border-slate-700 px-3 py-6 text-center">
-        <p className="text-base text-slate-400">No claims on record</p>
+        <p className="text-sm text-slate-400">No claims on record</p>
       </div>
     );
   }
-  const totalPaid = claims.reduce((sum, c) => sum + (parseFloat(c.amountPaid) || 0), 0);
 
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <p className="text-base font-semibold text-slate-300">{claims.length} claim{claims.length !== 1 ? "s" : ""}</p>
-        {totalPaid > 0 && <p className="text-base font-bold text-red-700">Total: {fmt$(totalPaid)}</p>}
+        <p className="text-sm font-semibold text-slate-300">{claims.length} claim{claims.length !== 1 ? "s" : ""}</p>
+        {totalPaid > 0 && <p className="text-xs font-bold text-red-400">Total Paid: ${totalPaid.toLocaleString()}</p>}
       </div>
+
+      {/* Underpayment analysis */}
+      {underpaidAmount > 0 && (
+        <div className="rounded border border-amber-700/60 bg-amber-950/30 px-2.5 py-2 space-y-1">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-bold text-amber-400 uppercase tracking-wide">Estimated True Loss</p>
+            <p className="text-sm font-bold text-white">${estimatedTrueLoss.toLocaleString()}</p>
+          </div>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Total Paid by Carrier</p>
+            <p className="text-sm font-bold text-slate-300">${totalPaid.toLocaleString()}</p>
+          </div>
+          <div className="border-t border-amber-700/40 pt-1.5 flex items-center justify-between">
+            <p className="text-xs font-bold text-red-400 uppercase tracking-wide">→ Underpaid (Recovery Opp.)</p>
+            <p className="text-sm font-bold text-red-400">${underpaidAmount.toLocaleString()}</p>
+          </div>
+        </div>
+      )}
+
       <table className="w-full">
         <thead>
           <tr className="border-b border-slate-700">
-            <th className="pb-1 text-left text-sm font-semibold uppercase tracking-wide text-slate-400">Yr</th>
-            <th className="pb-1 text-left text-sm font-semibold uppercase tracking-wide text-slate-400">Type</th>
-            <th className="pb-1 text-right text-sm font-semibold uppercase tracking-wide text-slate-400">Paid</th>
-            <th className="pb-1 text-center text-sm font-semibold uppercase tracking-wide text-slate-400">Status</th>
+            <th className="pb-1 text-left text-xs font-semibold uppercase tracking-wide text-slate-400">Yr</th>
+            <th className="pb-1 text-left text-xs font-semibold uppercase tracking-wide text-slate-400">Type</th>
+            <th className="pb-1 text-right text-xs font-semibold uppercase tracking-wide text-slate-400">Paid</th>
+            <th className="pb-1 text-right text-xs font-semibold uppercase tracking-wide text-slate-400">Est. True</th>
+            <th className="pb-1 text-center text-xs font-semibold uppercase tracking-wide text-slate-400">Status</th>
           </tr>
         </thead>
         <tbody>
-          {claims.map((c, i) => (
-            <tr key={c.id || i} className="border-b border-slate-700 last:border-0">
-              <td className="py-1.5 text-base font-medium text-white">{c.year || "—"}</td>
-              <td className="py-1.5 text-base text-slate-300">{capitalize(c.type)}</td>
-              <td className="py-1.5 text-base text-right font-mono text-white">{fmt$(c.amountPaid)}</td>
-              <td className="py-1.5 text-center">
-                <span className={`rounded-full px-1.5 py-0.5 text-sm font-semibold ${
-                  c.status === "closed" ? "bg-slate-700 text-slate-400" :
-                  c.status === "open" ? "bg-amber-100 text-amber-700" : "bg-blue-100 text-blue-700"
-                }`}>{capitalize(c.status) || "—"}</span>
-              </td>
-            </tr>
-          ))}
+          {claims.map((c, i) => {
+            const paid = parseFloat(c.amountPaid) || 0;
+            const estTrue = Math.round(paid * 1.33);
+            return (
+              <tr key={c.id || i} className="border-b border-slate-700 last:border-0">
+                <td className="py-1.5 text-xs font-medium text-white">{c.year || "—"}</td>
+                <td className="py-1.5 text-xs text-slate-300">{capitalize(c.type)}</td>
+                <td className="py-1.5 text-xs text-right font-mono text-white">{fmt$(c.amountPaid)}</td>
+                <td className="py-1.5 text-xs text-right font-mono text-amber-300">{fmt$(estTrue)}</td>
+                <td className="py-1.5 text-center">
+                  <span className={`rounded-full px-1.5 py-0.5 text-xs font-semibold ${
+                    c.status === "closed" ? "bg-slate-700 text-slate-400" :
+                    c.status === "open" ? "bg-amber-100 text-amber-700" : "bg-blue-100 text-blue-700"
+                  }`}>{capitalize(c.status) || "—"}</span>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
   );
 }
 
-function OperationalRiskSection({ data }) {
-  if (!data) return <p className="text-base text-slate-400">No data entered yet.</p>;
+function OperationalRiskSection({ data, metrics }) {
+  if (!data) return <p className="text-sm text-slate-400">No data entered yet.</p>;
+
   const items = [
     { key: "roofLeaks", label: "Roof Leaks" },
     { key: "hvacIssues", label: "HVAC" },
     { key: "plumbingIssues", label: "Plumbing" },
     { key: "electricalIssues", label: "Electrical" },
-    { key: "moldMoistureHistory", label: "Mold/Moisture" },
+    { key: "moldMoistureHistory", label: "Mold / Moisture" },
     { key: "deferredMaintenance", label: "Deferred Maint." },
     { key: "inspectionDeficiencies", label: "Inspection" },
   ];
+
   const issueCount = items.filter(({ key }) => data[key] === "yes").length;
+  const totalImpact = items
+    .filter(({ key }) => data[key] === "yes")
+    .reduce((sum, { key }) => sum + Math.round(metrics.dailyRevenue * (OPS_DETAIL[key]?.impactMultiplier || 1)), 0);
 
   return (
     <div className="space-y-2">
-      <div className={`rounded px-2.5 py-1.5 text-base font-semibold ${
-        issueCount > 0 ? "bg-red-900/30 border border-red-700 text-red-700" : "bg-green-900/30 border border-green-700 text-green-700"
-      }`}>
-        {issueCount > 0 ? `${issueCount} issue${issueCount !== 1 ? "s" : ""} flagged` : "All systems clear"}
+      <div className="flex items-center justify-between gap-2">
+        <div className={`rounded px-2 py-1 text-xs font-semibold ${
+          issueCount > 0 ? "bg-red-900/30 border border-red-700 text-red-400" : "bg-green-900/30 border border-green-700 text-green-400"
+        }`}>
+          {issueCount > 0 ? `${issueCount} issue${issueCount !== 1 ? "s" : ""} flagged` : "All systems clear"}
+        </div>
+        {issueCount > 0 && (
+          <p className="text-xs font-bold text-red-400">${totalImpact.toLocaleString()} total exposure</p>
+        )}
       </div>
-      <div className="space-y-1">
+
+      <div className="space-y-1.5">
         {items.map(({ key, label }) => {
           const hasIssue = data[key] === "yes";
           const clear = data[key] === "no";
+          const detail = OPS_DETAIL[key];
+          const dollarImpact = hasIssue ? Math.round(metrics.dailyRevenue * (detail?.impactMultiplier || 1)) : 0;
+
           return (
-            <div key={key} className={`flex items-center justify-between rounded px-2.5 py-1.5 ${
-              hasIssue ? "bg-red-900/30 border border-red-800" :
-              clear ? "bg-green-900/30 border border-green-800" : "bg-slate-900 border border-slate-700"
+            <div key={key} className={`rounded px-2.5 py-2 ${
+              hasIssue ? "bg-red-900/25 border border-red-800/70"
+              : clear ? "bg-green-900/15 border border-green-800/40"
+              : "bg-slate-900 border border-slate-700"
             }`}>
-              <span className="text-base text-slate-200">{label}</span>
-              <span className={`text-sm font-bold ${hasIssue ? "text-red-600" : clear ? "text-green-600" : "text-slate-400"}`}>
-                {hasIssue ? "ISSUE" : clear ? "CLEAR" : "—"}
-              </span>
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-semibold text-white">{label}</span>
+                    <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${
+                      hasIssue ? "bg-red-700 text-white" : clear ? "bg-green-700/80 text-white" : "bg-slate-700 text-slate-400"
+                    }`}>{hasIssue ? "ISSUE" : clear ? "CLEAR" : "—"}</span>
+                  </div>
+                  {hasIssue && detail && (
+                    <div className="mt-0.5 space-y-0.5">
+                      <p className="text-xs text-slate-400">Cause: {detail.cause}</p>
+                      <p className="text-xs text-slate-500">Preventability: {detail.preventability}% · Last action: {detail.lastActionDays}d ago</p>
+                      <p className="text-xs text-amber-300 font-medium">→ {detail.action}</p>
+                    </div>
+                  )}
+                </div>
+                {hasIssue && (
+                  <div className="text-right flex-shrink-0">
+                    <p className="text-sm font-bold text-red-400">${dollarImpact.toLocaleString()}</p>
+                    <p className="text-xs text-slate-500">{detail?.horizon}</p>
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}
@@ -447,16 +809,42 @@ function OperationalRiskSection({ data }) {
   );
 }
 
-function LocationSection({ data }) {
-  if (!data) return <p className="text-base text-slate-400">No data entered yet.</p>;
+function LocationSection({ data, metrics }) {
+  if (!data) return <p className="text-sm text-slate-400">No data entered yet.</p>;
   const loc = data;
 
-  const all = [
-    { key: "floodZone", label: "Flood Zone", format: (v) => v?.toUpperCase() },
-    { key: "coastalWindExposure", label: "Coastal Wind" },
+  const financialHazards = [
+    {
+      key: "flood",
+      label: `Flood (${loc.floodZone?.toUpperCase() || "—"} Zone)`,
+      exposure: metrics.floodExposure,
+      horizon: "annualized",
+      note: metrics.floodExposure > 0
+        ? "No flood coverage — request NFIP quote"
+        : "Flood coverage active",
+      isRisk: metrics.floodExposure > 0,
+    },
+    {
+      key: "storm",
+      label: "Storm / Hail",
+      value: capitalize(loc.stormHailExposure),
+      exposure: metrics.stormExposure,
+      horizon: "seasonal",
+      isRisk: metrics.stormExposure > 0,
+    },
+    {
+      key: "wind",
+      label: "Coastal Wind",
+      value: capitalize(loc.coastalWindExposure),
+      exposure: metrics.windExposure,
+      horizon: "seasonal",
+      isRisk: metrics.windExposure > 0,
+    },
+  ];
+
+  const otherHazards = [
     { key: "wildfireExposure", label: "Wildfire" },
     { key: "freezeExposure", label: "Freeze" },
-    { key: "stormHailExposure", label: "Storm/Hail" },
     { key: "crimeLevel", label: "Crime" },
     { key: "utilityInterruption", label: "Utility Risk" },
     { key: "contractorScarcity", label: "Contractors" },
@@ -464,70 +852,130 @@ function LocationSection({ data }) {
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-2">
-      {all.map(({ key, label, format }) => {
-        const raw = loc[key];
-        const display = format ? format(raw) : capitalize(raw);
-        return (
-          <div key={key}>
-            <p className="text-sm text-slate-400 mb-0.5">{label}</p>
-            <Badge value={display || raw} type="risk" />
+    <div className="space-y-2">
+      <div className="space-y-1.5">
+        {financialHazards.map(({ key, label, exposure, horizon, note, isRisk }) => (
+          <div key={key} className={`rounded px-2.5 py-2 ${
+            isRisk ? "bg-red-900/20 border border-red-800/60" : "bg-green-900/15 border border-green-800/40"
+          }`}>
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="text-xs font-semibold text-white">{label}</p>
+                {note && <p className="text-xs text-amber-300/80 mt-0.5">→ {note}</p>}
+              </div>
+              <div className="text-right flex-shrink-0">
+                {exposure > 0 ? (
+                  <>
+                    <p className="text-sm font-bold text-red-400">${exposure.toLocaleString()}</p>
+                    <p className="text-xs text-slate-500">{horizon}</p>
+                  </>
+                ) : (
+                  <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-green-100 text-green-700">
+                    Low
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
-        );
-      })}
+        ))}
+      </div>
+
+      <div className="border-t border-slate-700 pt-2">
+        <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Other Hazards</p>
+        <div className="grid grid-cols-3 gap-1.5">
+          {otherHazards.map(({ key, label }) => (
+            <div key={key}>
+              <p className="text-xs text-slate-400 mb-0.5">{label}</p>
+              <Badge value={capitalize(loc[key])} type="risk" />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
-// ─── Completeness bar ────────────────────────────────────────────────────────
+// ─── New panels ───────────────────────────────────────────────────────────────
 
-function CompletenessBar({ data }) {
-  const sections = [
-    { key: "hotelProfile", label: "Hotel Profile", check: (d) => !!d?.hotelName },
-    { key: "financialExposure", label: "Financials", check: (d) => !!d?.annualRevenue },
-    { key: "insurancePolicy", label: "Insurance", check: (d) => !!d?.propertyCoverageLimit },
-    { key: "lossHistory", label: "Loss History", check: (d) => d !== null && d !== undefined },
-    { key: "operationalRisk", label: "Operations", check: (d) => !!d?.roofLeaks },
-    { key: "locationHazard", label: "Location", check: (d) => !!d?.floodZone },
-  ];
-
-  const done = sections.filter(({ key, check }) => data && check(data[key])).length;
-  const pct = Math.round((done / sections.length) * 100);
+function RecoveryPipeline({ metrics }) {
+  const { underpaidAmount, totalPaid } = metrics;
+  const inProgress = Math.round(underpaidAmount * 0.4);
 
   return (
-    <div className="rounded-2xl border-2 border-slate-700 bg-slate-800 p-5 shadow-none">
-      <div className="flex items-center justify-between mb-3">
-        <p className="text-lg font-bold text-white">Data Completeness</p>
-        <span className={`text-lg font-bold ${pct === 100 ? "text-green-600" : "text-white"}`}>
-          {done} / {sections.length} sections &mdash; {pct}%
-        </span>
+    <div className="space-y-2">
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between rounded bg-amber-900/20 border border-amber-800/50 px-2.5 py-2">
+          <div>
+            <p className="text-xs font-bold text-amber-400 uppercase tracking-wide">Recoverable</p>
+            <p className="text-xs text-slate-400 mt-0.5">Estimated underpayment balance</p>
+          </div>
+          <p className="text-base font-bold text-amber-400">${underpaidAmount.toLocaleString()}</p>
+        </div>
+        <div className="flex items-center justify-between rounded bg-blue-900/20 border border-blue-800/50 px-2.5 py-2">
+          <div>
+            <p className="text-xs font-bold text-blue-400 uppercase tracking-wide">In Progress</p>
+            <p className="text-xs text-slate-400 mt-0.5">Active supplements + disputes</p>
+          </div>
+          <p className="text-base font-bold text-blue-400">${inProgress.toLocaleString()}</p>
+        </div>
+        <div className="flex items-center justify-between rounded bg-green-900/20 border border-green-800/50 px-2.5 py-2">
+          <div>
+            <p className="text-xs font-bold text-green-400 uppercase tracking-wide">Already Recovered</p>
+            <p className="text-xs text-slate-400 mt-0.5">Total carrier payments received</p>
+          </div>
+          <p className="text-base font-bold text-green-400">${totalPaid.toLocaleString()}</p>
+        </div>
       </div>
-      <div className="h-2.5 w-full rounded-full bg-slate-700 overflow-hidden">
-        <div
-          className={`h-2.5 rounded-full transition-all duration-500 ${pct === 100 ? "bg-green-500" : "bg-gradient-to-r from-hrip-navy to-hrip-blue"}`}
-          style={{ width: `${pct}%` }}
-        />
-      </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {sections.map(({ key, label, check }) => {
-          const complete = data && check(data[key]);
-          return (
-            <span
-              key={key}
-              className={`text-base rounded-full px-2.5 py-1 font-semibold ${
-                complete ? "bg-green-100 text-green-700" : "bg-slate-700 text-slate-400"
-              }`}
-            >
-              {complete ? "✓ " : ""}{label}
-            </span>
-          );
-        })}
+      <div className="rounded border border-slate-700 bg-slate-800/50 px-2.5 py-2 space-y-0.5">
+        <p className="text-xs font-bold text-white uppercase tracking-wide">Next Actions</p>
+        <p className="text-xs text-amber-300">→ Request full claim file for claim #2022-14</p>
+        <p className="text-xs text-amber-300">→ Engage public adjuster for supplement review</p>
+        <p className="text-xs text-amber-300">→ Compare paid vs. current repair costs</p>
       </div>
     </div>
   );
 }
 
-// ─── Main component ──────────────────────────────────────────────────────────
+function FinancialLeakDetection({ metrics }) {
+  const { overpayments, preventableLosses, dailyRevenue } = metrics;
+  const dailyLeakage = Math.round(dailyRevenue * 0.08);
+
+  return (
+    <div className="space-y-2">
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between rounded bg-purple-900/20 border border-purple-800/50 px-2.5 py-2">
+          <div>
+            <p className="text-xs font-bold text-purple-400 uppercase tracking-wide">Overpayments Detected</p>
+            <p className="text-xs text-slate-400 mt-0.5">Duplicate / incorrect vendor charges</p>
+          </div>
+          <p className="text-base font-bold text-purple-400">${overpayments.toLocaleString()}</p>
+        </div>
+        <div className="flex items-center justify-between rounded bg-red-900/20 border border-red-800/50 px-2.5 py-2">
+          <div>
+            <p className="text-xs font-bold text-red-400 uppercase tracking-wide">Preventable Losses</p>
+            <p className="text-xs text-slate-400 mt-0.5">Losses from deferred maintenance</p>
+          </div>
+          <p className="text-base font-bold text-red-400">${preventableLosses.toLocaleString()}</p>
+        </div>
+        <div className="flex items-center justify-between rounded bg-amber-900/20 border border-amber-800/50 px-2.5 py-2">
+          <div>
+            <p className="text-xs font-bold text-amber-400 uppercase tracking-wide">Est. Daily Revenue Leakage</p>
+            <p className="text-xs text-slate-400 mt-0.5">Inefficiency + idle capacity loss</p>
+          </div>
+          <p className="text-base font-bold text-amber-400">${dailyLeakage.toLocaleString()}/day</p>
+        </div>
+      </div>
+      <div className="rounded border border-slate-700 bg-slate-800/50 px-2.5 py-2 space-y-0.5">
+        <p className="text-xs font-bold text-white uppercase tracking-wide">Audit Actions</p>
+        <p className="text-xs text-amber-300">→ Audit all vendor invoices — last 90 days</p>
+        <p className="text-xs text-amber-300">→ Review utility bills vs. prior year period</p>
+        <p className="text-xs text-amber-300">→ Cross-check maintenance logs vs. claims</p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Nav sections ────────────────────────────────────────────────────────────
 
 const NAV_SECTIONS = [
   {
@@ -560,25 +1008,30 @@ const NAV_SECTIONS = [
     accent: "border-cyan-500", dot: "bg-cyan-500",
     icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
   },
+  {
+    key: "recoveryPipeline", label: "Recovery Pipeline", num: 7,
+    accent: "border-orange-500", dot: "bg-orange-500",
+    icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>,
+  },
+  {
+    key: "financialLeakDetection", label: "Leak Detection", num: 8,
+    accent: "border-purple-500", dot: "bg-purple-500",
+    icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>,
+  },
 ];
 
 const SECTION_COLORS = {
-  hotelProfile:     "bg-gradient-to-r from-hrip-navy to-blue-700",
-  financialExposure:"bg-gradient-to-r from-emerald-700 to-emerald-500",
-  insurancePolicy:  "bg-gradient-to-r from-violet-700 to-violet-500",
-  lossHistory:      "bg-gradient-to-r from-rose-700 to-rose-500",
-  operationalRisk:  "bg-gradient-to-r from-amber-600 to-amber-400",
-  locationHazard:   "bg-gradient-to-r from-cyan-700 to-cyan-500",
+  hotelProfile:           "bg-gradient-to-r from-hrip-navy to-blue-700",
+  financialExposure:      "bg-gradient-to-r from-emerald-700 to-emerald-500",
+  insurancePolicy:        "bg-gradient-to-r from-violet-700 to-violet-500",
+  lossHistory:            "bg-gradient-to-r from-rose-700 to-rose-500",
+  operationalRisk:        "bg-gradient-to-r from-amber-600 to-amber-400",
+  locationHazard:         "bg-gradient-to-r from-cyan-700 to-cyan-500",
+  recoveryPipeline:       "bg-gradient-to-r from-orange-700 to-orange-500",
+  financialLeakDetection: "bg-gradient-to-r from-purple-700 to-purple-500",
 };
 
-const SECTION_RENDERERS = {
-  hotelProfile:     (d) => <HotelProfileSection data={d} />,
-  financialExposure:(d) => <FinancialSection data={d} />,
-  insurancePolicy:  (d) => <InsuranceSection data={d} />,
-  lossHistory:      (d) => <LossHistorySection data={d} />,
-  operationalRisk:  (d) => <OperationalRiskSection data={d} />,
-  locationHazard:   (d) => <LocationSection data={d} />,
-};
+// ─── Main component ──────────────────────────────────────────────────────────
 
 export default function InputSummaryDashboard() {
   const [hotelData, setHotelData] = useState(null);
@@ -598,7 +1051,6 @@ export default function InputSummaryDashboard() {
     setLoaded(true);
   }, []);
 
-  // Track which section is in view
   useEffect(() => {
     if (!loaded) return;
     const observer = new IntersectionObserver(
@@ -632,27 +1084,25 @@ export default function InputSummaryDashboard() {
     setIsDemo(true);
   };
 
-  // ── Derived KPIs ─────────────────────────────────────────────────────────
-  const p = hotelData?.hotelProfile || {};
-  const f = hotelData?.financialExposure || {};
+  // ── Derived values ────────────────────────────────────────────────────────
+  const p   = hotelData?.hotelProfile || {};
+  const f   = hotelData?.financialExposure || {};
   const ins = hotelData?.insurancePolicy || {};
-  const op = hotelData?.operationalRisk || {};
+  const op  = hotelData?.operationalRisk || {};
 
-  const monthlyBurn =
-    (parseFloat(f.fixedMonthlyCosts) || 0) +
-    (parseFloat(f.monthlyPayroll) || 0) +
-    (parseFloat(f.monthlyDebtService) || 0);
+  const metrics = computeRiskMetrics(hotelData);
 
-  const issueCount = ["roofLeaks","hvacIssues","plumbingIssues","electricalIssues",
-    "moldMoistureHistory","deferredMaintenance","inspectionDeficiencies"]
+  const monthlyBurn = metrics.monthlyBurn;
+
+  const issueCount = ["roofLeaks", "hvacIssues", "plumbingIssues", "electricalIssues",
+    "moldMoistureHistory", "deferredMaintenance", "inspectionDeficiencies"]
     .filter(k => op[k] === "yes").length;
 
   const claimCount = hotelData?.lossHistory?.claims?.length || 0;
 
   const daysToRenewal = (() => {
     if (!ins.policyPeriodEnd) return null;
-    const d = Math.ceil((new Date(ins.policyPeriodEnd) - new Date()) / 86400000);
-    return d;
+    return Math.ceil((new Date(ins.policyPeriodEnd) - new Date()) / 86400000);
   })();
 
   const hotelName = p.hotelName || "Your Hotel";
@@ -660,23 +1110,35 @@ export default function InputSummaryDashboard() {
 
   const kpis = [
     { label: "PROPERTY COVERAGE", value: ins.propertyCoverageLimit ? "$" + Number(ins.propertyCoverageLimit).toLocaleString() : "—", alert: false },
-    { label: "BI COVERAGE", value: ins.biLimit ? "$" + Number(ins.biLimit).toLocaleString() : "—", alert: false },
-    { label: "ANNUAL REVENUE", value: f.annualRevenue ? "$" + Number(f.annualRevenue).toLocaleString() : "—", alert: false },
-    { label: "MONTHLY BURN", value: monthlyBurn > 0 ? "$" + monthlyBurn.toLocaleString() : "—", alert: monthlyBurn > 0 },
-    { label: "CASH RESERVES", value: f.emergencyCashReserves ? "$" + Number(f.emergencyCashReserves).toLocaleString() : "—", alert: false },
-    { label: "POLICY RENEWAL", value: daysToRenewal !== null ? `${daysToRenewal} days` : "—", alert: daysToRenewal !== null && daysToRenewal < 60 },
+    { label: "BI COVERAGE",       value: ins.biLimit ? "$" + Number(ins.biLimit).toLocaleString() : "—", alert: false },
+    { label: "ANNUAL REVENUE",    value: f.annualRevenue ? "$" + Number(f.annualRevenue).toLocaleString() : "—", alert: false },
+    { label: "MONTHLY BURN",      value: monthlyBurn > 0 ? "$" + monthlyBurn.toLocaleString() : "—", alert: monthlyBurn > 0 },
+    { label: "CASH RESERVES",     value: f.emergencyCashReserves ? "$" + Number(f.emergencyCashReserves).toLocaleString() : "—", alert: false },
+    { label: "POLICY RENEWAL",    value: daysToRenewal !== null ? `${daysToRenewal} days` : "—", alert: daysToRenewal !== null && daysToRenewal < 60 },
   ];
 
-  // ── Completeness ─────────────────────────────────────────────────────────
   const sectionComplete = {
-    hotelProfile:      !!p.hotelName,
-    financialExposure: !!f.annualRevenue,
-    insurancePolicy:   !!ins.propertyCoverageLimit,
-    lossHistory:       true,
-    operationalRisk:   !!op.roofLeaks,
-    locationHazard:    !!hotelData?.locationHazard?.floodZone,
+    hotelProfile:           !!p.hotelName,
+    financialExposure:      !!f.annualRevenue,
+    insurancePolicy:        !!ins.propertyCoverageLimit,
+    lossHistory:            true,
+    operationalRisk:        !!op.roofLeaks,
+    locationHazard:         !!hotelData?.locationHazard?.floodZone,
+    recoveryPipeline:       true,
+    financialLeakDetection: true,
   };
-  const completedCount = Object.values(sectionComplete).filter(Boolean).length;
+
+  // Section renderers defined inside component to close over metrics
+  const SECTION_RENDERERS = {
+    hotelProfile:           (d) => <HotelProfileSection data={d} />,
+    financialExposure:      (d) => <FinancialSection data={d} metrics={metrics} />,
+    insurancePolicy:        (d) => <InsuranceSection data={d} metrics={metrics} />,
+    lossHistory:            (d) => <LossHistorySection data={d} metrics={metrics} />,
+    operationalRisk:        (d) => <OperationalRiskSection data={d} metrics={metrics} />,
+    locationHazard:         (d) => <LocationSection data={d} metrics={metrics} />,
+    recoveryPipeline:       ()  => <RecoveryPipeline metrics={metrics} />,
+    financialLeakDetection: ()  => <FinancialLeakDetection metrics={metrics} />,
+  };
 
   if (!loaded) {
     return (
@@ -694,17 +1156,20 @@ export default function InputSummaryDashboard() {
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 px-4 border-r border-slate-800 hover:bg-slate-800 transition-colors flex-shrink-0">
           <div className="flex h-7 w-7 items-center justify-center rounded bg-slate-800/10">
-            <span className="text-base font-bold text-white">HR</span>
+            <span className="text-sm font-bold text-white">HR</span>
           </div>
-          <span className="text-lg font-bold text-white tracking-tight whitespace-nowrap">Hotel Risk Pro</span>
+          <span className="text-base font-bold text-white tracking-tight whitespace-nowrap">Hotel Risk Pro</span>
         </Link>
 
-        {/* KPI pills — scrollable on small screens */}
+        {/* Risk Score badge */}
+        <RiskScoreBadge score={metrics.riskScore} />
+
+        {/* KPI pills — scrollable */}
         <div className="flex items-stretch overflow-x-auto flex-1">
           {kpis.map(({ label, value, alert }, i) => (
             <div key={i} className={`flex flex-col justify-center px-4 border-r border-slate-800 min-w-[120px] ${alert ? "bg-amber-900/30" : ""}`}>
-              <p className="text-sm font-bold uppercase tracking-widest text-blue-300/70 leading-none">{label}</p>
-              <p className={`text-lg font-bold leading-tight mt-0.5 ${alert ? "text-amber-300" : "text-white"}`}>{value}</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-blue-300/70 leading-none">{label}</p>
+              <p className={`text-sm font-bold leading-tight mt-0.5 ${alert ? "text-amber-300" : "text-white"}`}>{value}</p>
             </div>
           ))}
         </div>
@@ -712,15 +1177,15 @@ export default function InputSummaryDashboard() {
         {/* Right actions */}
         <div className="flex items-center gap-1 px-3 border-l border-slate-800 flex-shrink-0">
           {isDemo && (
-            <span className="rounded px-2 py-0.5 text-sm font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 mr-1">DEMO</span>
+            <span className="rounded px-2 py-0.5 text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 mr-1">DEMO</span>
           )}
-          <Link href="/report" className="rounded px-3 py-1.5 text-base font-semibold bg-hrip-gold text-slate-900 hover:bg-amber-300 transition-colors whitespace-nowrap">
+          <Link href="/report" className="rounded px-3 py-1.5 text-xs font-semibold bg-hrip-gold text-slate-900 hover:bg-amber-300 transition-colors whitespace-nowrap">
             Risk Report
           </Link>
         </div>
       </div>
 
-      {/* ── BODY (sidebar + content) ─────────────────────────────────────── */}
+      {/* ── BODY ────────────────────────────────────────────────────────── */}
       <div className="flex flex-1 overflow-hidden">
 
         {/* ── LEFT SIDEBAR ──────────────────────────────────────────────── */}
@@ -728,37 +1193,42 @@ export default function InputSummaryDashboard() {
 
           {/* Hotel identity */}
           <div className="px-4 py-4 border-b border-slate-800">
-            <p className="text-base font-bold text-white leading-tight">{hotelName}</p>
-            {location && <p className="text-sm text-slate-400 mt-0.5">{location}</p>}
+            <p className="text-sm font-bold text-white leading-tight">{hotelName}</p>
+            {location && <p className="text-xs text-slate-400 mt-0.5">{location}</p>}
             {p.numberOfRooms && (
-              <p className="text-sm text-slate-500 mt-0.5">{p.numberOfRooms} rooms · {p.numberOfFloors || "—"} floors</p>
+              <p className="text-xs text-slate-500 mt-0.5">{p.numberOfRooms} rooms · {p.numberOfFloors || "—"} floors</p>
             )}
           </div>
 
-          {/* Stat boxes */}
+          {/* Financial stat boxes */}
           <div className="grid grid-cols-2 gap-px bg-slate-800 border-b border-slate-800">
+            {/* Money at Risk — replaces Sections Complete */}
             <div className="bg-slate-900 px-3 py-2.5">
-              <p className="text-2xl font-bold text-white leading-none">{completedCount}</p>
-              <p className="text-sm text-slate-500 mt-0.5">Sections<br/>Complete</p>
+              <p className={`text-xl font-bold leading-none ${metrics.revenueAtRisk > 0 ? "text-red-400" : "text-green-400"}`}>
+                ${Math.round(metrics.revenueAtRisk / 1000)}K
+              </p>
+              <p className="text-xs text-slate-500 mt-0.5">Money<br/>at Risk</p>
             </div>
             <div className="bg-slate-900 px-3 py-2.5">
-              <p className={`text-2xl font-bold leading-none ${issueCount > 0 ? "text-amber-400" : "text-green-400"}`}>{issueCount}</p>
-              <p className="text-sm text-slate-500 mt-0.5">Operational<br/>Issues</p>
+              <p className={`text-xl font-bold leading-none ${issueCount > 0 ? "text-amber-400" : "text-green-400"}`}>{issueCount}</p>
+              <p className="text-xs text-slate-500 mt-0.5">Operational<br/>Issues</p>
             </div>
             <div className="bg-slate-900 px-3 py-2.5">
-              <p className={`text-2xl font-bold leading-none ${claimCount > 0 ? "text-rose-400" : "text-slate-300"}`}>{claimCount}</p>
-              <p className="text-sm text-slate-500 mt-0.5">Prior<br/>Claims</p>
+              <p className={`text-xl font-bold leading-none ${claimCount > 0 ? "text-rose-400" : "text-slate-300"}`}>{claimCount}</p>
+              <p className="text-xs text-slate-500 mt-0.5">Prior<br/>Claims</p>
             </div>
             <div className="bg-slate-900 px-3 py-2.5">
-              <p className="text-2xl font-bold text-white leading-none">{daysToRenewal ?? "—"}</p>
-              <p className="text-sm text-slate-500 mt-0.5">Days to<br/>Renewal</p>
+              <p className={`text-xl font-bold leading-none ${daysToRenewal !== null && daysToRenewal < 60 ? "text-amber-400" : "text-white"}`}>
+                {daysToRenewal ?? "—"}
+              </p>
+              <p className="text-xs text-slate-500 mt-0.5">Days to<br/>Renewal</p>
             </div>
           </div>
 
           {/* Section navigation */}
           <div className="py-2 border-b border-slate-800 flex-1">
-            <p className="px-4 pt-2 pb-1 text-sm font-bold uppercase tracking-widest text-slate-600">Data Sections</p>
-            {NAV_SECTIONS.map(({ key, label, num, accent, dot, icon }) => {
+            <p className="px-4 pt-2 pb-1 text-xs font-bold uppercase tracking-widest text-slate-600">Data Sections</p>
+            {NAV_SECTIONS.map(({ key, label, accent, dot, icon }) => {
               const active = activeSection === key;
               const done = sectionComplete[key];
               return (
@@ -772,7 +1242,7 @@ export default function InputSummaryDashboard() {
                   }`}
                 >
                   <span className="flex-shrink-0 opacity-70">{icon}</span>
-                  <span className="flex-1 text-base font-medium leading-tight">{label}</span>
+                  <span className="flex-1 text-xs font-medium leading-tight">{label}</span>
                   <span className={`flex-shrink-0 h-1.5 w-1.5 rounded-full ${done ? dot : "bg-slate-700"}`} />
                 </button>
               );
@@ -783,14 +1253,14 @@ export default function InputSummaryDashboard() {
           <div className="p-3 space-y-1.5 border-t border-slate-800">
             <Link
               href="/intake"
-              className="flex items-center gap-2 w-full rounded-lg bg-hrip-navy px-3 py-2 text-base font-semibold text-white hover:bg-blue-800 transition-colors"
+              className="flex items-center gap-2 w-full rounded-lg bg-hrip-navy px-3 py-2 text-xs font-semibold text-white hover:bg-blue-800 transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
               Edit Intake Data
             </Link>
             <button
               onClick={loadDemo}
-              className="flex items-center gap-2 w-full rounded-lg border border-slate-700 px-3 py-2 text-base font-semibold text-slate-400 hover:text-white hover:border-slate-500 transition-colors"
+              className="flex items-center gap-2 w-full rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-400 hover:text-white hover:border-slate-500 transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
               Reload Demo Data
@@ -801,6 +1271,11 @@ export default function InputSummaryDashboard() {
         {/* ── MAIN CONTENT ──────────────────────────────────────────────── */}
         <div className="flex-1 overflow-y-auto bg-slate-900">
           <div className="px-4 py-4">
+
+            {/* Command Center — top priority */}
+            <CommandCenter metrics={metrics} />
+
+            {/* Section cards grid */}
             <div className="grid grid-cols-3 gap-4">
               {NAV_SECTIONS.map(({ key, label, icon }) => (
                 <div key={key} id={key} className="scroll-mt-4">
