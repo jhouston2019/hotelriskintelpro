@@ -1,6 +1,125 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
+// ─── Demo dataset ────────────────────────────────────────────────────────────
+
+const DEMO_DATA = {
+  hotelProfile: {
+    hotelName: "Riverside Boutique Inn",
+    address: "412 Harbor View Drive",
+    city: "Savannah",
+    state: "GA",
+    zip: "31401",
+    numberOfRooms: "87",
+    squareFootage: "68400",
+    yearBuilt: "1992",
+    yearRenovated: "2017",
+    numberOfFloors: "6",
+    constructionType: "masonry",
+    roofType: "flat",
+    roofAge: "9",
+    sprinklerSystem: "yes",
+    fireAlarmSystem: "yes",
+    poolSpa: "yes",
+    restaurantBar: "yes",
+    eventSpace: "yes",
+    parkingStructure: "no",
+  },
+  financialExposure: {
+    annualRevenue: "4850000",
+    roomRevenuePercent: "68",
+    fbRevenuePercent: "18",
+    eventRevenuePercent: "10",
+    otherRevenuePercent: "4",
+    averageOccupancy: "72",
+    adr: "189",
+    revpar: "136",
+    fixedMonthlyCosts: "148000",
+    monthlyPayroll: "112000",
+    monthlyDebtService: "54000",
+    emergencyCashReserves: "320000",
+  },
+  insurancePolicy: {
+    carrier: "Zurich North America",
+    policyPeriodStart: "2024-07-01",
+    policyPeriodEnd: "2025-07-01",
+    propertyCoverageLimit: "8500000",
+    biLimit: "2400000",
+    extraExpenseLimit: "250000",
+    liabilityLimit: "1000000",
+    umbrellaLimit: "5000000",
+    deductible: "25000",
+    biWaitingPeriod: "72",
+    biRestorationPeriod: "12",
+    coinsurancePercent: "80",
+    ordinanceLawCoverage: "yes",
+    equipmentBreakdown: "yes",
+    floodCoverage: "no",
+    windCoverage: "yes",
+    sewerBackup: "no",
+  },
+  lossHistory: {
+    claims: [
+      {
+        id: 1,
+        year: "2022",
+        date: "2022-08-14",
+        type: "property",
+        cause: "Water damage — roof membrane failure",
+        amountPaid: "87400",
+        reserveAmount: "0",
+        status: "closed",
+        areaAffected: "Top floor guest rooms (604–612)",
+        notes: "Flat roof membrane cracked after heavy rainfall. 9 rooms out of service for 6 weeks.",
+      },
+      {
+        id: 2,
+        year: "2021",
+        date: "2021-03-02",
+        type: "liability",
+        cause: "Slip and fall — pool deck",
+        amountPaid: "42000",
+        reserveAmount: "0",
+        status: "closed",
+        areaAffected: "Pool area",
+        notes: "Guest sustained minor injuries. Settled out of court.",
+      },
+      {
+        id: 3,
+        year: "2023",
+        date: "2023-11-18",
+        type: "property",
+        cause: "HVAC unit failure — water intrusion",
+        amountPaid: "31500",
+        reserveAmount: "5000",
+        status: "closed",
+        areaAffected: "3rd floor corridor and 4 rooms",
+        notes: "Condensate drain line blockage caused ceiling damage.",
+      },
+    ],
+  },
+  operationalRisk: {
+    roofLeaks: "yes",
+    hvacIssues: "yes",
+    plumbingIssues: "no",
+    electricalIssues: "no",
+    moldMoistureHistory: "yes",
+    deferredMaintenance: "yes",
+    inspectionDeficiencies: "no",
+  },
+  locationHazard: {
+    floodZone: "ae",
+    coastalWindExposure: "moderate",
+    wildfireExposure: "none",
+    freezeExposure: "low",
+    stormHailExposure: "moderate",
+    crimeLevel: "low",
+    utilityInterruption: "low",
+    contractorScarcity: "moderate",
+    litigationEnvironment: "moderate",
+  },
+};
+
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function fmt$( val ) {
@@ -495,6 +614,17 @@ export default function InputSummaryDashboard() {
     setLoaded(true);
   }, []);
 
+  const loadDemo = () => {
+    localStorage.setItem("hotelRiskAnalysis", JSON.stringify(DEMO_DATA));
+    setHotelData(DEMO_DATA);
+  };
+
+  const clearData = () => {
+    localStorage.removeItem("hotelRiskAnalysis");
+    localStorage.removeItem("hotelRiskIntake");
+    setHotelData(null);
+  };
+
   const hotelName = hotelData?.hotelProfile?.hotelName || "Your Hotel";
   const city = hotelData?.hotelProfile?.city;
   const state = hotelData?.hotelProfile?.state;
@@ -594,17 +724,28 @@ export default function InputSummaryDashboard() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-3">No Data Found</h2>
           <p className="text-gray-600 mb-8">
-            Complete the intake form to populate your dashboard with hotel risk data.
+            Complete the intake form to populate your dashboard, or load demo data to preview the layout.
           </p>
-          <Link
-            href="/intake"
-            className="inline-flex items-center gap-2 rounded-xl bg-hrip-navy px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-blue-800 transition-all"
-          >
-            Start Intake Form
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/intake"
+              className="inline-flex items-center gap-2 rounded-xl bg-hrip-navy px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-blue-800 transition-all"
+            >
+              Start Intake Form
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+            <button
+              onClick={loadDemo}
+              className="inline-flex items-center gap-2 rounded-xl border-2 border-hrip-navy px-8 py-4 text-base font-semibold text-hrip-navy hover:bg-hrip-navy hover:text-white transition-all"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              Load Demo Data
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -625,7 +766,27 @@ export default function InputSummaryDashboard() {
             <h1 className="text-xl font-bold text-gray-900">{hotelName}</h1>
             {location && <p className="text-sm text-gray-500">{location}</p>}
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={loadDemo}
+              className="inline-flex items-center gap-2 rounded-lg border-2 border-gray-300 px-4 py-2 text-sm font-semibold text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-all"
+              title="Overwrite with demo data"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              Demo Data
+            </button>
+            <button
+              onClick={clearData}
+              className="inline-flex items-center gap-2 rounded-lg border-2 border-gray-300 px-4 py-2 text-sm font-semibold text-gray-600 hover:border-red-300 hover:text-red-600 transition-all"
+              title="Clear all data"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              Clear
+            </button>
             <Link
               href="/intake"
               className="inline-flex items-center gap-2 rounded-lg border-2 border-hrip-navy px-4 py-2 text-sm font-semibold text-hrip-navy hover:bg-hrip-navy hover:text-white transition-all"
