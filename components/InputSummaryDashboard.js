@@ -154,8 +154,8 @@ function capitalize(str) {
 function Field({ label, value, mono = false }) {
   return (
     <div>
-      <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-0.5 leading-none">{label}</p>
-      <p className={`text-base font-semibold text-gray-800 leading-tight ${mono ? "font-mono" : ""}`}>
+      <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-0.5 leading-none">{label}</p>
+      <p className={`text-base font-semibold text-white leading-tight ${mono ? "font-mono" : ""}`}>
         {value || "—"}
       </p>
     </div>
@@ -165,7 +165,7 @@ function Field({ label, value, mono = false }) {
 // Coloured badge
 function Badge({ value, type = "neutral" }) {
   const base = "inline-flex items-center rounded-full px-2.5 py-0.5 text-base font-semibold";
-  if (!value || value === "—") return <span className={`${base} bg-gray-100 text-gray-500`}>—</span>;
+  if (!value || value === "—") return <span className={`${base} bg-slate-700 text-slate-400`}>—</span>;
 
   const low = ["no", "none", "low", "x"].includes(String(value).toLowerCase());
   const high = ["yes", "high", "v", "ae", "a"].includes(String(value).toLowerCase());
@@ -175,31 +175,31 @@ function Badge({ value, type = "neutral" }) {
     if (low) return <span className={`${base} bg-green-100 text-green-700`}>{capitalize(value)}</span>;
     if (high) return <span className={`${base} bg-red-100 text-red-700`}>{capitalize(value)}</span>;
     if (warn) return <span className={`${base} bg-amber-100 text-amber-700`}>{capitalize(value)}</span>;
-    return <span className={`${base} bg-gray-100 text-gray-700`}>{capitalize(value)}</span>;
+    return <span className={`${base} bg-slate-700 text-slate-200`}>{capitalize(value)}</span>;
   }
 
   if (type === "bool") {
     const isYes = String(value).toLowerCase() === "yes";
-    return <span className={`${base} ${isYes ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-500"}`}>{capitalize(value)}</span>;
+    return <span className={`${base} ${isYes ? "bg-blue-100 text-blue-700" : "bg-slate-700 text-slate-400"}`}>{capitalize(value)}</span>;
   }
 
-  return <span className={`${base} bg-gray-100 text-gray-700`}>{capitalize(value)}</span>;
+  return <span className={`${base} bg-slate-700 text-slate-200`}>{capitalize(value)}</span>;
 }
 
 // Section card wrapper
 function SectionCard({ icon, title, color, children, compact }) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-      <div className={`flex items-center justify-between px-3 py-2.5 border-b border-gray-100 ${color}`}>
+    <div className="rounded-xl border border-slate-700 bg-slate-800 shadow-none overflow-hidden">
+      <div className={`flex items-center justify-between px-3 py-2.5 border-b border-slate-700 ${color}`}>
         <div className="flex items-center gap-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded bg-white/20 [&_svg]:w-3.5 [&_svg]:h-3.5">
+          <div className="flex h-6 w-6 items-center justify-center rounded bg-slate-800/20 [&_svg]:w-3.5 [&_svg]:h-3.5">
             {icon}
           </div>
           <h3 className="text-base font-bold text-white uppercase tracking-wide">{title}</h3>
         </div>
         <Link
           href="/intake"
-          className="rounded bg-white/20 px-2 py-1 text-sm font-semibold text-white hover:bg-white/30 transition-colors"
+          className="rounded bg-slate-800/20 px-2 py-1 text-sm font-semibold text-white hover:bg-slate-800/30 transition-colors"
         >
           Edit
         </Link>
@@ -212,7 +212,7 @@ function SectionCard({ icon, title, color, children, compact }) {
 // ─── Section components ──────────────────────────────────────────────────────
 
 function HotelProfileSection({ data }) {
-  if (!data) return <p className="text-base text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-base text-slate-400">No data entered yet.</p>;
   const p = data;
   return (
     <div className="space-y-2.5">
@@ -235,15 +235,15 @@ function HotelProfileSection({ data }) {
       </div>
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-1">Sprinklers</p>
+          <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1">Sprinklers</p>
           <Badge value={p.sprinklerSystem} type="risk" />
         </div>
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-1">Fire Alarm</p>
+          <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1">Fire Alarm</p>
           <Badge value={p.fireAlarmSystem} type="risk" />
         </div>
       </div>
-      <div className="border-t border-gray-100 pt-2">
+      <div className="border-t border-slate-700 pt-2">
         <div className="flex flex-wrap gap-1">
           {[
             { key: "poolSpa", label: "Pool/Spa" },
@@ -252,7 +252,7 @@ function HotelProfileSection({ data }) {
             { key: "parkingStructure", label: "Parking" },
           ].map(({ key, label }) => (
             <span key={key} className={`rounded-full px-2 py-0.5 text-sm font-semibold ${
-              p[key] === "yes" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-400 line-through"
+              p[key] === "yes" ? "bg-blue-100 text-blue-700" : "bg-slate-700 text-slate-400 line-through"
             }`}>{label}</span>
           ))}
         </div>
@@ -262,7 +262,7 @@ function HotelProfileSection({ data }) {
 }
 
 function FinancialSection({ data }) {
-  if (!data) return <p className="text-base text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-base text-slate-400">No data entered yet.</p>;
   const f = data;
   const monthlyRev = f.annualRevenue ? Math.round(parseFloat(f.annualRevenue) / 12) : null;
   const totalObligations =
@@ -274,15 +274,15 @@ function FinancialSection({ data }) {
     <div className="space-y-2.5">
       <div className="grid grid-cols-3 gap-2">
         <div className="col-span-1">
-          <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-0.5">Annual Revenue</p>
-          <p className="text-lg font-bold text-hrip-navy">{fmt$(f.annualRevenue)}</p>
-          {monthlyRev && <p className="text-sm text-gray-400">≈ {fmt$(monthlyRev)}/mo</p>}
+          <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-0.5">Annual Revenue</p>
+          <p className="text-lg font-bold text-white">{fmt$(f.annualRevenue)}</p>
+          {monthlyRev && <p className="text-sm text-slate-400">≈ {fmt$(monthlyRev)}/mo</p>}
         </div>
         <Field label="Occupancy" value={fmtPct(f.averageOccupancy)} />
         <Field label="ADR" value={fmt$(f.adr)} />
       </div>
-      <div className="border-t border-gray-100 pt-2">
-        <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Revenue Mix</p>
+      <div className="border-t border-slate-700 pt-2">
+        <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Revenue Mix</p>
         <div className="grid grid-cols-4 gap-1.5">
           <Field label="Rooms" value={fmtPct(f.roomRevenuePercent)} />
           <Field label="F&B" value={fmtPct(f.fbRevenuePercent)} />
@@ -290,8 +290,8 @@ function FinancialSection({ data }) {
           <Field label="Other" value={fmtPct(f.otherRevenuePercent)} />
         </div>
       </div>
-      <div className="border-t border-gray-100 pt-2">
-        <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Monthly Obligations</p>
+      <div className="border-t border-slate-700 pt-2">
+        <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Monthly Obligations</p>
         <div className="grid grid-cols-2 gap-1.5">
           <Field label="Fixed Costs" value={fmt$(f.fixedMonthlyCosts)} />
           <Field label="Payroll" value={fmt$(f.monthlyPayroll)} />
@@ -299,7 +299,7 @@ function FinancialSection({ data }) {
           <Field label="Cash Reserves" value={fmt$(f.emergencyCashReserves)} />
         </div>
         {totalObligations > 0 && (
-          <div className="mt-2 rounded bg-amber-50 border border-amber-200 px-2.5 py-1.5">
+          <div className="mt-2 rounded bg-amber-900/30 border border-amber-700 px-2.5 py-1.5">
             <p className="text-base font-bold text-amber-800">Total Burn: {fmt$(totalObligations)}/mo</p>
           </div>
         )}
@@ -309,7 +309,7 @@ function FinancialSection({ data }) {
 }
 
 function InsuranceSection({ data }) {
-  if (!data) return <p className="text-base text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-base text-slate-400">No data entered yet.</p>;
   const ins = data;
   const coverages = [
     { key: "ordinanceLawCoverage", label: "Ordinance & Law" },
@@ -326,8 +326,8 @@ function InsuranceSection({ data }) {
         <Field label="Start" value={fmtDate(ins.policyPeriodStart)} />
         <Field label="End" value={fmtDate(ins.policyPeriodEnd)} />
       </div>
-      <div className="border-t border-gray-100 pt-2">
-        <p className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Coverage Limits</p>
+      <div className="border-t border-slate-700 pt-2">
+        <p className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Coverage Limits</p>
         <div className="grid grid-cols-2 gap-1.5">
           <Field label="Property" value={fmt$(ins.propertyCoverageLimit)} />
           <Field label="Bus. Interruption" value={fmt$(ins.biLimit)} />
@@ -337,20 +337,20 @@ function InsuranceSection({ data }) {
           <Field label="Deductible" value={fmt$(ins.deductible)} />
         </div>
       </div>
-      <div className="border-t border-gray-100 pt-2">
+      <div className="border-t border-slate-700 pt-2">
         <div className="grid grid-cols-3 gap-1.5">
           <Field label="BI Waiting" value={ins.biWaitingPeriod ? `${ins.biWaitingPeriod}d` : "—"} />
           <Field label="BI Period" value={ins.biRestorationPeriod ? `${ins.biRestorationPeriod}mo` : "—"} />
           <Field label="Coinsurance" value={fmtPct(ins.coinsurancePercent)} />
         </div>
       </div>
-      <div className="border-t border-gray-100 pt-2">
+      <div className="border-t border-slate-700 pt-2">
         <div className="flex flex-wrap gap-1">
           {coverages.map(({ key, label }) => {
             const hasIt = ins[key] && ins[key] !== "no" && ins[key] !== "";
             return (
               <span key={key} className={`rounded-full px-2 py-0.5 text-sm font-semibold ${
-                hasIt ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"
+                hasIt ? "bg-green-100 text-green-700" : "bg-slate-700 text-slate-400"
               }`}>{hasIt ? "✓ " : ""}{label}</span>
             );
           })}
@@ -364,8 +364,8 @@ function LossHistorySection({ data }) {
   const claims = data?.claims || [];
   if (claims.length === 0) {
     return (
-      <div className="rounded border border-dashed border-gray-200 px-3 py-6 text-center">
-        <p className="text-base text-gray-400">No claims on record</p>
+      <div className="rounded border border-dashed border-slate-700 px-3 py-6 text-center">
+        <p className="text-base text-slate-400">No claims on record</p>
       </div>
     );
   }
@@ -374,27 +374,27 @@ function LossHistorySection({ data }) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <p className="text-base font-semibold text-gray-600">{claims.length} claim{claims.length !== 1 ? "s" : ""}</p>
+        <p className="text-base font-semibold text-slate-300">{claims.length} claim{claims.length !== 1 ? "s" : ""}</p>
         {totalPaid > 0 && <p className="text-base font-bold text-red-700">Total: {fmt$(totalPaid)}</p>}
       </div>
       <table className="w-full">
         <thead>
-          <tr className="border-b border-gray-200">
-            <th className="pb-1 text-left text-sm font-semibold uppercase tracking-wide text-gray-400">Yr</th>
-            <th className="pb-1 text-left text-sm font-semibold uppercase tracking-wide text-gray-400">Type</th>
-            <th className="pb-1 text-right text-sm font-semibold uppercase tracking-wide text-gray-400">Paid</th>
-            <th className="pb-1 text-center text-sm font-semibold uppercase tracking-wide text-gray-400">Status</th>
+          <tr className="border-b border-slate-700">
+            <th className="pb-1 text-left text-sm font-semibold uppercase tracking-wide text-slate-400">Yr</th>
+            <th className="pb-1 text-left text-sm font-semibold uppercase tracking-wide text-slate-400">Type</th>
+            <th className="pb-1 text-right text-sm font-semibold uppercase tracking-wide text-slate-400">Paid</th>
+            <th className="pb-1 text-center text-sm font-semibold uppercase tracking-wide text-slate-400">Status</th>
           </tr>
         </thead>
         <tbody>
           {claims.map((c, i) => (
-            <tr key={c.id || i} className="border-b border-gray-100 last:border-0">
-              <td className="py-1.5 text-base font-medium text-gray-900">{c.year || "—"}</td>
-              <td className="py-1.5 text-base text-gray-600">{capitalize(c.type)}</td>
-              <td className="py-1.5 text-base text-right font-mono text-gray-900">{fmt$(c.amountPaid)}</td>
+            <tr key={c.id || i} className="border-b border-slate-700 last:border-0">
+              <td className="py-1.5 text-base font-medium text-white">{c.year || "—"}</td>
+              <td className="py-1.5 text-base text-slate-300">{capitalize(c.type)}</td>
+              <td className="py-1.5 text-base text-right font-mono text-white">{fmt$(c.amountPaid)}</td>
               <td className="py-1.5 text-center">
                 <span className={`rounded-full px-1.5 py-0.5 text-sm font-semibold ${
-                  c.status === "closed" ? "bg-gray-100 text-gray-500" :
+                  c.status === "closed" ? "bg-slate-700 text-slate-400" :
                   c.status === "open" ? "bg-amber-100 text-amber-700" : "bg-blue-100 text-blue-700"
                 }`}>{capitalize(c.status) || "—"}</span>
               </td>
@@ -407,7 +407,7 @@ function LossHistorySection({ data }) {
 }
 
 function OperationalRiskSection({ data }) {
-  if (!data) return <p className="text-base text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-base text-slate-400">No data entered yet.</p>;
   const items = [
     { key: "roofLeaks", label: "Roof Leaks" },
     { key: "hvacIssues", label: "HVAC" },
@@ -422,7 +422,7 @@ function OperationalRiskSection({ data }) {
   return (
     <div className="space-y-2">
       <div className={`rounded px-2.5 py-1.5 text-base font-semibold ${
-        issueCount > 0 ? "bg-red-50 border border-red-200 text-red-700" : "bg-green-50 border border-green-200 text-green-700"
+        issueCount > 0 ? "bg-red-900/30 border border-red-700 text-red-700" : "bg-green-900/30 border border-green-700 text-green-700"
       }`}>
         {issueCount > 0 ? `${issueCount} issue${issueCount !== 1 ? "s" : ""} flagged` : "All systems clear"}
       </div>
@@ -432,11 +432,11 @@ function OperationalRiskSection({ data }) {
           const clear = data[key] === "no";
           return (
             <div key={key} className={`flex items-center justify-between rounded px-2.5 py-1.5 ${
-              hasIssue ? "bg-red-50 border border-red-100" :
-              clear ? "bg-green-50 border border-green-100" : "bg-gray-50 border border-gray-100"
+              hasIssue ? "bg-red-900/30 border border-red-800" :
+              clear ? "bg-green-900/30 border border-green-800" : "bg-slate-900 border border-slate-700"
             }`}>
-              <span className="text-base text-gray-700">{label}</span>
-              <span className={`text-sm font-bold ${hasIssue ? "text-red-600" : clear ? "text-green-600" : "text-gray-400"}`}>
+              <span className="text-base text-slate-200">{label}</span>
+              <span className={`text-sm font-bold ${hasIssue ? "text-red-600" : clear ? "text-green-600" : "text-slate-400"}`}>
                 {hasIssue ? "ISSUE" : clear ? "CLEAR" : "—"}
               </span>
             </div>
@@ -448,7 +448,7 @@ function OperationalRiskSection({ data }) {
 }
 
 function LocationSection({ data }) {
-  if (!data) return <p className="text-base text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-base text-slate-400">No data entered yet.</p>;
   const loc = data;
 
   const all = [
@@ -470,7 +470,7 @@ function LocationSection({ data }) {
         const display = format ? format(raw) : capitalize(raw);
         return (
           <div key={key}>
-            <p className="text-sm text-gray-400 mb-0.5">{label}</p>
+            <p className="text-sm text-slate-400 mb-0.5">{label}</p>
             <Badge value={display || raw} type="risk" />
           </div>
         );
@@ -495,14 +495,14 @@ function CompletenessBar({ data }) {
   const pct = Math.round((done / sections.length) * 100);
 
   return (
-    <div className="rounded-2xl border-2 border-gray-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border-2 border-slate-700 bg-slate-800 p-5 shadow-none">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-lg font-bold text-gray-900">Data Completeness</p>
-        <span className={`text-lg font-bold ${pct === 100 ? "text-green-600" : "text-hrip-navy"}`}>
+        <p className="text-lg font-bold text-white">Data Completeness</p>
+        <span className={`text-lg font-bold ${pct === 100 ? "text-green-600" : "text-white"}`}>
           {done} / {sections.length} sections &mdash; {pct}%
         </span>
       </div>
-      <div className="h-2.5 w-full rounded-full bg-gray-100 overflow-hidden">
+      <div className="h-2.5 w-full rounded-full bg-slate-700 overflow-hidden">
         <div
           className={`h-2.5 rounded-full transition-all duration-500 ${pct === 100 ? "bg-green-500" : "bg-gradient-to-r from-hrip-navy to-hrip-blue"}`}
           style={{ width: `${pct}%` }}
@@ -515,7 +515,7 @@ function CompletenessBar({ data }) {
             <span
               key={key}
               className={`text-base rounded-full px-2.5 py-1 font-semibold ${
-                complete ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"
+                complete ? "bg-green-100 text-green-700" : "bg-slate-700 text-slate-400"
               }`}
             >
               {complete ? "✓ " : ""}{label}
@@ -693,7 +693,7 @@ export default function InputSummaryDashboard() {
       <div className="flex-shrink-0 bg-slate-900 border-b border-slate-800 flex items-stretch h-12">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 px-4 border-r border-slate-800 hover:bg-slate-800 transition-colors flex-shrink-0">
-          <div className="flex h-7 w-7 items-center justify-center rounded bg-white/10">
+          <div className="flex h-7 w-7 items-center justify-center rounded bg-slate-800/10">
             <span className="text-base font-bold text-white">HR</span>
           </div>
           <span className="text-lg font-bold text-white tracking-tight whitespace-nowrap">Hotel Risk Pro</span>
@@ -799,7 +799,7 @@ export default function InputSummaryDashboard() {
         </div>
 
         {/* ── MAIN CONTENT ──────────────────────────────────────────────── */}
-        <div className="flex-1 overflow-y-auto bg-gray-50">
+        <div className="flex-1 overflow-y-auto bg-slate-900">
           <div className="px-4 py-4">
             <div className="grid grid-cols-3 gap-4">
               {NAV_SECTIONS.map(({ key, label, icon }) => (
