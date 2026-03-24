@@ -609,7 +609,14 @@ export default function InputSummaryDashboard() {
   useEffect(() => {
     const raw = localStorage.getItem("hotelRiskAnalysis") || localStorage.getItem("hotelRiskIntake");
     if (raw) {
-      try { setHotelData(JSON.parse(raw)); } catch {}
+      try {
+        setHotelData(JSON.parse(raw));
+      } catch {
+        setHotelData(DEMO_DATA);
+      }
+    } else {
+      // No real data — show demo data by default
+      setHotelData(DEMO_DATA);
     }
     setLoaded(true);
   }, []);
@@ -625,6 +632,7 @@ export default function InputSummaryDashboard() {
     setHotelData(null);
   };
 
+  const isDemo = !localStorage.getItem("hotelRiskAnalysis") && !localStorage.getItem("hotelRiskIntake");
   const hotelName = hotelData?.hotelProfile?.hotelName || "Your Hotel";
   const city = hotelData?.hotelProfile?.city;
   const state = hotelData?.hotelProfile?.state;
@@ -763,7 +771,14 @@ export default function InputSummaryDashboard() {
         {/* Action bar */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-xl font-bold text-gray-900">{hotelName}</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl font-bold text-gray-900">{hotelName}</h1>
+              {isDemo && (
+                <span className="rounded-full bg-amber-100 border border-amber-300 px-2 py-0.5 text-xs font-bold text-amber-700">
+                  DEMO
+                </span>
+              )}
+            </div>
             {location && <p className="text-sm text-gray-500">{location}</p>}
           </div>
           <div className="flex flex-wrap gap-3">
