@@ -188,7 +188,7 @@ function Badge({ value, type = "neutral" }) {
 
 function SectionCard({ icon, title, color, children, compact, glossaryId }) {
   return (
-    <div className="flex h-[32rem] w-full min-h-0 flex-col rounded-xl border border-slate-700 bg-slate-800 shadow-none overflow-hidden">
+    <div className="flex h-full min-h-0 w-full flex-col rounded-xl border border-slate-700 bg-slate-800 shadow-none overflow-hidden">
       <div className={`flex flex-shrink-0 items-center justify-between px-3 py-2.5 border-b border-slate-700 ${color}`}>
         <div className="flex min-w-0 items-center gap-2">
           <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded bg-slate-800/20 [&_svg]:w-3.5 [&_svg]:h-3.5">
@@ -1323,10 +1323,10 @@ export default function InputSummaryDashboard() {
             {/* Command Center — top priority */}
             <CommandCenter metrics={metrics} />
 
-            {/* Section cards grid — fixed equal card height (scroll inside) */}
-            <div className="grid grid-cols-3 gap-4">
+            {/* Section cards grid — uniform row heights; cards fill cell; scroll inside body */}
+            <div className="grid grid-cols-3 gap-4 items-stretch [grid-auto-rows:44rem] sm:[grid-auto-rows:46rem]">
               {NAV_SECTIONS.map(({ key, label, icon }) => (
-                <div key={key} id={key} className="scroll-mt-4 min-w-0">
+                <div key={key} id={key} className="scroll-mt-4 flex h-full min-h-0 min-w-0 flex-col">
                   <SectionCard
                     title={label}
                     color={SECTION_COLORS[key]}
