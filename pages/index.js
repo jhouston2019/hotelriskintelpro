@@ -4,19 +4,19 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* Top navigation */}
-      <header className="border-b border-gray-200 bg-white sticky top-0 z-50 shadow-sm">
+      <header className="border-b border-blue-900 bg-hrip-navy sticky top-0 z-50 shadow-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-hrip-navy to-hrip-blue">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10">
               <span className="text-base font-bold tracking-tight text-white">
                 HR
               </span>
             </div>
             <div>
-              <p className="text-base font-bold tracking-tight text-gray-900">
+              <p className="text-base font-bold tracking-tight text-white">
                 Hotel Risk Pro
               </p>
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-blue-200">
                 Risk Intelligence Monitoring
               </p>
             </div>
@@ -24,19 +24,19 @@ export default function Home() {
           <nav className="flex items-center gap-8 text-sm font-medium">
             <Link
               href="/dashboard"
-              className="text-gray-700 hover:text-hrip-navy transition-colors"
+              className="text-blue-100 hover:text-white transition-colors"
             >
               Dashboard
             </Link>
             <Link
               href="/pricing"
-              className="text-gray-700 hover:text-hrip-navy transition-colors"
+              className="text-blue-100 hover:text-white transition-colors"
             >
               Pricing
             </Link>
             <Link
               href="/login"
-              className="rounded-lg border-2 border-gray-300 px-4 py-2 text-sm font-semibold text-gray-900 hover:border-hrip-navy hover:bg-gray-50 transition-all"
+              className="rounded-lg border-2 border-white/30 px-4 py-2 text-sm font-semibold text-white hover:border-white hover:bg-white/10 transition-all"
             >
               Login
             </Link>
