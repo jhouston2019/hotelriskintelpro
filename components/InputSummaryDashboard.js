@@ -154,8 +154,8 @@ function capitalize(str) {
 function Field({ label, value, mono = false }) {
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-0.5">{label}</p>
-      <p className={`text-sm font-medium text-gray-900 ${mono ? "font-mono" : ""}`}>
+      <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-0.5 leading-none">{label}</p>
+      <p className={`text-xs font-semibold text-gray-800 leading-tight ${mono ? "font-mono" : ""}`}>
         {value || "—"}
       </p>
     </div>
@@ -187,24 +187,24 @@ function Badge({ value, type = "neutral" }) {
 }
 
 // Section card wrapper
-function SectionCard({ icon, title, color, children, sectionIndex }) {
+function SectionCard({ icon, title, color, children, compact }) {
   return (
-    <div className="rounded-2xl border-2 border-gray-200 bg-white shadow-sm overflow-hidden">
-      <div className={`flex items-center justify-between px-6 py-4 border-b border-gray-100 ${color}`}>
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/20">
+    <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+      <div className={`flex items-center justify-between px-3 py-2.5 border-b border-gray-100 ${color}`}>
+        <div className="flex items-center gap-2">
+          <div className="flex h-6 w-6 items-center justify-center rounded bg-white/20 [&_svg]:w-3.5 [&_svg]:h-3.5">
             {icon}
           </div>
-          <h3 className="text-base font-bold text-white">{title}</h3>
+          <h3 className="text-xs font-bold text-white uppercase tracking-wide">{title}</h3>
         </div>
         <Link
           href="/intake"
-          className="rounded-lg bg-white/20 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/30 transition-colors"
+          className="rounded bg-white/20 px-2 py-1 text-[10px] font-semibold text-white hover:bg-white/30 transition-colors"
         >
           Edit
         </Link>
       </div>
-      <div className="p-6">{children}</div>
+      <div className={compact ? "p-3" : "p-6"}>{children}</div>
     </div>
   );
 }
@@ -212,57 +212,48 @@ function SectionCard({ icon, title, color, children, sectionIndex }) {
 // ─── Section components ──────────────────────────────────────────────────────
 
 function HotelProfileSection({ data }) {
-  if (!data) return <p className="text-sm text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-xs text-gray-400">No data entered yet.</p>;
   const p = data;
   return (
-    <div className="space-y-5">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+    <div className="space-y-2.5">
+      <div className="grid grid-cols-3 gap-2">
         <Field label="Hotel Name" value={p.hotelName} />
         <Field label="Rooms" value={fmtNum(p.numberOfRooms)} />
         <Field label="Floors" value={fmtNum(p.numberOfFloors)} />
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-2 gap-2">
         <Field label="Address" value={[p.address, p.city, p.state, p.zip].filter(Boolean).join(", ") || "—"} />
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-2">
           <Field label="Built" value={p.yearBuilt || "—"} />
           <Field label="Renovated" value={p.yearRenovated || "—"} />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-        <Field label="Sq. Footage" value={fmtNum(p.squareFootage)} />
+      <div className="grid grid-cols-3 gap-2">
+        <Field label="Sq. Ft." value={fmtNum(p.squareFootage)} />
         <Field label="Construction" value={capitalize(p.constructionType)} />
-        <Field label="Roof Type" value={capitalize(p.roofType)} />
+        <Field label="Roof" value={`${capitalize(p.roofType)}${p.roofAge ? ` · ${p.roofAge}yr` : ""}`} />
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-        <Field label="Roof Age" value={p.roofAge ? `${p.roofAge} yrs` : "—"} />
+      <div className="grid grid-cols-2 gap-2">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Sprinklers</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">Sprinklers</p>
           <Badge value={p.sprinklerSystem} type="risk" />
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Fire Alarm</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">Fire Alarm</p>
           <Badge value={p.fireAlarmSystem} type="risk" />
         </div>
       </div>
-      <div className="border-t border-gray-100 pt-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Amenities</p>
-        <div className="flex flex-wrap gap-2">
+      <div className="border-t border-gray-100 pt-2">
+        <div className="flex flex-wrap gap-1">
           {[
-            { key: "poolSpa", label: "Pool / Spa" },
-            { key: "restaurantBar", label: "Restaurant / Bar" },
-            { key: "eventSpace", label: "Event Space" },
-            { key: "parkingStructure", label: "Parking Structure" },
+            { key: "poolSpa", label: "Pool/Spa" },
+            { key: "restaurantBar", label: "Restaurant" },
+            { key: "eventSpace", label: "Events" },
+            { key: "parkingStructure", label: "Parking" },
           ].map(({ key, label }) => (
-            <span
-              key={key}
-              className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
-                p[key] === "yes"
-                  ? "bg-blue-100 text-blue-700"
-                  : "bg-gray-100 text-gray-400 line-through"
-              }`}
-            >
-              {label}
-            </span>
+            <span key={key} className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+              p[key] === "yes" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-400 line-through"
+            }`}>{label}</span>
           ))}
         </div>
       </div>
@@ -271,7 +262,7 @@ function HotelProfileSection({ data }) {
 }
 
 function FinancialSection({ data }) {
-  if (!data) return <p className="text-sm text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-xs text-gray-400">No data entered yet.</p>;
   const f = data;
   const monthlyRev = f.annualRevenue ? Math.round(parseFloat(f.annualRevenue) / 12) : null;
   const totalObligations =
@@ -280,42 +271,36 @@ function FinancialSection({ data }) {
     (parseFloat(f.monthlyDebtService) || 0);
 
   return (
-    <div className="space-y-5">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-        <div className="col-span-2 sm:col-span-1">
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-0.5">Annual Revenue</p>
-          <p className="text-lg font-bold text-hrip-navy">{fmt$(f.annualRevenue)}</p>
-          {monthlyRev && (
-            <p className="text-xs text-gray-500 mt-0.5">≈ {fmt$(monthlyRev)} / month</p>
-          )}
+    <div className="space-y-2.5">
+      <div className="grid grid-cols-3 gap-2">
+        <div className="col-span-1">
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-0.5">Annual Revenue</p>
+          <p className="text-sm font-bold text-hrip-navy">{fmt$(f.annualRevenue)}</p>
+          {monthlyRev && <p className="text-[10px] text-gray-400">≈ {fmt$(monthlyRev)}/mo</p>}
         </div>
-        <Field label="Avg Occupancy" value={fmtPct(f.averageOccupancy)} />
+        <Field label="Occupancy" value={fmtPct(f.averageOccupancy)} />
         <Field label="ADR" value={fmt$(f.adr)} />
       </div>
-
-      <div className="border-t border-gray-100 pt-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Revenue Mix</p>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="border-t border-gray-100 pt-2">
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Revenue Mix</p>
+        <div className="grid grid-cols-4 gap-1.5">
           <Field label="Rooms" value={fmtPct(f.roomRevenuePercent)} />
           <Field label="F&B" value={fmtPct(f.fbRevenuePercent)} />
           <Field label="Events" value={fmtPct(f.eventRevenuePercent)} />
           <Field label="Other" value={fmtPct(f.otherRevenuePercent)} />
         </div>
       </div>
-
-      <div className="border-t border-gray-100 pt-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Monthly Obligations</p>
-        <div className="grid grid-cols-2 gap-3">
-          <Field label="Fixed Operating Costs" value={fmt$(f.fixedMonthlyCosts)} />
+      <div className="border-t border-gray-100 pt-2">
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Monthly Obligations</p>
+        <div className="grid grid-cols-2 gap-1.5">
+          <Field label="Fixed Costs" value={fmt$(f.fixedMonthlyCosts)} />
           <Field label="Payroll" value={fmt$(f.monthlyPayroll)} />
           <Field label="Debt Service" value={fmt$(f.monthlyDebtService)} />
-          <Field label="Emergency Reserves" value={fmt$(f.emergencyCashReserves)} />
+          <Field label="Cash Reserves" value={fmt$(f.emergencyCashReserves)} />
         </div>
         {totalObligations > 0 && (
-          <div className="mt-3 rounded-lg bg-amber-50 border border-amber-200 px-4 py-2.5">
-            <p className="text-sm font-semibold text-amber-800">
-              Total Monthly Burn: {fmt$(totalObligations)}
-            </p>
+          <div className="mt-2 rounded bg-amber-50 border border-amber-200 px-2.5 py-1.5">
+            <p className="text-xs font-bold text-amber-800">Total Burn: {fmt$(totalObligations)}/mo</p>
           </div>
         )}
       </div>
@@ -324,61 +309,49 @@ function FinancialSection({ data }) {
 }
 
 function InsuranceSection({ data }) {
-  if (!data) return <p className="text-sm text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-xs text-gray-400">No data entered yet.</p>;
   const ins = data;
-
   const coverages = [
     { key: "ordinanceLawCoverage", label: "Ordinance & Law" },
-    { key: "equipmentBreakdown", label: "Equipment Breakdown" },
-    { key: "floodCoverage", label: "Flood Coverage" },
-    { key: "windCoverage", label: "Wind Coverage" },
+    { key: "equipmentBreakdown", label: "Equip. Breakdown" },
+    { key: "floodCoverage", label: "Flood" },
+    { key: "windCoverage", label: "Wind" },
     { key: "sewerBackup", label: "Sewer Backup" },
   ];
 
   return (
-    <div className="space-y-5">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+    <div className="space-y-2.5">
+      <div className="grid grid-cols-3 gap-2">
         <Field label="Carrier" value={ins.carrier} />
-        <Field label="Policy Start" value={fmtDate(ins.policyPeriodStart)} />
-        <Field label="Policy End" value={fmtDate(ins.policyPeriodEnd)} />
+        <Field label="Start" value={fmtDate(ins.policyPeriodStart)} />
+        <Field label="End" value={fmtDate(ins.policyPeriodEnd)} />
       </div>
-
-      <div className="border-t border-gray-100 pt-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Coverage Limits</p>
-        <div className="grid grid-cols-2 gap-3">
-          <Field label="Property Coverage" value={fmt$(ins.propertyCoverageLimit)} />
-          <Field label="Business Interruption" value={fmt$(ins.biLimit)} />
+      <div className="border-t border-gray-100 pt-2">
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1.5">Coverage Limits</p>
+        <div className="grid grid-cols-2 gap-1.5">
+          <Field label="Property" value={fmt$(ins.propertyCoverageLimit)} />
+          <Field label="Bus. Interruption" value={fmt$(ins.biLimit)} />
           <Field label="Extra Expense" value={fmt$(ins.extraExpenseLimit)} />
-          <Field label="General Liability" value={fmt$(ins.liabilityLimit)} />
+          <Field label="Liability" value={fmt$(ins.liabilityLimit)} />
           <Field label="Umbrella" value={fmt$(ins.umbrellaLimit)} />
           <Field label="Deductible" value={fmt$(ins.deductible)} />
         </div>
       </div>
-
-      <div className="border-t border-gray-100 pt-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">BI Parameters</p>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          <Field label="Waiting Period" value={ins.biWaitingPeriod ? `${ins.biWaitingPeriod} days` : "—"} />
-          <Field label="Restoration Period" value={ins.biRestorationPeriod ? `${ins.biRestorationPeriod} months` : "—"} />
+      <div className="border-t border-gray-100 pt-2">
+        <div className="grid grid-cols-3 gap-1.5">
+          <Field label="BI Waiting" value={ins.biWaitingPeriod ? `${ins.biWaitingPeriod}d` : "—"} />
+          <Field label="BI Period" value={ins.biRestorationPeriod ? `${ins.biRestorationPeriod}mo` : "—"} />
           <Field label="Coinsurance" value={fmtPct(ins.coinsurancePercent)} />
         </div>
       </div>
-
-      <div className="border-t border-gray-100 pt-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Additional Coverages</p>
-        <div className="flex flex-wrap gap-2">
+      <div className="border-t border-gray-100 pt-2">
+        <div className="flex flex-wrap gap-1">
           {coverages.map(({ key, label }) => {
-            const val = ins[key];
-            const hasIt = val && val !== "no" && val !== "";
+            const hasIt = ins[key] && ins[key] !== "no" && ins[key] !== "";
             return (
-              <span
-                key={key}
-                className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
-                  hasIt ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"
-                }`}
-              >
-                {hasIt ? "✓ " : ""}{label}
-              </span>
+              <span key={key} className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                hasIt ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"
+              }`}>{hasIt ? "✓ " : ""}{label}</span>
             );
           })}
         </div>
@@ -391,107 +364,80 @@ function LossHistorySection({ data }) {
   const claims = data?.claims || [];
   if (claims.length === 0) {
     return (
-      <div className="rounded-xl border-2 border-dashed border-gray-200 px-6 py-8 text-center">
-        <p className="text-sm font-medium text-gray-400">No claims on record</p>
+      <div className="rounded border border-dashed border-gray-200 px-3 py-6 text-center">
+        <p className="text-xs text-gray-400">No claims on record</p>
       </div>
     );
   }
-
   const totalPaid = claims.reduce((sum, c) => sum + (parseFloat(c.amountPaid) || 0), 0);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <p className="text-sm font-semibold text-gray-700">{claims.length} claim{claims.length !== 1 ? "s" : ""} on record</p>
-        {totalPaid > 0 && (
-          <p className="text-sm font-bold text-red-700">Total Paid: {fmt$(totalPaid)}</p>
-        )}
+        <p className="text-xs font-semibold text-gray-600">{claims.length} claim{claims.length !== 1 ? "s" : ""}</p>
+        {totalPaid > 0 && <p className="text-xs font-bold text-red-700">Total: {fmt$(totalPaid)}</p>}
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b-2 border-gray-200">
-              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Year</th>
-              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Type</th>
-              <th className="pb-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Cause</th>
-              <th className="pb-2 text-right text-xs font-semibold uppercase tracking-wide text-gray-500">Paid</th>
-              <th className="pb-2 text-center text-xs font-semibold uppercase tracking-wide text-gray-500">Status</th>
+      <table className="w-full">
+        <thead>
+          <tr className="border-b border-gray-200">
+            <th className="pb-1 text-left text-[10px] font-semibold uppercase tracking-wide text-gray-400">Yr</th>
+            <th className="pb-1 text-left text-[10px] font-semibold uppercase tracking-wide text-gray-400">Type</th>
+            <th className="pb-1 text-right text-[10px] font-semibold uppercase tracking-wide text-gray-400">Paid</th>
+            <th className="pb-1 text-center text-[10px] font-semibold uppercase tracking-wide text-gray-400">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {claims.map((c, i) => (
+            <tr key={c.id || i} className="border-b border-gray-100 last:border-0">
+              <td className="py-1.5 text-xs font-medium text-gray-900">{c.year || "—"}</td>
+              <td className="py-1.5 text-xs text-gray-600">{capitalize(c.type)}</td>
+              <td className="py-1.5 text-xs text-right font-mono text-gray-900">{fmt$(c.amountPaid)}</td>
+              <td className="py-1.5 text-center">
+                <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
+                  c.status === "closed" ? "bg-gray-100 text-gray-500" :
+                  c.status === "open" ? "bg-amber-100 text-amber-700" : "bg-blue-100 text-blue-700"
+                }`}>{capitalize(c.status) || "—"}</span>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {claims.map((c, i) => (
-              <tr key={c.id || i} className="border-b border-gray-100 last:border-0">
-                <td className="py-2.5 font-medium text-gray-900">{c.year || "—"}</td>
-                <td className="py-2.5 text-gray-700">{capitalize(c.type)}</td>
-                <td className="py-2.5 text-gray-700">{capitalize(c.cause)}</td>
-                <td className="py-2.5 text-right font-mono text-gray-900">{fmt$(c.amountPaid)}</td>
-                <td className="py-2.5 text-center">
-                  <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${
-                    c.status === "closed" ? "bg-gray-100 text-gray-600" :
-                    c.status === "open" ? "bg-amber-100 text-amber-700" :
-                    "bg-blue-100 text-blue-700"
-                  }`}>
-                    {capitalize(c.status) || "—"}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
 
 function OperationalRiskSection({ data }) {
-  if (!data) return <p className="text-sm text-gray-400">No data entered yet.</p>;
-
+  if (!data) return <p className="text-xs text-gray-400">No data entered yet.</p>;
   const items = [
     { key: "roofLeaks", label: "Roof Leaks" },
-    { key: "hvacIssues", label: "HVAC Issues" },
-    { key: "plumbingIssues", label: "Plumbing Issues" },
-    { key: "electricalIssues", label: "Electrical Issues" },
-    { key: "moldMoistureHistory", label: "Mold / Moisture" },
-    { key: "deferredMaintenance", label: "Deferred Maintenance" },
-    { key: "inspectionDeficiencies", label: "Inspection Deficiencies" },
+    { key: "hvacIssues", label: "HVAC" },
+    { key: "plumbingIssues", label: "Plumbing" },
+    { key: "electricalIssues", label: "Electrical" },
+    { key: "moldMoistureHistory", label: "Mold/Moisture" },
+    { key: "deferredMaintenance", label: "Deferred Maint." },
+    { key: "inspectionDeficiencies", label: "Inspection" },
   ];
-
   const issueCount = items.filter(({ key }) => data[key] === "yes").length;
-  const allClear = issueCount === 0 && items.every(({ key }) => data[key]);
 
   return (
-    <div className="space-y-3">
-      {allClear && (
-        <div className="rounded-lg bg-green-50 border border-green-200 px-4 py-2.5">
-          <p className="text-sm font-semibold text-green-700">All systems — no issues reported</p>
-        </div>
-      )}
-      {issueCount > 0 && (
-        <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-2.5">
-          <p className="text-sm font-semibold text-red-700">{issueCount} issue{issueCount !== 1 ? "s" : ""} flagged</p>
-        </div>
-      )}
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+    <div className="space-y-2">
+      <div className={`rounded px-2.5 py-1.5 text-xs font-semibold ${
+        issueCount > 0 ? "bg-red-50 border border-red-200 text-red-700" : "bg-green-50 border border-green-200 text-green-700"
+      }`}>
+        {issueCount > 0 ? `${issueCount} issue${issueCount !== 1 ? "s" : ""} flagged` : "All systems clear"}
+      </div>
+      <div className="space-y-1">
         {items.map(({ key, label }) => {
-          const val = data[key];
-          const hasIssue = val === "yes";
-          const noIssue = val === "no";
+          const hasIssue = data[key] === "yes";
+          const clear = data[key] === "no";
           return (
-            <div
-              key={key}
-              className={`flex items-center justify-between rounded-lg border-2 px-4 py-3 ${
-                hasIssue ? "border-red-200 bg-red-50" :
-                noIssue ? "border-green-200 bg-green-50" :
-                "border-gray-200 bg-gray-50"
-              }`}
-            >
-              <span className="text-sm font-medium text-gray-800">{label}</span>
-              <span className={`text-xs font-bold ${
-                hasIssue ? "text-red-600" :
-                noIssue ? "text-green-600" :
-                "text-gray-400"
-              }`}>
-                {hasIssue ? "ISSUE" : noIssue ? "CLEAR" : "—"}
+            <div key={key} className={`flex items-center justify-between rounded px-2.5 py-1.5 ${
+              hasIssue ? "bg-red-50 border border-red-100" :
+              clear ? "bg-green-50 border border-green-100" : "bg-gray-50 border border-gray-100"
+            }`}>
+              <span className="text-xs text-gray-700">{label}</span>
+              <span className={`text-[10px] font-bold ${hasIssue ? "text-red-600" : clear ? "text-green-600" : "text-gray-400"}`}>
+                {hasIssue ? "ISSUE" : clear ? "CLEAR" : "—"}
               </span>
             </div>
           );
@@ -502,52 +448,33 @@ function OperationalRiskSection({ data }) {
 }
 
 function LocationSection({ data }) {
-  if (!data) return <p className="text-sm text-gray-400">No data entered yet.</p>;
+  if (!data) return <p className="text-xs text-gray-400">No data entered yet.</p>;
   const loc = data;
 
-  const hazards = [
+  const all = [
     { key: "floodZone", label: "Flood Zone", format: (v) => v?.toUpperCase() },
     { key: "coastalWindExposure", label: "Coastal Wind" },
     { key: "wildfireExposure", label: "Wildfire" },
     { key: "freezeExposure", label: "Freeze" },
-    { key: "stormHailExposure", label: "Storm / Hail" },
-  ];
-
-  const conditions = [
-    { key: "crimeLevel", label: "Crime Level" },
+    { key: "stormHailExposure", label: "Storm/Hail" },
+    { key: "crimeLevel", label: "Crime" },
     { key: "utilityInterruption", label: "Utility Risk" },
-    { key: "contractorScarcity", label: "Contractor Scarcity" },
-    { key: "litigationEnvironment", label: "Litigation Env." },
+    { key: "contractorScarcity", label: "Contractors" },
+    { key: "litigationEnvironment", label: "Litigation" },
   ];
 
   return (
-    <div className="space-y-5">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Natural Hazards</p>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-          {hazards.map(({ key, label, format }) => {
-            const raw = loc[key];
-            const display = format ? format(raw) : capitalize(raw);
-            return (
-              <div key={key} className="flex flex-col gap-1">
-                <p className="text-xs text-gray-500">{label}</p>
-                <Badge value={display || raw} type="risk" />
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="border-t border-gray-100 pt-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Local Conditions</p>
-        <div className="grid grid-cols-2 gap-2">
-          {conditions.map(({ key, label }) => (
-            <div key={key} className="flex flex-col gap-1">
-              <p className="text-xs text-gray-500">{label}</p>
-              <Badge value={loc[key]} type="risk" />
-            </div>
-          ))}
-        </div>
-      </div>
+    <div className="grid grid-cols-3 gap-2">
+      {all.map(({ key, label, format }) => {
+        const raw = loc[key];
+        const display = format ? format(raw) : capitalize(raw);
+        return (
+          <div key={key}>
+            <p className="text-[10px] text-gray-400 mb-0.5">{label}</p>
+            <Badge value={display || raw} type="risk" />
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -873,19 +800,22 @@ export default function InputSummaryDashboard() {
 
         {/* ── MAIN CONTENT ──────────────────────────────────────────────── */}
         <div className="flex-1 overflow-y-auto bg-gray-50">
-          <div className="max-w-4xl mx-auto px-6 py-6 space-y-6">
-            {NAV_SECTIONS.map(({ key, label, icon }) => (
-              <div key={key} id={key} className="scroll-mt-4">
-                <SectionCard
-                  title={label}
-                  color={SECTION_COLORS[key]}
-                  icon={<span className="text-white">{icon}</span>}
-                >
-                  {SECTION_RENDERERS[key](hotelData?.[key])}
-                </SectionCard>
-              </div>
-            ))}
-            <div className="h-12" />
+          <div className="px-4 py-4">
+            <div className="grid grid-cols-3 gap-4">
+              {NAV_SECTIONS.map(({ key, label, icon }) => (
+                <div key={key} id={key} className="scroll-mt-4">
+                  <SectionCard
+                    title={label}
+                    color={SECTION_COLORS[key]}
+                    icon={<span className="text-white">{icon}</span>}
+                    compact
+                  >
+                    {SECTION_RENDERERS[key](hotelData?.[key])}
+                  </SectionCard>
+                </div>
+              ))}
+            </div>
+            <div className="h-6" />
           </div>
         </div>
 
