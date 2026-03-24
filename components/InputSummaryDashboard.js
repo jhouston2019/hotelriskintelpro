@@ -690,9 +690,9 @@ export default function InputSummaryDashboard() {
     <div className="h-screen flex flex-col overflow-hidden bg-slate-950">
 
       {/* ── TOP BAR ─────────────────────────────────────────────────────── */}
-      <div className="flex-shrink-0 bg-hrip-navy border-b border-blue-900 flex items-stretch h-12">
+      <div className="flex-shrink-0 bg-slate-900 border-b border-slate-800 flex items-stretch h-12">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2.5 px-4 border-r border-blue-900 hover:bg-blue-900/40 transition-colors flex-shrink-0">
+        <Link href="/" className="flex items-center gap-2.5 px-4 border-r border-slate-800 hover:bg-slate-800 transition-colors flex-shrink-0">
           <div className="flex h-7 w-7 items-center justify-center rounded bg-white/10">
             <span className="text-base font-bold text-white">HR</span>
           </div>
@@ -702,7 +702,7 @@ export default function InputSummaryDashboard() {
         {/* KPI pills — scrollable on small screens */}
         <div className="flex items-stretch overflow-x-auto flex-1">
           {kpis.map(({ label, value, alert }, i) => (
-            <div key={i} className={`flex flex-col justify-center px-4 border-r border-blue-900/60 min-w-[120px] ${alert ? "bg-amber-900/30" : ""}`}>
+            <div key={i} className={`flex flex-col justify-center px-4 border-r border-slate-800 min-w-[120px] ${alert ? "bg-amber-900/30" : ""}`}>
               <p className="text-sm font-bold uppercase tracking-widest text-blue-300/70 leading-none">{label}</p>
               <p className={`text-lg font-bold leading-tight mt-0.5 ${alert ? "text-amber-300" : "text-white"}`}>{value}</p>
             </div>
@@ -710,7 +710,7 @@ export default function InputSummaryDashboard() {
         </div>
 
         {/* Right actions */}
-        <div className="flex items-center gap-1 px-3 border-l border-blue-900 flex-shrink-0">
+        <div className="flex items-center gap-1 px-3 border-l border-slate-800 flex-shrink-0">
           {isDemo && (
             <span className="rounded px-2 py-0.5 text-sm font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 mr-1">DEMO</span>
           )}
