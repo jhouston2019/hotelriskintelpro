@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import GlossaryLink from "./GlossaryLink";
+import { SECTION_GLOSSARY_IDS, KPI_LABEL_GLOSSARY_IDS } from "../lib/dashboard-glossary";
 
 // ─── Demo dataset ────────────────────────────────────────────────────────────
 
@@ -184,15 +186,18 @@ function Badge({ value, type = "neutral" }) {
   return <span className={`${base} bg-slate-700 text-slate-200`}>{capitalize(value)}</span>;
 }
 
-function SectionCard({ icon, title, color, children, compact }) {
+function SectionCard({ icon, title, color, children, compact, glossaryId }) {
   return (
-    <div className="rounded-xl border border-slate-700 bg-slate-800 shadow-none overflow-hidden">
-      <div className={`flex items-center justify-between px-3 py-2.5 border-b border-slate-700 ${color}`}>
-        <div className="flex items-center gap-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded bg-slate-800/20 [&_svg]:w-3.5 [&_svg]:h-3.5">
+    <div className="flex h-[32rem] w-full min-h-0 flex-col rounded-xl border border-slate-700 bg-slate-800 shadow-none overflow-hidden">
+      <div className={`flex flex-shrink-0 items-center justify-between px-3 py-2.5 border-b border-slate-700 ${color}`}>
+        <div className="flex min-w-0 items-center gap-2">
+          <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded bg-slate-800/20 [&_svg]:w-3.5 [&_svg]:h-3.5">
             {icon}
           </div>
-          <h3 className="text-sm font-bold text-white uppercase tracking-wide">{title}</h3>
+          <h3 className="flex min-w-0 items-center gap-1.5 text-sm font-bold text-white uppercase tracking-wide">
+            <span className="truncate">{title}</span>
+            {glossaryId && <GlossaryLink id={glossaryId} compact title={`${title}: definition and how-to`} />}
+          </h3>
         </div>
         <Link
           href="/intake"
@@ -201,7 +206,7 @@ function SectionCard({ icon, title, color, children, compact }) {
           Edit
         </Link>
       </div>
-      <div className={compact ? "p-3" : "p-6"}>{children}</div>
+      <div className={`min-h-0 flex-1 overflow-y-auto ${compact ? "p-3" : "p-6"}`}>{children}</div>
     </div>
   );
 }
@@ -358,13 +363,19 @@ function CommandCenter({ metrics }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          <h2 className="text-sm font-bold text-white uppercase tracking-widest">Today&apos;s Priorities</h2>
+          <h2 className="flex items-center gap-1.5 text-sm font-bold text-white uppercase tracking-widest">
+            <span>Today&apos;s Priorities</span>
+            <GlossaryLink id="command-center-todays-priorities" compact title="Today's priorities: definition and how-to" />
+          </h2>
           <span className="rounded-full bg-red-700/80 px-2 py-0.5 text-xs font-bold text-white">
             {topPriorities.length} ACTIONS
           </span>
         </div>
         <div className="text-right">
-          <p className="text-xs font-bold text-red-400/80 uppercase tracking-widest">Total Money in Play Today</p>
+          <p className="flex items-center justify-end gap-1 text-xs font-bold text-red-400/80 uppercase tracking-widest">
+            <span>Total Money in Play Today</span>
+            <GlossaryLink id="total-money-in-play" compact title="Total money in play: definition" />
+          </p>
           <p className="text-xl font-bold text-white">${totalMoneyInPlay.toLocaleString()}</p>
         </div>
       </div>
@@ -400,10 +411,16 @@ function RiskScoreBadge({ score }) {
   const color = score >= 70 ? "text-red-400" : score >= 50 ? "text-amber-400" : "text-green-400";
   return (
     <div className="flex flex-col items-center justify-center px-4 border-r border-slate-800 min-w-[110px]">
-      <p className="text-xs font-bold uppercase tracking-widest text-blue-300/70 leading-none">RISK SCORE</p>
+      <p className="flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-blue-300/70 leading-none">
+        <span>RISK SCORE</span>
+        <GlossaryLink id="risk-score" compact title="Risk score: definition and how-to" />
+      </p>
       <div className="flex items-center gap-1.5 mt-0.5">
         <p className={`text-lg font-bold leading-tight ${color}`}>{score}</p>
-        <span className="text-xs font-bold text-red-400 leading-tight">↑+12</span>
+        <span className="flex items-center gap-0.5 text-xs font-bold text-red-400 leading-tight">
+          ↑+12
+          <GlossaryLink id="risk-score-trend" compact title="Risk score trend: definition" />
+        </span>
       </div>
     </div>
   );
@@ -1109,12 +1126,12 @@ export default function InputSummaryDashboard() {
   const location = [p.city, p.state].filter(Boolean).join(", ") || null;
 
   const kpis = [
-    { label: "PROPERTY COVERAGE", value: ins.propertyCoverageLimit ? "$" + Number(ins.propertyCoverageLimit).toLocaleString() : "—", alert: false },
-    { label: "BI COVERAGE",       value: ins.biLimit ? "$" + Number(ins.biLimit).toLocaleString() : "—", alert: false },
-    { label: "ANNUAL REVENUE",    value: f.annualRevenue ? "$" + Number(f.annualRevenue).toLocaleString() : "—", alert: false },
-    { label: "MONTHLY BURN",      value: monthlyBurn > 0 ? "$" + monthlyBurn.toLocaleString() : "—", alert: monthlyBurn > 0 },
-    { label: "CASH RESERVES",     value: f.emergencyCashReserves ? "$" + Number(f.emergencyCashReserves).toLocaleString() : "—", alert: false },
-    { label: "POLICY RENEWAL",    value: daysToRenewal !== null ? `${daysToRenewal} days` : "—", alert: daysToRenewal !== null && daysToRenewal < 60 },
+    { label: "PROPERTY COVERAGE", value: ins.propertyCoverageLimit ? "$" + Number(ins.propertyCoverageLimit).toLocaleString() : "—", alert: false, glossaryId: KPI_LABEL_GLOSSARY_IDS["PROPERTY COVERAGE"] },
+    { label: "BI COVERAGE",       value: ins.biLimit ? "$" + Number(ins.biLimit).toLocaleString() : "—", alert: false, glossaryId: KPI_LABEL_GLOSSARY_IDS["BI COVERAGE"] },
+    { label: "ANNUAL REVENUE",    value: f.annualRevenue ? "$" + Number(f.annualRevenue).toLocaleString() : "—", alert: false, glossaryId: KPI_LABEL_GLOSSARY_IDS["ANNUAL REVENUE"] },
+    { label: "MONTHLY BURN",      value: monthlyBurn > 0 ? "$" + monthlyBurn.toLocaleString() : "—", alert: monthlyBurn > 0, glossaryId: KPI_LABEL_GLOSSARY_IDS["MONTHLY BURN"] },
+    { label: "CASH RESERVES",     value: f.emergencyCashReserves ? "$" + Number(f.emergencyCashReserves).toLocaleString() : "—", alert: false, glossaryId: KPI_LABEL_GLOSSARY_IDS["CASH RESERVES"] },
+    { label: "POLICY RENEWAL",    value: daysToRenewal !== null ? `${daysToRenewal} days` : "—", alert: daysToRenewal !== null && daysToRenewal < 60, glossaryId: KPI_LABEL_GLOSSARY_IDS["POLICY RENEWAL"] },
   ];
 
   const sectionComplete = {
@@ -1166,9 +1183,12 @@ export default function InputSummaryDashboard() {
 
         {/* KPI pills — scrollable */}
         <div className="flex items-stretch overflow-x-auto flex-1">
-          {kpis.map(({ label, value, alert }, i) => (
+          {kpis.map(({ label, value, alert, glossaryId }, i) => (
             <div key={i} className={`flex flex-col justify-center px-4 border-r border-slate-800 min-w-[120px] ${alert ? "bg-amber-900/30" : ""}`}>
-              <p className="text-xs font-bold uppercase tracking-widest text-blue-300/70 leading-none">{label}</p>
+              <p className="flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-blue-300/70 leading-none">
+                <span>{label}</span>
+                {glossaryId && <GlossaryLink id={glossaryId} compact title={`${label}: definition`} />}
+              </p>
               <p className={`text-sm font-bold leading-tight mt-0.5 ${alert ? "text-amber-300" : "text-white"}`}>{value}</p>
             </div>
           ))}
@@ -1179,6 +1199,12 @@ export default function InputSummaryDashboard() {
           {isDemo && (
             <span className="rounded px-2 py-0.5 text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 mr-1">DEMO</span>
           )}
+          <Link
+            href="/dashboard-help"
+            className="rounded px-2.5 py-1.5 text-xs font-semibold text-slate-300 hover:text-white border border-slate-600 hover:border-slate-500 whitespace-nowrap"
+          >
+            Help
+          </Link>
           <Link href="/report" className="rounded px-3 py-1.5 text-xs font-semibold bg-hrip-gold text-slate-900 hover:bg-amber-300 transition-colors whitespace-nowrap">
             Risk Report
           </Link>
@@ -1207,27 +1233,42 @@ export default function InputSummaryDashboard() {
               <p className={`text-xl font-bold leading-none ${metrics.revenueAtRisk > 0 ? "text-red-400" : "text-green-400"}`}>
                 ${Math.round(metrics.revenueAtRisk / 1000)}K
               </p>
-              <p className="text-xs text-slate-500 mt-0.5">Money<br/>at Risk</p>
+              <p className="mt-0.5 flex items-start gap-1 text-xs text-slate-500">
+                <span>Money<br/>at Risk</span>
+                <GlossaryLink id="money-at-risk-sidebar" compact title="Money at risk: definition" className="mt-0.5" />
+              </p>
             </div>
             <div className="bg-slate-900 px-3 py-2.5">
               <p className={`text-xl font-bold leading-none ${issueCount > 0 ? "text-amber-400" : "text-green-400"}`}>{issueCount}</p>
-              <p className="text-xs text-slate-500 mt-0.5">Operational<br/>Issues</p>
+              <p className="mt-0.5 flex items-start gap-1 text-xs text-slate-500">
+                <span>Operational<br/>Issues</span>
+                <GlossaryLink id="operational-issues-count" compact title="Operational issues: definition" className="mt-0.5" />
+              </p>
             </div>
             <div className="bg-slate-900 px-3 py-2.5">
               <p className={`text-xl font-bold leading-none ${claimCount > 0 ? "text-rose-400" : "text-slate-300"}`}>{claimCount}</p>
-              <p className="text-xs text-slate-500 mt-0.5">Prior<br/>Claims</p>
+              <p className="mt-0.5 flex items-start gap-1 text-xs text-slate-500">
+                <span>Prior<br/>Claims</span>
+                <GlossaryLink id="prior-claims-count" compact title="Prior claims: definition" className="mt-0.5" />
+              </p>
             </div>
             <div className="bg-slate-900 px-3 py-2.5">
               <p className={`text-xl font-bold leading-none ${daysToRenewal !== null && daysToRenewal < 60 ? "text-amber-400" : "text-white"}`}>
                 {daysToRenewal ?? "—"}
               </p>
-              <p className="text-xs text-slate-500 mt-0.5">Days to<br/>Renewal</p>
+              <p className="mt-0.5 flex items-start gap-1 text-xs text-slate-500">
+                <span>Days to<br/>Renewal</span>
+                <GlossaryLink id="days-to-renewal-sidebar" compact title="Days to renewal: definition" className="mt-0.5" />
+              </p>
             </div>
           </div>
 
           {/* Section navigation */}
           <div className="py-2 border-b border-slate-800 flex-1">
-            <p className="px-4 pt-2 pb-1 text-xs font-bold uppercase tracking-widest text-slate-600">Data Sections</p>
+            <p className="flex items-center gap-1.5 px-4 pt-2 pb-1 text-xs font-bold uppercase tracking-widest text-slate-600">
+              <span>Data Sections</span>
+              <GlossaryLink id="data-sections-nav" compact title="Data sections navigation: definition" />
+            </p>
             {NAV_SECTIONS.map(({ key, label, accent, dot, icon }) => {
               const active = activeSection === key;
               const done = sectionComplete[key];
@@ -1252,6 +1293,13 @@ export default function InputSummaryDashboard() {
           {/* Quick actions */}
           <div className="p-3 space-y-1.5 border-t border-slate-800">
             <Link
+              href="/dashboard-help"
+              className="flex items-center gap-2 w-full rounded-lg border border-slate-600 px-3 py-2 text-xs font-semibold text-slate-300 hover:border-amber-500/50 hover:text-amber-200 transition-colors"
+            >
+              <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+              Help & glossary
+            </Link>
+            <Link
               href="/intake"
               className="flex items-center gap-2 w-full rounded-lg bg-hrip-navy px-3 py-2 text-xs font-semibold text-white hover:bg-blue-800 transition-colors"
             >
@@ -1275,15 +1323,16 @@ export default function InputSummaryDashboard() {
             {/* Command Center — top priority */}
             <CommandCenter metrics={metrics} />
 
-            {/* Section cards grid */}
+            {/* Section cards grid — fixed equal card height (scroll inside) */}
             <div className="grid grid-cols-3 gap-4">
               {NAV_SECTIONS.map(({ key, label, icon }) => (
-                <div key={key} id={key} className="scroll-mt-4">
+                <div key={key} id={key} className="scroll-mt-4 min-w-0">
                   <SectionCard
                     title={label}
                     color={SECTION_COLORS[key]}
                     icon={<span className="text-white">{icon}</span>}
                     compact
+                    glossaryId={SECTION_GLOSSARY_IDS[key]}
                   >
                     {SECTION_RENDERERS[key](hotelData?.[key])}
                   </SectionCard>
