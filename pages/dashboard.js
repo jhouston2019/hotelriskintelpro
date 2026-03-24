@@ -1,5 +1,5 @@
-import MonitoringDashboard from "../components/MonitoringDashboard";
+import InputSummaryDashboard from "../components/InputSummaryDashboard";
 
 export default function Dashboard() {
-  return <MonitoringDashboard />;
+  return <InputSummaryDashboard />;
 }

@@ -1022,7 +1022,15 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 py-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-gray-600">© {new Date().getFullYear()} Hotel Risk Pro. All rights reserved.</p>
-            <p className="text-sm text-gray-500">Risk Intelligence Monitoring for Hotel Owners</p>
+            <div className="flex items-center gap-6">
+              <p className="text-sm text-gray-500">Risk Intelligence Monitoring for Hotel Owners</p>
+              <Link
+                href="/admin/login"
+                className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                Admin
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
